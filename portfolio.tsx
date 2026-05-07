@@ -15,7 +15,7 @@
   ABOUT: Edit the ABOUT object to update personal info.
 */
 
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 
 // ─── THEME CONFIG ───────────────────────────────────────
@@ -23,6 +23,19 @@ const THEME = {
   carbonBlack: "#262620",
   palmLeaf:    "#899878",
   beige:       "#e4e6c3",
+};
+
+// ─── TYPES ──────────────────────────────────────────────
+type Project = {
+  id: string;
+  title: string;
+  industry: string;
+  role: string;
+  tools: string[];
+  summary: string;
+  description: string;
+  responsibilities: string[];
+  impact: string;
 };
 
 // ─── PROJECTS DATA ──────────────────────────────────────
@@ -226,7 +239,7 @@ const fadeUp = {
 };
 const stagger = { visible: { transition: { staggerChildren: 0.1 } } };
 
-function FadeIn({ children, delay = 0, className = "" }) {
+function FadeIn({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-60px" });
   return (
@@ -479,7 +492,7 @@ const css = `
 export default function App() {
   const [theme, setTheme] = useState("light");
   const [page, setPage] = useState("home");
-  const [activeProject, setActiveProject] = useState(null);
+  const [activeProject, setActiveProject] = useState<Project | null>(null);
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
@@ -487,7 +500,7 @@ export default function App() {
 
   useEffect(() => { window.scrollTo(0, 0); }, [page, activeProject]);
 
-  const nav = (p) => { setPage(p); setActiveProject(null); };
+  const nav = (p: string) => { setPage(p); setActiveProject(null); };
 
   return (
     <>
@@ -520,7 +533,7 @@ export default function App() {
 }
 
 // ─── HOME PAGE ───────────────────────────────────────────
-function HomePage({ nav }) {
+function HomePage({ nav }: { nav: (p: string) => void }) {
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }}>
       <div className="container">
@@ -593,7 +606,7 @@ function HomePage({ nav }) {
 }
 
 // ─── ABOUT PAGE ──────────────────────────────────────────
-function AboutPage({ nav }) {
+function AboutPage({ nav }: { nav: (p: string) => void }) {
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }}>
       <div className="container" style={{ paddingTop: "4rem", paddingBottom: "5rem" }}>
@@ -702,7 +715,7 @@ function SkillsPage() {
 }
 
 // ─── PROJECTS PAGE ───────────────────────────────────────
-function ProjectsPage({ onSelect }) {
+function ProjectsPage({ onSelect }: { onSelect: (p: Project) => void }) {
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }}>
       <div className="container" style={{ paddingTop: "4rem", paddingBottom: "5rem" }}>
@@ -731,7 +744,7 @@ function ProjectsPage({ onSelect }) {
 }
 
 // ─── PROJECT DETAIL ──────────────────────────────────────
-function ProjectDetail({ project: p, onBack }) {
+function ProjectDetail({ project: p, onBack }: { project: Project; onBack: () => void }) {
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.45, ease: [0.22,1,0.36,1] }}>
       <div className="project-detail">
