@@ -419,17 +419,19 @@ const css = `
   .edu-inst { font-size: 13px; color: var(--accent); margin-bottom: 6px; }
   .edu-desc { font-size: 14px; color: var(--muted); }
 
-  .tool-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5px; }
-  .tool-group { background: var(--card); padding: 1.5rem; border-radius: 2px; }
+  .tool-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5px; align-items: stretch; }
+  .tool-grid > * { display: flex; }
+  .tool-group { background: var(--card); padding: 1.5rem; border-radius: 2px; width: 100%; }
   .tool-group-label { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 1rem; }
   .tool-items { display: flex; flex-direction: column; gap: 6px; }
   .tool-item { font-size: 14px; color: var(--muted); }
 
-  .soft-list { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; }
+  .soft-list { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; align-items: stretch; }
+  .soft-list > * { display: flex; }
   .soft-item {
     background: var(--card); padding: 1.25rem 1.5rem;
     font-size: 14px; color: var(--muted); line-height: 1.65;
-    border-radius: 2px;
+    border-radius: 2px; width: 100%;
   }
   .soft-item::before { content: '—'; color: var(--accent); margin-right: 8px; font-weight: 600; }
 
@@ -662,6 +664,22 @@ function AboutPage({ nav }: { nav: (p: string) => void }) {
 
 // ─── SKILLS PAGE ─────────────────────────────────────────
 function SkillsPage() {
+  const softListRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const equalize = () => {
+      if (!softListRef.current) return;
+      const items = softListRef.current.querySelectorAll<HTMLElement>(".soft-item");
+      items.forEach(el => { el.style.height = "auto"; });
+      let max = 0;
+      items.forEach(el => { max = Math.max(max, el.offsetHeight); });
+      items.forEach(el => { el.style.height = `${max}px`; });
+    };
+    document.fonts.ready.then(equalize);
+    window.addEventListener("resize", equalize);
+    return () => window.removeEventListener("resize", equalize);
+  }, []);
+
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }}>
       <div className="container" style={{ paddingTop: "4rem", paddingBottom: "5rem" }}>
@@ -701,7 +719,7 @@ function SkillsPage() {
 
         <section className="section" style={{ paddingTop: "0" }}>
           <FadeIn><div className="section-label">Soft skills</div></FadeIn>
-          <div className="soft-list">
+          <div className="soft-list" ref={softListRef}>
             {SKILLS.soft.map((s, i) => (
               <FadeIn key={i} delay={i * 0.05}>
                 <div className="soft-item">{s}</div>
