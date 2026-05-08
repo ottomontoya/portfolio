@@ -1,20 +1,3 @@
-/*
-  PORTFOLIO SITE
-  ─────────────────────────────────────────────────────
-  To run locally:
-    npm create vite@latest portfolio -- --template react
-    npm install framer-motion
-    Copy this file to src/App.jsx
-
-  To deploy on Vercel:
-    Push to GitHub → Import in vercel.com → Deploy (zero config for Vite/React)
-
-  FONTS: Peace Sans and Open Sauce are loaded via @import below.
-  COLORS: Edit the THEME object to change all colors site-wide.
-  PROJECTS: Edit the PROJECTS array to update project data.
-  ABOUT: Edit the ABOUT object to update personal info.
-*/
-
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 
