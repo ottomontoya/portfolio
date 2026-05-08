@@ -268,6 +268,7 @@ const css = `
     --accent: #899878;
     --card:   #d8dab0;
     --border: rgba(38,38,32,0.12);
+    --nav-pill: #c6c8a4;
   }
   [data-theme="dark"] {
     --burgundy: var(--cherry);
@@ -276,6 +277,7 @@ const css = `
     --muted:  #9a9c8a;
     --accent: #899878;
     --card:   #2e2e28;
+    --nav-pill: #3a3a34;
     --border: rgba(228,230,195,0.1);
   }
 
@@ -303,7 +305,8 @@ const css = `
 
   .nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
+    display: grid; grid-template-columns: 1fr auto 1fr;
+    align-items: center;
     padding: 0 2.5rem;
     height: 60px;
     background: var(--bg);
@@ -311,18 +314,21 @@ const css = `
     transition: background 0.3s;
   }
   .nav-logo { font-weight: 600; font-size: 15px; color: var(--fg); cursor: pointer; letter-spacing: 0.03em; }
-  .nav-links { display: flex; gap: 2rem; align-items: center; }
+  .nav-links { display: flex; gap: 0.5rem; align-items: center; }
+  .nav-end { display: flex; justify-content: flex-end; align-items: center; }
   .nav-link {
     font-size: 14px; color: var(--muted); background: none; border: none;
-    cursor: pointer; font-family: inherit; padding: 0;
-    transition: color 0.2s;
+    cursor: pointer; font-family: inherit; padding: 0.3rem 0.75rem;
+    border-radius: 9999px; transition: color 0.2s; position: relative;
   }
-  .nav-link:hover, .nav-link.active { color: var(--fg); }
-  .nav-link.active { font-weight: 600; }
+  .nav-link:hover { color: var(--fg); }
+  .nav-link.active { color: var(--fg); }
+  .nav-pill-bg { position: absolute; inset: 0; border-radius: 9999px; background: var(--nav-pill); }
+  .nav-link-label { position: relative; }
   .theme-btn {
     background: none; border: none; padding: 0; cursor: pointer;
     color: var(--burgundy); display: flex; align-items: center; justify-content: center;
-    transition: color 0.2s; margin-left: 1rem;
+    transition: color 0.2s;
   }
   .theme-btn svg { transition: fill 0.2s, stroke 0.2s; fill: none; }
   .theme-btn:hover { color: var(--burgundy); }
@@ -468,7 +474,7 @@ const css = `
 
   @media (max-width: 700px) {
     .nav { padding: 0 1.2rem; }
-    .nav-links { gap: 1rem; }
+    .nav-links { gap: 0.25rem; }
     .container { padding: 0 1.2rem; }
     .hero { padding: 3rem 0 2rem; }
     .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
@@ -500,9 +506,18 @@ export default function App() {
         <div className="nav-links">
           {["home","about","skills","projects"].map(p => (
             <button key={p} className={`nav-link${page===p?" active":""}`} onClick={() => nav(p)}>
-              {p.charAt(0).toUpperCase()+p.slice(1)}
+              {page === p && (
+                <motion.span
+                  className="nav-pill-bg"
+                  layoutId="nav-pill"
+                  transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                />
+              )}
+              <span className="nav-link-label">{p.charAt(0).toUpperCase()+p.slice(1)}</span>
             </button>
           ))}
+        </div>
+        <div className="nav-end">
           <button className="theme-btn" onClick={() => setTheme(t => t==="light"?"dark":"light")} aria-label="Toggle theme">
             {theme === "light"
               ? <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
