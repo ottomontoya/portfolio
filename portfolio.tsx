@@ -257,6 +257,8 @@ const css = `
   }
 
   :root {
+    --crimson: #8B1E3F;
+    --cherry: #C7476A;
     --carbon: #262620;
     --palm:   #899878;
     --beige:  #e4e6c3;
@@ -268,6 +270,7 @@ const css = `
     --border: rgba(38,38,32,0.12);
   }
   [data-theme="dark"] {
+    --crimson: var(--cherry);
     --bg:     #262620;
     --fg:     #e4e6c3;
     --muted:  #9a9c8a;
@@ -318,11 +321,11 @@ const css = `
   .nav-link.active { font-weight: 600; }
   .theme-btn {
     background: none; border: none; padding: 0; cursor: pointer;
-    color: var(--muted); display: flex; align-items: center; justify-content: center;
+    color: var(--crimson); display: flex; align-items: center; justify-content: center;
     transition: color 0.2s; margin-left: 1rem;
   }
   .theme-btn svg { transition: fill 0.2s, stroke 0.2s; fill: none; }
-  .theme-btn:hover { color: var(--fg); }
+  .theme-btn:hover { color: var(--crimson); }
   .theme-btn:hover svg { fill: currentColor; }
 
   .page { padding-top: 60px; min-height: 100vh; }
