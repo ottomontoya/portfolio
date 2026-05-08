@@ -599,7 +599,7 @@ function HomePage({ nav }: { nav: (p: string) => void }) {
             <div className="section-label">Get in touch</div>
             <h2 className="contact-title">Let's work together.</h2>
             <p className="contact-sub">Open to new projects and collaborations.</p>
-            <a href="mailto:montoyaotto@icloud.com" className="btn btn-primary">Say hello →</a>
+            <a href="mailto:ottomontoya.work@icloud.com" className="btn btn-primary">Say hello →</a>
           </FadeIn>
         </section>
       </div>
