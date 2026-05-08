@@ -317,11 +317,13 @@ const css = `
   .nav-link:hover, .nav-link.active { color: var(--fg); }
   .nav-link.active { font-weight: 600; }
   .theme-btn {
-    background: none; border: 1px solid var(--border); border-radius: 20px;
-    padding: 4px 12px; font-size: 13px; cursor: pointer; color: var(--muted);
-    font-family: inherit; transition: all 0.2s; margin-left: 1rem;
+    background: none; border: none; padding: 0; cursor: pointer;
+    color: var(--muted); display: flex; align-items: center; justify-content: center;
+    transition: color 0.2s; margin-left: 1rem;
   }
-  .theme-btn:hover { color: var(--fg); border-color: var(--accent); }
+  .theme-btn svg { transition: fill 0.2s, stroke 0.2s; fill: none; }
+  .theme-btn:hover { color: var(--fg); }
+  .theme-btn:hover svg { fill: currentColor; }
 
   .page { padding-top: 60px; min-height: 100vh; }
   .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
@@ -498,8 +500,11 @@ export default function App() {
               {p.charAt(0).toUpperCase()+p.slice(1)}
             </button>
           ))}
-          <button className="theme-btn" onClick={() => setTheme(t => t==="light"?"dark":"light")}>
-            {theme === "light" ? "Dark" : "Light"}
+          <button className="theme-btn" onClick={() => setTheme(t => t==="light"?"dark":"light")} aria-label="Toggle theme">
+            {theme === "light"
+              ? <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+              : <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            }
           </button>
         </div>
       </nav>
