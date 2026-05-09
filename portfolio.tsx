@@ -269,6 +269,7 @@ const css = `
     --card:   #d8dab0;
     --border: rgba(38,38,32,0.12);
     --nav-pill: #c6c8a4;
+    --mobile-pill-bg: #2e2e28;
   }
   [data-theme="dark"] {
     --burgundy: var(--cherry);
@@ -278,6 +279,7 @@ const css = `
     --accent: #899878;
     --card:   #2e2e28;
     --nav-pill: #3a3a34;
+    --mobile-pill-bg: #4a4a42;
     --border: rgba(228,230,195,0.1);
   }
 
@@ -472,15 +474,54 @@ const css = `
   .contact-title { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 1rem; }
   .contact-sub { color: var(--muted); margin-bottom: 2.5rem; font-size: 1.05rem; }
 
+  .mobile-nav { display: none; }
+
   @media (max-width: 700px) {
-    .nav { padding: 0 1.2rem; }
-    .nav-links { gap: 0.25rem; }
+    .nav { padding: 0 1.2rem; border-bottom: none; }
+    .nav-links { display: none; }
+    .nav-end { grid-column: 3; }
     .container { padding: 0 1.2rem; }
     .hero { padding: 3rem 0 2rem; }
     .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
     .soft-list { grid-template-columns: 1fr; }
     .project-row { grid-template-columns: 1fr; }
     .project-row-arrow { display: none; }
+    .page { padding-bottom: 96px; }
+
+    .mobile-nav {
+      display: flex;
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 200;
+      background: var(--mobile-pill-bg);
+      border-radius: 9999px;
+      padding: 5px;
+      gap: 2px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      white-space: nowrap;
+    }
+    .mobile-nav-link {
+      position: relative;
+      font-size: 14px;
+      color: rgba(228,230,195,0.5);
+      padding: 9px 20px;
+      border-radius: 9999px;
+      border: none;
+      background: none;
+      cursor: pointer;
+      font-family: inherit;
+      transition: color 0.2s;
+    }
+    .mobile-nav-link.active { color: var(--beige); }
+    .mobile-nav-pill-bg {
+      position: absolute;
+      inset: 0;
+      border-radius: 9999px;
+      background: var(--accent);
+    }
+    .mobile-nav-link-label { position: relative; }
   }
 `;
 
@@ -535,6 +576,21 @@ export default function App() {
           {page === "projects" && !activeProject && <ProjectsPage key="projects" onSelect={setActiveProject} />}
           {page === "projects" && activeProject && <ProjectDetail key={activeProject.id} project={activeProject} onBack={() => setActiveProject(null)} />}
         </AnimatePresence>
+      </div>
+
+      <div className="mobile-nav">
+        {["home","about","skills","projects"].map(p => (
+          <button key={p} className={`mobile-nav-link${page===p?" active":""}`} onClick={() => nav(p)}>
+            {page === p && (
+              <motion.span
+                className="mobile-nav-pill-bg"
+                layoutId="mobile-nav-pill"
+                transition={{ type: "spring", stiffness: 380, damping: 32 }}
+              />
+            )}
+            <span className="mobile-nav-link-label">{p.charAt(0).toUpperCase()+p.slice(1)}</span>
+          </button>
+        ))}
       </div>
     </>
   );
