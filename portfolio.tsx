@@ -166,7 +166,7 @@ const EXPERIENCE = [
 ];
 
 const ABOUT_BODY = [
-  "I'm a Data Analyst with a Bachelor's in Informatics Engineering and Digital Business. I work end-to-end across the BI stack — from understanding business questions and defining KPIs, to designing dashboards, to building the governance models that keep data secure and trustworthy.",
+  "I'm a Data Analyst with a Bachelor's in Informatics Engineering and Digital Business. From understanding business questions and defining KPIs, to designing dashboards, to building the governance models that keep data secure and trustworthy.",
   "I specialize in Tableau and Amazon QuickSight, and I've built interactive reporting and internal tools with Retool across e-commerce, education, non-profit, energy, and cybersecurity.",
   "What I enjoy most is translating messy requirements into clean data models and intuitive dashboards — and working closely with stakeholders so the result actually fits their workflow.",
 ];
