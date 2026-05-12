@@ -353,7 +353,10 @@ function Nav({ dark, onToggleDark }: { dark: boolean; onToggleDark: () => void }
     <>
       <header className={`nav-wrap${scrolled ? " scrolled" : ""}`}>
         <div className="nav-pill">
-          <button className="nav-brand" onClick={() => scrollTo("home")}>Otto Montoya</button>
+          <button className="nav-brand" onClick={() => scrollTo("home")}>
+            <img src={dark ? "/assets/logo-light.svg" : "/assets/logo.svg"} alt="" width="20" height="20" />
+            Otto Montoya
+          </button>
           <nav ref={navCenterRef} className="nav-center">
             {dPill.ready && (
               <span className="nav-active-pill" style={{ left: dPill.left, top: dPill.top, width: dPill.width, height: dPill.height }} />
@@ -766,7 +769,9 @@ const CSS = `
     font-family: var(--font-body); font-size: 13px; font-weight: 600;
     letter-spacing: -.01em; color: inherit; cursor: pointer;
     padding: 8px 14px; opacity: .92;
+    display: inline-flex; align-items: center; gap: 8px;
   }
+  .nav-brand img { display: block; flex-shrink: 0; }
   .nav-brand:hover { opacity: 1; }
   .nav-center { justify-self: center; display: flex; gap: 2px; align-items: center; position: relative; }
   .nav-active-pill {
