@@ -1,42 +1,45 @@
-import React, { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence, useInView } from "framer-motion";
+import React, { useState, useEffect } from "react";
 
-// ─── THEME CONFIG ───────────────────────────────────────
-const THEME = {
-  carbonBlack: "#262620",
-  palmLeaf:    "#899878",
-  beige:       "#e4e6c3",
-};
+// ─── TYPES ───────────────────────────────────────────────
 
-// ─── TYPES ──────────────────────────────────────────────
-type Project = {
+type ChartKind = "areaDown" | "areaUp" | "bars" | "lines" | "scatter";
+
+interface Project {
   id: string;
+  n: string;
   title: string;
-  industry: string;
+  client: string;
   role: string;
-  tools: string[];
   summary: string;
+  tools: string[];
+  metric: { value: string; label: string };
+  chart: ChartKind;
   description: string;
   responsibilities: string[];
   impact: string;
-};
+}
 
-// ─── PROJECTS DATA ──────────────────────────────────────
-const PROJECTS = [
+// ─── DATA ────────────────────────────────────────────────
+
+const STATS = [
+  { value: "696→12", label: "Access paths consolidated", suffix: "for one Tableau deployment" },
+  { value: "5", label: "Industries served", suffix: "cybersec · auto · non-profit · energy · saas" },
+  { value: "~15", label: "Legacy dashboards rebuilt", suffix: "for a global manufacturer" },
+  { value: "3+", label: "Years end-to-end BI", suffix: "from KPI to delivery" },
+];
+
+const PROJECTS: Project[] = [
   {
-    id: "cybersecurity-saas",
+    id: "p1",
+    n: "01",
     title: "Governed Data Access at Scale",
-    industry: "Cybersecurity SaaS",
+    client: "Cybersecurity SaaS",
     role: "Data Analyst & BI Specialist",
-    tools: ["Tableau", "Snowflake", "dbt"],
     summary: "Redesigned row-level security in Tableau, reducing 696 access paths to 12 maintainable rules and eliminating all risky data sources.",
-    description: `The client's Tableau environment had grown organically, resulting in 696 disparate access paths, dozens of risky data sources with PII exposure, and a folder structure of ~30 team-specific spaces that made governance nearly impossible.
-
-I began by analyzing Tableau usage data, user activity patterns, and data-source configurations to understand the full surface area of the problem. From this analysis I designed a new group-based Row Level Security model that reduced 696 access paths to 3 default cases and 9 special cases, while removing 100% of identified risky data sources.
-
-Alongside the RLS redesign, I restructured content from ~30 team folders into 5 global, access-regulated folders — clearly separating Sandbox, Production, and Staging environments. I defined metrics for stale vs. active content, identified inactive users and leftover assets, and built admin monitoring dashboards that reduced admin workload by approximately 70%.
-
-I also contributed light dbt work for metadata tagging in a dbt → Snowflake → Tableau stack, maintained the Data Catalog, and prepared documentation, demos, and onboarding materials so the entire user base could adopt the redesigned model smoothly.`,
+    tools: ["Tableau", "Snowflake", "dbt"],
+    metric: { value: "696 → 12", label: "Access paths" },
+    chart: "areaDown",
+    description: "The client's Tableau environment had grown organically, resulting in 696 disparate access paths, dozens of risky data sources with PII exposure, and a folder structure of ~30 team-specific spaces that made governance nearly impossible.\n\nI began by analyzing Tableau usage data, user activity patterns, and data-source configurations to understand the full surface area of the problem. From this analysis I designed a new group-based Row Level Security model that reduced 696 access paths to 3 default cases and 9 special cases, while removing 100% of identified risky data sources.\n\nAlongside the RLS redesign, I restructured content from ~30 team folders into 5 global, access-regulated folders — clearly separating Sandbox, Production, and Staging environments. I defined metrics for stale vs. active content, identified inactive users and leftover assets, and built admin monitoring dashboards that reduced admin workload by approximately 70%.",
     responsibilities: [
       "Analyzed Tableau usage data, user activity, and PII exposure across all data sources",
       "Designed group-based RLS model reducing 696 access paths to 12 rules",
@@ -48,19 +51,16 @@ I also contributed light dbt work for metadata tagging in a dbt → Snowflake �
     impact: "696 → 12 access paths. 100% risky data sources removed. ~70% reduction in admin workload.",
   },
   {
-    id: "automotive-bi-migration",
+    id: "p2",
+    n: "02",
     title: "Legacy BI Migration for a Global Manufacturer",
-    industry: "Automotive Manufacturing",
+    client: "Automotive Manufacturing",
     role: "BI Developer",
-    tools: ["Tableau"],
     summary: "Rebuilt ~15 legacy internal dashboards as modern Tableau views embedded into the client's internal portal, working from sketch-based designs.",
-    description: `The client was migrating their internal BI tooling to Tableau and needed their existing dashboards — defined only as sketch-based designs — rebuilt as modern, embeddable views.
-
-I was responsible for translating approximately 15 sketch-based designs into fully functional Tableau dashboards, working with datasets prepared by the data engineering team for each use case. Each dashboard went through iterative review cycles: I submitted completed work, the client provided feedback, and I refined until function and visuals matched both the original sketches and the client's expectations.
-
-In parallel, I conducted R&D on Tableau Extensions to evaluate how third-party visual components could accelerate future development, offer richer chart types, and reduce reliance on complex calculated fields — simplifying both knowledge transfer and long-term maintenance.
-
-I also collaborated closely with teammates responsible for embedding the dashboards into the client's internal portal, aligning on technical constraints and ensuring every dashboard was integration-ready.`,
+    tools: ["Tableau"],
+    metric: { value: "15", label: "Dashboards rebuilt" },
+    chart: "bars",
+    description: "The client was migrating their internal BI tooling to Tableau and needed their existing dashboards — defined only as sketch-based designs — rebuilt as modern, embeddable views.\n\nI was responsible for translating approximately 15 sketch-based designs into fully functional Tableau dashboards, working with datasets prepared by the data engineering team for each use case. Each dashboard went through iterative review cycles: I submitted completed work, the client provided feedback, and I refined until function and visuals matched both the original sketches and the client's expectations.\n\nIn parallel, I conducted R&D on Tableau Extensions to evaluate how third-party visual components could accelerate future development, offer richer chart types, and reduce reliance on complex calculated fields — simplifying both knowledge transfer and long-term maintenance.",
     responsibilities: [
       "Rebuilt ~15 dashboards from sketch-based designs end-to-end in Tableau",
       "Worked with datasets prepared by the data engineering team per use case",
@@ -71,17 +71,16 @@ I also collaborated closely with teammates responsible for embedding the dashboa
     impact: "Full legacy dashboard suite migrated. Dashboards embedded and live in the client's internal portal.",
   },
   {
-    id: "nonprofit-unified-analytics",
+    id: "p3",
+    n: "03",
     title: "Unified Analytics for an Open Source Foundation",
-    industry: "Non-Profit & Open Source",
+    client: "Non-Profit & Open Source",
     role: "BI Consultant",
-    tools: ["Amazon QuickSight", "Snowflake"],
     summary: "Consolidated Salesforce, web analytics, and GitHub data into a single QuickSight environment with target-oriented KPI dashboards.",
-    description: `The client's reporting was fragmented across Salesforce, Google Analytics, and GitHub — with no unified view of funnel performance, web engagement, or community activity. The goal was to bring all three sources together in one BI environment built on Amazon QuickSight and Snowflake.
-
-Working from high-level requirements rather than detailed mockups, I designed and iterated on dashboard concepts, presented them in weekly reviews, and translated feedback into three production dashboards — one per data source. Each dashboard exposed target-oriented KPIs and growth indicators relevant to that source, giving the client's team a single place to monitor the full picture.
-
-I also created a detailed specification document for the data engineering team, outlining the required fields, grain, and source systems for each dashboard to ensure upstream Snowflake models delivered exactly what reporting needed. After implementation I performed data validation and iterative refinement to ensure metrics matched source-system expectations before handoff.`,
+    tools: ["Amazon QuickSight", "Snowflake"],
+    metric: { value: "3 → 1", label: "Sources unified" },
+    chart: "lines",
+    description: "The client's reporting was fragmented across Salesforce, Google Analytics, and GitHub — with no unified view of funnel performance, web engagement, or community activity. The goal was to bring all three sources together in one BI environment built on Amazon QuickSight and Snowflake.\n\nWorking from high-level requirements rather than detailed mockups, I designed and iterated on dashboard concepts, presented them in weekly reviews, and translated feedback into three production dashboards — one per data source. Each dashboard exposed target-oriented KPIs and growth indicators relevant to that source, giving the client's team a single place to monitor the full picture.\n\nI also created a detailed specification document for the data engineering team, outlining the required fields, grain, and source systems for each dashboard to ensure upstream Snowflake models delivered exactly what reporting needed. After implementation I performed data validation and iterative refinement to ensure metrics matched source-system expectations before handoff.",
     responsibilities: [
       "Designed and built three QuickSight dashboards on top of Snowflake data",
       "Gathered requirements and iterated through weekly client reviews",
@@ -92,17 +91,16 @@ I also created a detailed specification document for the data engineering team, 
     impact: "Three data sources unified in one BI environment. Client can monitor funnel, web, and community in a single view.",
   },
   {
-    id: "energy-reporting-apps",
+    id: "p4",
+    n: "04",
     title: "Revenue Reporting & Workflow Apps for an Energy Company",
-    industry: "Energy & Digital Assets",
+    client: "Energy & Digital Assets",
     role: "BI & Workflow Applications Developer",
-    tools: ["Amazon QuickSight", "Retool", "AWS"],
     summary: "Built revenue reporting dashboards and interactive Retool workflow apps to automate manual processes and improve data quality.",
-    description: `The client needed both reporting visibility and operational tooling — revenue dashboards in Amazon QuickSight and form-driven workflow applications in Retool to replace error-prone manual processes.
-
-In QuickSight I designed and implemented scheduled revenue reports, working from high-level requirements and mockups co-created with a product designer and the client. In Retool I built highly interactive, data-entry-oriented applications with many dynamic fields, conditional logic, and validation rules to minimize user error and ensure data quality in complex operational workflows.
-
-Requirements were gathered and refined through daily syncs and working sessions with the client's team. These sessions also served as live demos and training — walking the client through functionality, capturing feedback, and ensuring the team could use the tools confidently in daily operations. I also produced how-to guides and documentation to support ongoing adoption.`,
+    tools: ["Amazon QuickSight", "Retool", "AWS"],
+    metric: { value: "Auto.", label: "Manual workflows" },
+    chart: "areaUp",
+    description: "The client needed both reporting visibility and operational tooling — revenue dashboards in Amazon QuickSight and form-driven workflow applications in Retool to replace error-prone manual processes.\n\nIn QuickSight I designed and implemented scheduled revenue reports, working from high-level requirements and mockups co-created with a product designer and the client. In Retool I built highly interactive, data-entry-oriented applications with many dynamic fields, conditional logic, and validation rules to minimize user error and ensure data quality in complex operational workflows.\n\nRequirements were gathered and refined through daily syncs and working sessions with the client's team. These sessions also served as live demos and training — walking the client through functionality, capturing feedback, and ensuring the team could use the tools confidently in daily operations. I also produced how-to guides and documentation to support ongoing adoption.",
     responsibilities: [
       "Gathered and refined reporting and workflow requirements directly from the client",
       "Built QuickSight dashboards for fixed-schedule revenue reporting",
@@ -114,17 +112,16 @@ Requirements were gathered and refined through daily syncs and working sessions 
     impact: "Manual processes automated. Data quality improved through validation guardrails. Client team fully onboarded.",
   },
   {
-    id: "email-client-salesforce",
+    id: "p5",
+    n: "05",
     title: "Rationalized BI for an Email Client Product Team",
-    industry: "Software Product — Email Client",
+    client: "Software Product — Email Client",
     role: "BI Consultant",
-    tools: ["Amazon QuickSight", "Neon", "Salesforce"],
     summary: "Standardized a fragmented Salesforce reporting landscape by introducing QuickSight and consolidating many overlapping dashboards into flexible KPI views.",
-    description: `The client had accumulated many disconnected Salesforce reports — standalone charts, overlapping dashboards, and separate versions for each time grain (daily, weekly, monthly, quarterly, annual). The goal was to rationalize this landscape and build a unified, flexible BI structure in Amazon QuickSight.
-
-I helped evaluate BI tools and led the recommendation toward QuickSight based on the client's Salesforce setup and long-term needs. From there I designed KPI-oriented mockups largely from scratch, using existing Salesforce reports and continuous client feedback as input, and implemented a unified dashboard structure where users could switch between daily, weekly, monthly, quarterly, and yearly views — replacing the many near-duplicate dashboards with a small, flexible set.
-
-I also built out the full QuickSight project structure: folders, user groups, core dashboards, data sources connected to Neon, and scheduled refreshes — ensuring a smooth, company-wide rollout with up-to-date data and minimal manual work for the client's team.`,
+    tools: ["Amazon QuickSight", "Neon", "Salesforce"],
+    metric: { value: "Many → Few", label: "Rationalized" },
+    chart: "scatter",
+    description: "The client had accumulated many disconnected Salesforce reports — standalone charts, overlapping dashboards, and separate versions for each time grain (daily, weekly, monthly, quarterly, annual). The goal was to rationalize this landscape and build a unified, flexible BI structure in Amazon QuickSight.\n\nI helped evaluate BI tools and led the recommendation toward QuickSight based on the client's Salesforce setup and long-term needs. From there I designed KPI-oriented mockups largely from scratch, using existing Salesforce reports and continuous client feedback as input, and implemented a unified dashboard structure where users could switch between daily, weekly, monthly, quarterly, and yearly views — replacing the many near-duplicate dashboards with a small, flexible set.\n\nI also built out the full QuickSight project structure: folders, user groups, core dashboards, data sources connected to Neon, and scheduled refreshes — ensuring a smooth, company-wide rollout with up-to-date data and minimal manual work for the client's team.",
     responsibilities: [
       "Supported BI tool evaluation and recommended Amazon QuickSight",
       "Designed KPI-oriented mockups from scratch using Salesforce reports as input",
@@ -137,717 +134,938 @@ I also built out the full QuickSight project structure: folders, user groups, co
   },
 ];
 
-// ─── ABOUT DATA ─────────────────────────────────────────
-const ABOUT = {
-  name: "Data Analyst",
-  tagline: "Turning complex data into clear, reliable insights.",
-  bio: `I'm a Data Analyst with a Bachelor's in Informatics Engineering and Digital Business. I work end-to-end across the BI stack — from understanding business questions and defining KPIs, to designing dashboards, to building the governance models that keep data secure and trustworthy.
+const SKILL_GROUPS = [
+  { label: "BI & Visualization", items: ["Tableau", "Tableau Online", "Amazon QuickSight", "Power BI"] },
+  { label: "Data & Cloud", items: ["Snowflake", "Amazon Athena", "Amazon S3", "Neon", "Azure ETL"] },
+  { label: "Dev & Workflow", items: ["Retool", "SQL", "Python", "Pandas", "Jupyter", "dbt", "ETL pipelines"] },
+  { label: "Supporting", items: ["Excel-based BI", "Laravel / PHP", "Dashboard embedding", "Tableau Extensions"] },
+];
 
-I specialize in Tableau and Amazon QuickSight, and I've built interactive reporting and internal tools with Retool across industries including e-commerce, education, non-profit, energy, and cybersecurity.
+const SOFT_SKILLS = [
+  "Translate ambiguous requirements into concrete data models and dashboards through structured discovery.",
+  "Communicate complex data topics in plain language — adapting depth for technical and non-technical audiences.",
+  "Collaborate across product, data engineering, design, and business teams.",
+  "Maintain strong attention to detail in data quality, documentation, and governance.",
+  "Run working sessions, live demos, and walkthroughs that build stakeholder confidence.",
+  "Take ownership from discovery through implementation and adoption, not just delivery.",
+  "Coach users on new tools and dashboards to ensure adoption sticks.",
+  "Adapt quickly to new industries — delivering reliable insights regardless of domain.",
+];
 
-What I enjoy most is the combination of problem-solving and communication — translating messy requirements into clean data models and intuitive dashboards, and working closely with stakeholders so solutions fit real workflows. I care deeply about data quality, documentation, and governance so insights are reliable and repeatable, not just interesting.`,
-  interests: ["Data governance", "Analytics engineering", "Dashboard design", "Stakeholder collaboration", "Data quality"],
-  workStyle: [
-    "I gather requirements through working sessions and daily syncs, turning high-level ideas into concrete specs.",
-    "I validate metrics against source systems before any dashboard goes to production.",
-    "I write documentation and run demos so teams can actually use what I build.",
-    "I adapt quickly to different industries and domains — the data problems are often more similar than they appear.",
-  ],
-  links: [
-    { label: "LinkedIn", url: "https://www.linkedin.com/in/ottomontoya/", icon: "ti-brand-linkedin" },
-  ],
-  experience: [
-    { role: "Data Analyst", company: "STX Next", period: "Present" },
-    { role: "Jr. Data Analyst", company: "STX Next", period: "2024-2025" },
-    { role: "Jr. Data Analyst", company: "Inquire Business Consulting", period: "2023-2024" },
-    { role: "Software Engineer Intern", company: "Inquire Business Consulting", period: "Internship - 2023" },
-  ],
-};
+const EDUCATION = [
+  { title: "Data Science and Machine Learning", school: "MIT Schwarzman College of Computing", note: "Advanced modeling, experimentation, and decision-making with data." },
+  { title: "Python Data Structures", school: "Universidad Austral", note: "Foundations of Python data structures for analytics workflows." },
+  { title: "Bachelor's in Informatics Engineering & Digital Business", school: "Universidad Anáhuac Mayab", note: "Core computing, systems, and digital business foundations." },
+];
 
-const SKILLS = {
-  education: [
-    {
-      title: "Data Science and Machine Learning: Making Data-Driven Decisions",
-      institution: "MIT Schwarzman College of Computing",
-      period: "Recent",
-      desc: "Advanced modeling, experimentation, and decision-making with data.",
-    },
-    {
-      title: "Python Data Structure",
-      institution: "Universidad Austral",
-      period: "Prior",
-      desc: "Foundations of Python data structures for analytics workflows.",
-    },
-    {
-      title: "Bachelor's Degree in Informatics Engineering and Digital Business",
-      institution: "Universidad Anáhuac Mayab",
-      period: "Undergraduate",
-      desc: "Core computing, systems, and digital business foundations.",
-    },
-  ],
-  toolGroups: [
-    {
-      label: "BI & Visualization",
-      tools: ["Tableau", "Tableau Online", "Amazon QuickSight", "Power BI"],
-    },
-    {
-      label: "Data & Cloud",
-      tools: ["Snowflake", "Amazon Athena", "Amazon S3", "Neon", "Azure ETL"],
-    },
-    {
-      label: "Dev & Workflow",
-      tools: ["Retool", "SQL", "Python", "Pandas", "Jupyter", "dbt", "ETL pipelines"],
-    },
-    {
-      label: "Supporting",
-      tools: ["Excel-based BI", "Laravel / PHP", "Dashboard embedding", "Tableau Extensions"],
-    },
-  ],
-  soft: [
-    "Translate ambiguous requirements into concrete data models and dashboards through structured discovery.",
-    "Run working sessions, live demos, and walkthroughs that build stakeholder confidence.",
-    "Communicate complex data topics in plain language — adapting depth for technical and non-technical audiences.",
-    "Take ownership from discovery through implementation and adoption, not just delivery.",
-    "Collaborate across product, data engineering, design, and business teams.",
-    "Coach users on new tools and dashboards to ensure adoption sticks.",
-    "Maintain strong attention to detail in data quality, documentation, and governance.",
-    "Adapt quickly to new industries — delivering reliable insights regardless of domain.",
-  ],
-};
+const EXPERIENCE = [
+  { role: "Data Analyst", org: "STX Next", time: "Present", note: "Leading dashboard and governance work end-to-end across multiple client industries." },
+  { role: "Jr. Data Analyst", org: "STX Next", time: "2024 — 2025", note: "Shipped client BI work in Tableau and QuickSight; supported migrations and data modeling." },
+  { role: "Jr. Data Analyst", org: "Inquire Business Consulting", time: "2023 — 2024", note: "Reporting and analytics for cross-industry clients; early dashboard design work." },
+  { role: "Software Engineer Intern", org: "Inquire Business Consulting", time: "2023", note: "Internship across data + product systems; foundation in engineering practices." },
+];
 
-// ─── ANIMATION VARIANTS ─────────────────────────────────
-const fadeUp = {
-  hidden: { opacity: 0, y: 28 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
-};
-const stagger = { visible: { transition: { staggerChildren: 0.1 } } };
+const ABOUT_BODY = [
+  "I'm a Data Analyst with a Bachelor's in Informatics Engineering and Digital Business. I work end-to-end across the BI stack — from understanding business questions and defining KPIs, to designing dashboards, to building the governance models that keep data secure and trustworthy.",
+  "I specialize in Tableau and Amazon QuickSight, and I've built interactive reporting and internal tools with Retool across e-commerce, education, non-profit, energy, and cybersecurity.",
+  "What I enjoy most is translating messy requirements into clean data models and intuitive dashboards — and working closely with stakeholders so the result actually fits their workflow.",
+];
 
-function FadeIn({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-60px" });
+const HOW_I_WORK = [
+  "I gather requirements through working sessions and daily syncs — high-level ideas into concrete specs.",
+  "I validate every metric against source systems before a dashboard goes to production.",
+  "I write documentation and run demos so teams can actually use what I build.",
+  "I adapt quickly to new industries — the data problems are often more similar than they appear.",
+];
+
+const ABOUT_TAGS = ["Data governance", "Analytics engineering", "Dashboard design", "Stakeholder collaboration", "Data quality"];
+
+// ─── CHARTS ──────────────────────────────────────────────
+
+function Spark({ data = [4,6,5,8,7,10,9,12,11,14,13,16], color = "currentColor", w = 240, h = 60, fill = false }: {
+  data?: number[]; color?: string; w?: number; h?: number; fill?: boolean;
+}) {
+  const max = Math.max(...data), min = Math.min(...data);
+  const xs = data.map((_, i) => (i / (data.length - 1)) * w);
+  const ys = data.map(v => h - ((v - min) / (max - min || 1)) * (h - 4) - 2);
+  const path = xs.map((x, i) => `${i ? "L" : "M"}${x.toFixed(1)},${ys[i].toFixed(1)}`).join(" ");
+  const area = `${path} L${w},${h} L0,${h} Z`;
   return (
-    <motion.div
-      ref={ref}
-      initial="hidden"
-      animate={inView ? "visible" : "hidden"}
-      variants={fadeUp}
-      transition={{ delay }}
-      className={className}
-    >
-      {children}
-    </motion.div>
+    <svg viewBox={`0 0 ${w} ${h}`} width="100%" preserveAspectRatio="none" style={{ overflow: "visible" }}>
+      {fill && <path d={area} fill={color} fillOpacity={0.15} />}
+      <path d={path} stroke={color} strokeWidth="1.5" fill="none" strokeLinejoin="round" strokeLinecap="round" />
+      {xs.map((x, i) => i === xs.length - 1 && <circle key={i} cx={x} cy={ys[i]} r="3" fill={color} />)}
+    </svg>
   );
 }
 
-// ─── STYLES ─────────────────────────────────────────────
-const css = `
-  @font-face {
-    font-family: 'Peace Sans';
-    src: url('/fonts/PeaceSans-Webfont.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-  }
-  @font-face {
-    font-family: 'Open Sauce Sans';
-    src: url('/fonts/OpenSauceSans-Regular.ttf') format('truetype');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-  }
+function Bars({ data = [3,5,4,7,6,9,8,5,11,9,12,14], color = "currentColor", w = 240, h = 80 }: {
+  data?: number[]; color?: string; w?: number; h?: number;
+}) {
+  const max = Math.max(...data);
+  const bw = w / data.length;
+  return (
+    <svg viewBox={`0 0 ${w} ${h}`} width="100%" preserveAspectRatio="none">
+      {data.map((v, i) => {
+        const bh = (v / max) * (h - 4);
+        return <rect key={i} x={i * bw + 1.5} y={h - bh} width={bw - 3} height={bh} fill={color} opacity={0.4 + (i / data.length) * 0.6} />;
+      })}
+    </svg>
+  );
+}
 
-  :root {
-    --burgundy: #8B1E3F;
-    --cherry: #C7476A;
-    --carbon: #262620;
-    --palm:   #899878;
-    --beige:  #e4e6c3;
-    --bg:     #e4e6c3;
-    --fg:     #262620;
-    --muted:  #5a5c4e;
-    --accent: #899878;
-    --card:   #d8dab0;
-    --border: rgba(38,38,32,0.12);
-    --nav-pill: #c6c8a4;
-    --mobile-pill-bg: #2e2e28;
-  }
-  [data-theme="dark"] {
-    --burgundy: var(--cherry);
-    --bg:     #262620;
-    --fg:     #e4e6c3;
-    --muted:  #9a9c8a;
-    --accent: #899878;
-    --card:   #2e2e28;
-    --nav-pill: #3a3a34;
-    --mobile-pill-bg: #4a4a42;
-    --border: rgba(228,230,195,0.1);
-  }
+function ScatterChart({ color = "currentColor", w = 240, h = 120, n = 28 }: {
+  color?: string; w?: number; h?: number; n?: number;
+}) {
+  const pts = Array.from({ length: n }, (_, i) => {
+    const a = Math.sin(i * 13.37) * 0.5 + 0.5;
+    const b = Math.cos(i * 7.91) * 0.5 + 0.5;
+    return { x: a * (w - 8) + 4, y: b * (h - 8) + 4, r: 1.5 + (Math.sin(i * 2.1) * 0.5 + 0.5) * 2.5 };
+  });
+  return (
+    <svg viewBox={`0 0 ${w} ${h}`} width="100%" preserveAspectRatio="none">
+      {pts.map((p, i) => <circle key={i} cx={p.x} cy={p.y} r={p.r} fill={color} opacity={0.4 + (i % 4) * 0.15} />)}
+    </svg>
+  );
+}
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+function LinesChart({ color = "currentColor", w = 240, h = 100 }: {
+  color?: string; w?: number; h?: number;
+}) {
+  const series = [
+    [3,4,5,4,6,5,7,6,8,7,9,10],
+    [2,3,3,5,4,6,7,7,9,9,11,12],
+    [5,4,6,5,7,8,7,9,8,10,11,13],
+  ];
+  const max = 14, min = 2;
+  return (
+    <svg viewBox={`0 0 ${w} ${h}`} width="100%" preserveAspectRatio="none" style={{ overflow: "visible" }}>
+      {series.map((data, si) => {
+        const xs = data.map((_, i) => (i / (data.length - 1)) * w);
+        const ys = data.map(v => h - ((v - min) / (max - min)) * (h - 6) - 3);
+        const path = xs.map((x, i) => `${i ? "L" : "M"}${x.toFixed(1)},${ys[i].toFixed(1)}`).join(" ");
+        return <path key={si} d={path} stroke={color} strokeWidth="1.5" fill="none" opacity={1 - si * 0.3} strokeDasharray={si === 1 ? "3 3" : "0"} />;
+      })}
+    </svg>
+  );
+}
 
-  body, #root {
-    background: var(--bg);
-    color: var(--fg);
-    font-family: 'Open Sauce Sans', system-ui, sans-serif;
-    font-size: 16px;
-    line-height: 1.7;
-    transition: background 0.3s, color 0.3s;
-    min-height: 100vh;
+function ProjectChart({ kind, color }: { kind: ChartKind; color: string }) {
+  switch (kind) {
+    case "areaDown": return <Spark data={[16,15,14,12,11,9,8,7,6,5,4,3]} color={color} fill />;
+    case "areaUp":   return <Spark data={[3,4,4,6,5,8,7,10,9,12,13,15]} color={color} fill />;
+    case "bars":     return <Bars color={color} />;
+    case "lines":    return <LinesChart color={color} />;
+    case "scatter":  return <ScatterChart color={color} />;
+    default:         return <Spark color={color} fill />;
   }
+}
 
-  h1,h2,h3,h4 {
-    font-family: 'Peace Sans', system-ui, sans-serif;
-    font-weight: 600;
-    line-height: 1.2;
-    letter-spacing: -0.02em;
-  }
+// ─── NAV ─────────────────────────────────────────────────
 
-  a { color: var(--accent); text-decoration: none; }
-  a:hover { text-decoration: underline; }
+const NAV_ITEMS = [
+  { id: "home", label: "Home" },
+  { id: "about", label: "About" },
+  { id: "work", label: "Work" },
+  { id: "skills", label: "Skills" },
+  { id: "experience", label: "Experience" },
+];
 
-  .nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: grid; grid-template-columns: 1fr auto 1fr;
-    align-items: center;
-    padding: 0 2.5rem;
-    height: 60px;
-    background: var(--bg);
-    border-bottom: 1px solid var(--border);
-    transition: background 0.3s;
-  }
-  .nav-logo { font-weight: 600; font-size: 15px; color: var(--fg); cursor: pointer; letter-spacing: 0.03em; }
-  .nav-links { display: flex; gap: 0.5rem; align-items: center; }
-  .nav-end { display: flex; justify-content: flex-end; align-items: center; }
-  .nav-link {
-    font-size: 14px; color: var(--muted); background: none; border: none;
-    cursor: pointer; font-family: inherit; padding: 0.3rem 0.75rem;
-    border-radius: 9999px; transition: color 0.2s; position: relative;
-  }
-  .nav-link:hover { color: var(--fg); }
-  .nav-link.active { color: var(--fg); }
-  .nav-pill-bg { position: absolute; inset: 0; border-radius: 9999px; background: var(--nav-pill); }
-  .nav-link-label { position: relative; }
-  .theme-btn {
-    background: none; border: none; padding: 0; cursor: pointer;
-    color: var(--burgundy); display: flex; align-items: center; justify-content: center;
-    transition: color 0.2s;
-  }
-  .theme-btn svg { transition: fill 0.2s, stroke 0.2s; fill: none; }
-  .theme-btn:hover { color: var(--burgundy); }
-  .theme-btn:hover svg { fill: currentColor; }
+function useActiveSection() {
+  const [active, setActive] = useState("home");
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.filter(e => e.isIntersecting);
+        if (!visible.length) return;
+        visible.sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        setActive(visible[0].target.id);
+      },
+      { threshold: [0.25, 0.5, 0.75], rootMargin: "-30% 0px -30% 0px" }
+    );
+    NAV_ITEMS.forEach(it => {
+      const el = document.getElementById(it.id);
+      if (el) obs.observe(el);
+    });
+    return () => obs.disconnect();
+  }, []);
+  return active;
+}
 
-  .page { padding-top: 60px; min-height: 100vh; }
-  .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
+function scrollTo(id: string) {
+  document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+}
 
-  .hero {
-    min-height: calc(100vh - 60px);
-    display: flex; flex-direction: column; justify-content: center;
-    padding: 5rem 0 3rem;
-  }
-  .hero-eyebrow {
-    font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--accent); margin-bottom: 1.5rem; font-weight: 600;
-  }
-  .hero-title { font-size: clamp(2.8rem, 6vw, 5rem); font-weight: 600; margin-bottom: 1.5rem; }
-  .hero-sub { font-size: 1.15rem; color: var(--muted); max-width: 540px; line-height: 1.8; margin-bottom: 2.5rem; }
-  .cta-row { display: flex; gap: 1rem; flex-wrap: wrap; }
-  .btn {
-    display: inline-flex; align-items: center; gap: 6px;
-    padding: 10px 22px; border-radius: 4px; font-size: 14px; font-weight: 600;
-    cursor: pointer; font-family: inherit; transition: all 0.2s; border: none;
-  }
-  .btn-primary { background: var(--accent); color: var(--beige); }
-  .btn-primary:hover { opacity: 0.88; }
-  .btn-outline {
-    background: none; border: 1.5px solid var(--border);
-    color: var(--fg);
-  }
-  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+const SunIcon = ({ size = 16 }: { size?: number }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="4" />
+    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+  </svg>
+);
 
-  .section { padding: 5rem 0; }
-  .section-label {
-    font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
-    color: var(--accent); font-weight: 600; margin-bottom: 2.5rem;
-    display: flex; align-items: center; gap: 10px;
-  }
-  .section-label::after {
-    content: ''; flex: 1; height: 1px; background: var(--border);
-  }
-  .section-title { font-size: clamp(1.6rem, 3vw, 2.2rem); margin-bottom: 1.5rem; }
+const MoonIcon = ({ size = 16 }: { size?: number }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+  </svg>
+);
 
-  .teaser-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5px; margin-top: 1rem; }
-  .teaser-card {
-    background: var(--card); padding: 2rem;
-    cursor: pointer; transition: background 0.2s;
-    border-radius: 2px;
-  }
-  .teaser-card:hover { background: var(--accent); }
-  .teaser-card:hover * { color: var(--beige) !important; }
-  .teaser-card h3 { font-size: 1.05rem; margin-bottom: 0.5rem; }
-  .teaser-card p { font-size: 14px; color: var(--muted); line-height: 1.6; }
-  .teaser-arrow { font-size: 1.4rem; margin-top: 1.5rem; color: var(--accent); }
-
-  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
-  .bio-text { font-size: 1rem; color: var(--muted); line-height: 1.85; white-space: pre-line; }
-  .tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 1.5rem; }
-  .tag {
-    padding: 4px 12px; border-radius: 2px;
-    background: var(--card); font-size: 13px; color: var(--muted);
-    border: 1px solid var(--border);
-  }
-  .work-style-list { list-style: none; }
-  .work-style-list li {
-    padding: 1rem 0; border-bottom: 1px solid var(--border);
-    font-size: 15px; color: var(--muted); line-height: 1.7;
-  }
-  .work-style-list li:first-child { border-top: 1px solid var(--border); }
-  .exp-list { margin-top: 1.5rem; }
-  .exp-item { padding: 0.8rem 0; border-bottom: 1px solid var(--border); }
-  .exp-role { font-weight: 600; font-size: 15px; }
-  .exp-meta { font-size: 13px; color: var(--muted); }
-
-  .edu-list { display: flex; flex-direction: column; gap: 1.5px; }
-  .edu-card {
-    background: var(--card); padding: 1.5rem 2rem;
-    border-radius: 2px;
-  }
-  .edu-title { font-weight: 600; font-size: 15px; margin-bottom: 4px; }
-  .edu-inst { font-size: 13px; color: var(--accent); margin-bottom: 6px; }
-  .edu-desc { font-size: 14px; color: var(--muted); }
-
-  .tool-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5px; align-items: stretch; }
-  .tool-grid > * { display: flex; }
-  .tool-group { background: var(--card); padding: 1.5rem; border-radius: 2px; width: 100%; }
-  .tool-group-label { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 1rem; }
-  .tool-items { display: flex; flex-direction: column; gap: 6px; }
-  .tool-item { font-size: 14px; color: var(--muted); }
-
-  .soft-list { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; align-items: stretch; }
-  .soft-list > * { display: flex; }
-  .soft-item {
-    background: var(--card); padding: 1.25rem 1.5rem;
-    font-size: 14px; color: var(--muted); line-height: 1.65;
-    border-radius: 2px; width: 100%;
-  }
-  .soft-item::before { content: '—'; color: var(--accent); margin-right: 8px; font-weight: 600; }
-
-  .project-list { display: flex; flex-direction: column; gap: 1.5px; }
-  .project-row {
-    display: grid; grid-template-columns: 1fr auto;
-    align-items: center; gap: 2rem;
-    background: var(--card); padding: 1.75rem 2rem;
-    cursor: pointer; transition: background 0.2s; border-radius: 2px;
-  }
-  .project-row:hover { background: var(--accent); }
-  .project-row:hover * { color: var(--beige) !important; }
-  .project-row-title { font-size: 1.05rem; font-weight: 600; margin-bottom: 4px; }
-  .project-row-meta { font-size: 13px; color: var(--muted); }
-  .project-row-tools { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
-  .pill {
-    font-size: 12px; padding: 2px 10px; border-radius: 10px;
-    background: var(--border); color: var(--muted);
-    border: 1px solid var(--border);
-  }
-  .project-row-arrow { font-size: 1.4rem; color: var(--accent); flex-shrink: 0; }
-
-  .project-detail { max-width: 700px; margin: 0 auto; padding: 3rem 2rem 5rem; }
-  .detail-back {
-    background: none; border: none; cursor: pointer; font-family: inherit;
-    font-size: 14px; color: var(--muted); display: flex; align-items: center; gap: 6px;
-    padding: 0; margin-bottom: 3rem; transition: color 0.2s;
-  }
-  .detail-back:hover { color: var(--accent); }
-  .detail-eyebrow { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 1rem; }
-  .detail-title { font-size: clamp(1.8rem, 4vw, 2.8rem); margin-bottom: 2rem; }
-  .detail-meta { display: flex; gap: 2rem; flex-wrap: wrap; padding: 1.5rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin-bottom: 2.5rem; }
-  .detail-meta-item label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); display: block; font-weight: 600; margin-bottom: 4px; }
-  .detail-meta-item span { font-size: 14px; color: var(--fg); }
-  .detail-body { font-size: 15px; color: var(--muted); line-height: 1.85; white-space: pre-line; margin-bottom: 2.5rem; }
-  .detail-section-title { font-size: 1rem; font-weight: 600; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.08em; font-size: 12px; color: var(--accent); }
-  .resp-list { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 2.5rem; }
-  .resp-list li { font-size: 15px; color: var(--muted); padding-left: 1.2rem; position: relative; line-height: 1.65; }
-  .resp-list li::before { content: '—'; position: absolute; left: 0; color: var(--accent); }
-  .impact-box { background: var(--card); padding: 1.5rem 2rem; border-radius: 2px; border-left: 3px solid var(--accent); }
-  .impact-box p { font-size: 15px; color: var(--muted); }
-
-  .contact-section { text-align: center; padding: 5rem 0 6rem; }
-  .contact-title { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 1rem; }
-  .contact-sub { color: var(--muted); margin-bottom: 2.5rem; font-size: 1.05rem; }
-
-  .mobile-nav { display: none; }
-
-  @media (max-width: 700px) {
-    .nav { padding: 0 1.2rem; border-bottom: none; }
-    .nav-links { display: none; }
-    .nav-end { grid-column: 3; }
-    .container { padding: 0 1.2rem; }
-    .hero { padding: 3rem 0 2rem; }
-    .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-    .soft-list { grid-template-columns: 1fr; }
-    .project-row { grid-template-columns: 1fr; }
-    .project-row-arrow { display: none; }
-    .page { padding-bottom: 96px; }
-
-    .mobile-nav {
-      display: flex;
-      position: fixed;
-      bottom: 28px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 200;
-      background: var(--mobile-pill-bg);
-      border-radius: 9999px;
-      padding: 5px;
-      gap: 2px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-      white-space: nowrap;
-    }
-    .mobile-nav-link {
-      position: relative;
-      font-size: 14px;
-      color: rgba(228,230,195,0.5);
-      padding: 9px 20px;
-      border-radius: 9999px;
-      border: none;
-      background: none;
-      cursor: pointer;
-      font-family: inherit;
-      transition: color 0.2s;
-    }
-    .mobile-nav-link.active { color: var(--beige); }
-    .mobile-nav-pill-bg {
-      position: absolute;
-      inset: 0;
-      border-radius: 9999px;
-      background: var(--accent);
-    }
-    .mobile-nav-link-label { position: relative; }
-  }
-`;
-
-// ─── APP ─────────────────────────────────────────────────
-export default function App() {
-  const [theme, setTheme] = useState("light");
-  const [page, setPage] = useState("home");
-  const [activeProject, setActiveProject] = useState<Project | null>(null);
+function Nav({ dark, onToggleDark }: { dark: boolean; onToggleDark: () => void }) {
+  const active = useActiveSection();
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
-  }, [theme]);
-
-  useEffect(() => { window.scrollTo(0, 0); }, [page, activeProject]);
-
-  const nav = (p: string) => { setPage(p); setActiveProject(null); };
+    const on = () => setScrolled(window.scrollY > 24);
+    on();
+    window.addEventListener("scroll", on, { passive: true });
+    return () => window.removeEventListener("scroll", on);
+  }, []);
 
   return (
     <>
-      <style>{css}</style>
-      <nav className="nav">
-        <div className="nav-logo" onClick={() => nav("home")}>Otto Montoya</div>
-        <div className="nav-links">
-          {["home","about","skills","projects"].map(p => (
-            <button key={p} className={`nav-link${page===p?" active":""}`} onClick={() => nav(p)}>
-              {page === p && (
-                <motion.span
-                  className="nav-pill-bg"
-                  layoutId="nav-pill"
-                  transition={{ type: "spring", stiffness: 380, damping: 32 }}
-                />
-              )}
-              <span className="nav-link-label">{p.charAt(0).toUpperCase()+p.slice(1)}</span>
+      <header className={`nav-wrap${scrolled ? " scrolled" : ""}`}>
+        <div className="nav-pill">
+          <button className="nav-brand" onClick={() => scrollTo("home")}>Otto Montoya</button>
+          <nav className="nav-center">
+            {NAV_ITEMS.map(it => (
+              <button key={it.id} className={`nav-link${active === it.id ? " active" : ""}`} onClick={() => scrollTo(it.id)}>
+                {it.label}
+              </button>
+            ))}
+          </nav>
+          <button className="nav-mode" onClick={onToggleDark} aria-label="Toggle dark mode">
+            {dark ? <SunIcon /> : <MoonIcon />}
+          </button>
+        </div>
+      </header>
+
+      <div className="mnav-wrap">
+        <div className="mnav-pill">
+          {NAV_ITEMS.map(it => (
+            <button key={it.id} className={`mnav-link${active === it.id ? " active" : ""}`} onClick={() => scrollTo(it.id)}>
+              {it.label}
             </button>
           ))}
-        </div>
-        <div className="nav-end">
-          <button className="theme-btn" onClick={() => setTheme(t => t==="light"?"dark":"light")} aria-label="Toggle theme">
-            {theme === "light"
-              ? <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-              : <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-            }
+          <span className="mnav-sep" />
+          <button className="mnav-link mnav-mode" onClick={onToggleDark} aria-label="Toggle dark mode">
+            {dark ? <SunIcon size={14} /> : <MoonIcon size={14} />}
           </button>
         </div>
-      </nav>
-
-      <div className="page">
-        <AnimatePresence mode="wait">
-          {page === "home" && <HomePage key="home" nav={nav} />}
-          {page === "about" && <AboutPage key="about" nav={nav} />}
-          {page === "skills" && <SkillsPage key="skills" />}
-          {page === "projects" && !activeProject && <ProjectsPage key="projects" onSelect={setActiveProject} />}
-          {page === "projects" && activeProject && <ProjectDetail key={activeProject.id} project={activeProject} onBack={() => setActiveProject(null)} />}
-        </AnimatePresence>
-      </div>
-
-      <div className="mobile-nav">
-        {["home","about","skills","projects"].map(p => (
-          <button key={p} className={`mobile-nav-link${page===p?" active":""}`} onClick={() => nav(p)}>
-            {page === p && (
-              <motion.span
-                className="mobile-nav-pill-bg"
-                layoutId="mobile-nav-pill"
-                transition={{ type: "spring", stiffness: 380, damping: 32 }}
-              />
-            )}
-            <span className="mobile-nav-link-label">{p.charAt(0).toUpperCase()+p.slice(1)}</span>
-          </button>
-        ))}
       </div>
     </>
   );
 }
 
-// ─── HOME PAGE ───────────────────────────────────────────
-function HomePage({ nav }: { nav: (p: string) => void }) {
+// ─── DIVIDERS ────────────────────────────────────────────
+
+function Divider({ from, to, variant = "wave" }: { from: string; to: string; variant?: "wave" | "curve" | "diagonal" }) {
+  if (variant === "diagonal") {
+    return (
+      <svg className="sec-divider" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true">
+        <polygon points="0,0 1440,80 1440,0" style={{ fill: from }} />
+        <polygon points="0,0 1440,80 0,80" style={{ fill: to }} />
+      </svg>
+    );
+  }
+  if (variant === "curve") {
+    return (
+      <svg className="sec-divider" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
+        <rect x="0" y="0" width="1440" height="120" style={{ fill: from }} />
+        <path d="M0,120 C 360,40 1080,40 1440,120 L1440,120 L0,120 Z" style={{ fill: to }} />
+      </svg>
+    );
+  }
   return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }}>
-      <div className="container">
-        <div className="hero">
-          <motion.div initial="hidden" animate="visible" variants={stagger}>
-            <motion.p variants={fadeUp} className="hero-eyebrow">Data Analyst · BI Specialist</motion.p>
-            <motion.h1 variants={fadeUp} className="hero-title">
-              Clear insights<br />from complex data.
-            </motion.h1>
-            <motion.p variants={fadeUp} className="hero-sub">
-              {ABOUT.tagline} I work end-to-end across the BI stack — from KPI definition to dashboard delivery and data governance.
-            </motion.p>
-            <motion.div variants={fadeUp} className="cta-row">
-              <button className="btn btn-primary" onClick={() => nav("projects")}>View projects →</button>
-              <button className="btn btn-outline" onClick={() => nav("about")}>About me</button>
-            </motion.div>
-          </motion.div>
+    <svg className="sec-divider" viewBox="0 0 1440 140" preserveAspectRatio="none" aria-hidden="true">
+      <rect x="0" y="0" width="1440" height="140" style={{ fill: from }} />
+      <path d="M0,80 C 240,140 480,30 720,80 C 960,130 1200,30 1440,80 L1440,140 L0,140 Z" style={{ fill: to }} />
+    </svg>
+  );
+}
+
+// ─── UI PRIMITIVES ───────────────────────────────────────
+
+function Eyebrow({ children, dot }: { children: React.ReactNode; dot?: boolean }) {
+  return (
+    <div className="eyebrow">
+      {dot && <span className="eyebrow-dot" />}
+      <span>{children}</span>
+    </div>
+  );
+}
+
+function Pill({ children }: { children: React.ReactNode }) {
+  return <span className="a-pill">{children}</span>;
+}
+
+// ─── SECTIONS ────────────────────────────────────────────
+
+function HeroSection() {
+  return (
+    <section id="home" className="room room-hero">
+      <div className="shell">
+        <Eyebrow dot>Data Analyst · BI Specialist</Eyebrow>
+        <h1 className="h1">
+          Clear insights<br />from <em>complex</em> data.
+        </h1>
+        <p className="lead">
+          I work end-to-end across the BI stack — from understanding the question, to defining KPIs, to shipping dashboards teams actually use.
+        </p>
+        <div className="cta-row">
+          <button className="cta cta-primary" onClick={() => scrollTo("work")}>View work <span className="arr">→</span></button>
+          <button className="cta cta-ghost" onClick={() => scrollTo("about")}>About me</button>
         </div>
-
-        <section className="section">
-          <FadeIn><div className="section-label">What I do</div></FadeIn>
-          <div className="teaser-grid">
-            {[
-              { title: "About", text: "Background, interests, and how I work.", page: "about" },
-              { title: "Skills", text: "BI tools, data platforms, and soft skills.", page: "skills" },
-              { title: "Projects", text: "Five projects across five industries.", page: "projects" },
-            ].map((t, i) => (
-              <FadeIn key={t.title} delay={i * 0.08}>
-                <div className="teaser-card" onClick={() => nav(t.page)}>
-                  <h3>{t.title}</h3>
-                  <p>{t.text}</p>
-                  <div className="teaser-arrow">→</div>
-                </div>
-              </FadeIn>
-            ))}
-          </div>
-        </section>
-
-        <section className="section">
-          <FadeIn><div className="section-label">Selected projects</div></FadeIn>
-          <div className="project-list">
-            {PROJECTS.slice(0, 3).map((p, i) => (
-              <FadeIn key={p.id} delay={i * 0.06}>
-                <div className="project-row" onClick={() => { nav("projects"); }}>
-                  <div>
-                    <div className="project-row-title">{p.title}</div>
-                    <div className="project-row-meta">{p.industry} · {p.role}</div>
-                    <div className="project-row-tools">
-                      {p.tools.map(t => <span key={t} className="pill">{t}</span>)}
-                    </div>
-                  </div>
-                  <div className="project-row-arrow">→</div>
-                </div>
-              </FadeIn>
-            ))}
-          </div>
-        </section>
-
-        <section className="contact-section">
-          <FadeIn>
-            <div className="section-label">Get in touch</div>
-            <h2 className="contact-title">Let's work together.</h2>
-            <p className="contact-sub">Open to new projects and collaborations.</p>
-            <a href="mailto:ottomontoya.work@icloud.com" className="btn btn-primary">Say hello →</a>
-          </FadeIn>
-        </section>
-      </div>
-    </motion.div>
-  );
-}
-
-// ─── ABOUT PAGE ──────────────────────────────────────────
-function AboutPage({ nav }: { nav: (p: string) => void }) {
-  return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }}>
-      <div className="container" style={{ paddingTop: "4rem", paddingBottom: "5rem" }}>
-        <FadeIn><div className="section-label">About</div></FadeIn>
-        <FadeIn><h1 style={{ fontSize: "clamp(2rem,4vw,3rem)", marginBottom: "3rem" }}>I turn messy data into reliable insights.</h1></FadeIn>
-
-        <div className="about-grid">
-          <div>
-            <FadeIn>
-              <p className="bio-text">{ABOUT.bio}</p>
-              <div className="tag-row">
-                {ABOUT.interests.map(i => <span key={i} className="tag">{i}</span>)}
-              </div>
-            </FadeIn>
-
-            <FadeIn delay={0.1}>
-              <div style={{ marginTop: "3rem" }}>
-                <div className="section-label" style={{ marginBottom: "1rem" }}>Experience</div>
-                <div className="exp-list">
-                  {ABOUT.experience.map(e => (
-                    <div key={e.role+e.company} className="exp-item">
-                      <div className="exp-role">{e.role}</div>
-                      <div className="exp-meta">{e.company} · {e.period}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </FadeIn>
-          </div>
-
-          <div>
-            <FadeIn delay={0.12}>
-              <div className="section-label" style={{ marginBottom: "1rem" }}>How I work</div>
-              <ul className="work-style-list">
-                {ABOUT.workStyle.map((s, i) => <li key={i}>{s}</li>)}
-              </ul>
-            </FadeIn>
-
-            <FadeIn delay={0.18}>
-              <div style={{ marginTop: "2.5rem" }}>
-                <div className="section-label" style={{ marginBottom: "1rem" }}>Find me</div>
-                {ABOUT.links.map(l => (
-                  <a key={l.label} href={l.url} className="btn btn-outline" style={{ display: "inline-flex", marginRight: "10px" }}>{l.label} →</a>
-                ))}
-              </div>
-            </FadeIn>
-          </div>
-        </div>
-      </div>
-    </motion.div>
-  );
-}
-
-// ─── SKILLS PAGE ─────────────────────────────────────────
-function SkillsPage() {
-  const softListRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const equalize = () => {
-      if (!softListRef.current) return;
-      const items = softListRef.current.querySelectorAll<HTMLElement>(".soft-item");
-      items.forEach(el => { el.style.height = "auto"; });
-      let max = 0;
-      items.forEach(el => { max = Math.max(max, el.offsetHeight); });
-      items.forEach(el => { el.style.height = `${max}px`; });
-    };
-    document.fonts.ready.then(equalize);
-    window.addEventListener("resize", equalize);
-    return () => window.removeEventListener("resize", equalize);
-  }, []);
-
-  return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }}>
-      <div className="container" style={{ paddingTop: "4rem", paddingBottom: "5rem" }}>
-        <FadeIn><div className="section-label">Skills</div></FadeIn>
-        <FadeIn><h1 style={{ fontSize: "clamp(2rem,4vw,3rem)", marginBottom: "3rem" }}>Tools, knowledge, and ways of working.</h1></FadeIn>
-
-        <section className="section" style={{ paddingTop: "0" }}>
-          <FadeIn><div className="section-label">Education & certifications</div></FadeIn>
-          <div className="edu-list">
-            {SKILLS.education.map((e, i) => (
-              <FadeIn key={e.title} delay={i * 0.07}>
-                <div className="edu-card">
-                  <div className="edu-title">{e.title}</div>
-                  <div className="edu-inst">{e.institution}</div>
-                  <div className="edu-desc">{e.desc}</div>
-                </div>
-              </FadeIn>
-            ))}
-          </div>
-        </section>
-
-        <section className="section" style={{ paddingTop: "0" }}>
-          <FadeIn><div className="section-label">Tool skills</div></FadeIn>
-          <div className="tool-grid">
-            {SKILLS.toolGroups.map((g, i) => (
-              <FadeIn key={g.label} delay={i * 0.07}>
-                <div className="tool-group">
-                  <div className="tool-group-label">{g.label}</div>
-                  <div className="tool-items">
-                    {g.tools.map(t => <span key={t} className="tool-item">— {t}</span>)}
-                  </div>
-                </div>
-              </FadeIn>
-            ))}
-          </div>
-        </section>
-
-        <section className="section" style={{ paddingTop: "0" }}>
-          <FadeIn><div className="section-label">Soft skills</div></FadeIn>
-          <div className="soft-list" ref={softListRef}>
-            {SKILLS.soft.map((s, i) => (
-              <FadeIn key={i} delay={i * 0.05}>
-                <div className="soft-item">{s}</div>
-              </FadeIn>
-            ))}
-          </div>
-        </section>
-      </div>
-    </motion.div>
-  );
-}
-
-// ─── PROJECTS PAGE ───────────────────────────────────────
-function ProjectsPage({ onSelect }: { onSelect: (p: Project) => void }) {
-  return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }}>
-      <div className="container" style={{ paddingTop: "4rem", paddingBottom: "5rem" }}>
-        <FadeIn><div className="section-label">Projects</div></FadeIn>
-        <FadeIn><h1 style={{ fontSize: "clamp(2rem,4vw,3rem)", marginBottom: "3rem" }}>Five projects across five industries.</h1></FadeIn>
-        <div className="project-list">
-          {PROJECTS.map((p, i) => (
-            <FadeIn key={p.id} delay={i * 0.07}>
-              <div className="project-row" onClick={() => onSelect(p)}>
-                <div>
-                  <div className="project-row-title">{p.title}</div>
-                  <div className="project-row-meta">{p.industry} · {p.role}</div>
-                  <div style={{ marginTop: "6px", fontSize: "14px", color: "var(--muted)", lineHeight: "1.6" }}>{p.summary}</div>
-                  <div className="project-row-tools">
-                    {p.tools.map(t => <span key={t} className="pill">{t}</span>)}
-                  </div>
-                </div>
-                <div className="project-row-arrow">→</div>
-              </div>
-            </FadeIn>
+        <div className="hero-strip">
+          {STATS.map((s, i) => (
+            <div className="hero-stat" key={i}>
+              <div className="stat-val">{s.value}</div>
+              <div className="stat-label">{s.label}</div>
+              <div className="stat-suffix">{s.suffix}</div>
+            </div>
           ))}
         </div>
       </div>
-    </motion.div>
+    </section>
   );
 }
 
-// ─── PROJECT DETAIL ──────────────────────────────────────
-function ProjectDetail({ project: p, onBack }: { project: Project; onBack: () => void }) {
+function AboutSection() {
   return (
-    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.45, ease: [0.22,1,0.36,1] }}>
-      <div className="project-detail">
-        <button className="detail-back" onClick={onBack}>← All projects</button>
-        <div className="detail-eyebrow">{p.industry}</div>
-        <h1 className="detail-title">{p.title}</h1>
-        <div className="detail-meta">
-          <div className="detail-meta-item"><label>Role</label><span>{p.role}</span></div>
-          <div className="detail-meta-item">
-            <label>Tools</label>
-            <div style={{ display: "flex", gap: "6px", flexWrap: "wrap", marginTop: "4px" }}>
-              {p.tools.map(t => <span key={t} className="pill">{t}</span>)}
+    <section id="about" className="room room-about">
+      <div className="shell">
+        <Eyebrow dot>About</Eyebrow>
+        <h2 className="h2">I turn messy data <em>into reliable insights.</em></h2>
+        <div className="about-grid">
+          <div className="about-body">
+            {ABOUT_BODY.map((p, i) => <p key={i}>{p}</p>)}
+            <div className="tags">
+              {ABOUT_TAGS.map(t => <Pill key={t}>{t}</Pill>)}
+            </div>
+          </div>
+          <div className="about-side">
+            <div className="side-h">How I work</div>
+            <ul className="how">
+              {HOW_I_WORK.map((h, i) => (
+                <li key={i}>
+                  <span className="how-n mono">0{i + 1}</span>
+                  <span>{h}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function WorkSection({ onOpen }: { onOpen: (id: string) => void }) {
+  return (
+    <section id="work" className="room room-work">
+      <div className="shell">
+        <Eyebrow dot>Selected work</Eyebrow>
+        <div className="work-head">
+          <h2 className="h2 h2-work">Five projects, <em>five industries.</em></h2>
+          <p className="lead lead-work">From access governance to legacy migrations — each one ended with a dashboard people actually used.</p>
+        </div>
+        <ul className="projects">
+          {PROJECTS.map((p) => (
+            <li key={p.id} className="project" onClick={() => onOpen(p.id)}>
+              <div className="proj-n mono">{p.n}</div>
+              <div className="proj-main">
+                <h3 className="proj-title">{p.title}</h3>
+                <div className="proj-meta mono">{p.client} · {p.role}</div>
+                <p className="proj-sum">{p.summary}</p>
+                <div className="proj-tools">
+                  {p.tools.map(t => <Pill key={t}>{t}</Pill>)}
+                </div>
+              </div>
+              <div className="proj-chart">
+                <div className="proj-metric">
+                  <div className="proj-mv">{p.metric.value}</div>
+                  <div className="proj-ml mono">{p.metric.label}</div>
+                </div>
+                <ProjectChart kind={p.chart} color="currentColor" />
+              </div>
+              <div className="proj-arr">→</div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}
+
+function SkillsSection() {
+  return (
+    <section id="skills" className="room room-skills">
+      <div className="shell">
+        <Eyebrow dot>Skills</Eyebrow>
+        <h2 className="h2">Tools, knowledge, <em>and ways of working.</em></h2>
+        <div className="skills-grid">
+          {SKILL_GROUPS.map(g => (
+            <div className="skill-col" key={g.label}>
+              <div className="skill-h mono">{g.label}</div>
+              <ul>
+                {g.items.map(it => <li key={it}>{it}</li>)}
+              </ul>
+            </div>
+          ))}
+        </div>
+        <div className="soft">
+          <div className="side-h">How I show up</div>
+          <ul className="soft-list">
+            {SOFT_SKILLS.map((s, i) => (
+              <li key={i}>
+                <span className="mono how-n">·</span>
+                <span>{s}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="edu">
+          <div className="side-h">Education & certifications</div>
+          <ul className="edu-list">
+            {EDUCATION.map((e, i) => (
+              <li key={i}>
+                <div className="edu-title">{e.title}</div>
+                <div className="edu-school mono">{e.school}</div>
+                <div className="edu-note">{e.note}</div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ExperienceSection() {
+  return (
+    <section id="experience" className="room room-exp">
+      <div className="shell">
+        <Eyebrow dot>Experience</Eyebrow>
+        <h2 className="h2">A path through <em>data, dashboards & teams.</em></h2>
+        <ol className="timeline">
+          {EXPERIENCE.map((e, i) => (
+            <li className="tl-item" key={i}>
+              <div className="tl-time mono">{e.time}</div>
+              <div className="tl-body">
+                <div className="tl-role">{e.role}</div>
+                <div className="tl-org mono">{e.org}</div>
+                <div className="tl-note">{e.note}</div>
+              </div>
+            </li>
+          ))}
+        </ol>
+        <div className="contact-block">
+          <div className="contact-l">
+            <Eyebrow>Get in touch</Eyebrow>
+            <h3 className="contact-title">Let's work <em>together.</em></h3>
+            <p className="contact-sub">Open to new projects and collaborations.</p>
+            <a href="mailto:hello@ottomontoya.com" className="cta cta-primary">
+              Say hello <span className="arr">→</span>
+            </a>
+          </div>
+          <ul className="contact-r">
+            <li><span className="mono">Email</span><span>hello@ottomontoya.com</span></li>
+            <li><span className="mono">LinkedIn</span><span>in/ottomontoya</span></li>
+            <li><span className="mono">Based in</span><span>Mérida, México</span></li>
+          </ul>
+        </div>
+        <footer className="foot mono">
+          <span>© 2026 Otto Montoya</span>
+          <span>Made with care · Mérida, MX</span>
+        </footer>
+      </div>
+    </section>
+  );
+}
+
+// ─── PROJECT OVERLAY ─────────────────────────────────────
+
+function ProjectOverlay({ project, onClose }: { project: Project | null; onClose: () => void }) {
+  useEffect(() => {
+    if (!project) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
+  }, [project, onClose]);
+
+  if (!project) return null;
+  return (
+    <div className="overlay" onClick={onClose}>
+      <div className="overlay-card" onClick={e => e.stopPropagation()}>
+        <button className="overlay-x" onClick={onClose} aria-label="Close">×</button>
+        <div className="overlay-grid">
+          <div>
+            <div className="mono overlay-eb">{project.n} · {project.client}</div>
+            <h3 className="overlay-title">{project.title}</h3>
+            <div className="mono overlay-role">{project.role}</div>
+            <div className="overlay-body">
+              {project.description.split("\n\n").map((p, i) => <p key={i}>{p}</p>)}
+            </div>
+            <div className="overlay-section-label">Responsibilities</div>
+            <ul className="overlay-resp">
+              {project.responsibilities.map((r, i) => <li key={i}>{r}</li>)}
+            </ul>
+            <div className="overlay-section-label" style={{ marginTop: 20 }}>Impact</div>
+            <div className="overlay-impact">{project.impact}</div>
+            <div className="overlay-tools">
+              {project.tools.map(t => <Pill key={t}>{t}</Pill>)}
+            </div>
+          </div>
+          <div className="overlay-side">
+            <div className="overlay-metric">
+              <div className="proj-mv ov-mv">{project.metric.value}</div>
+              <div className="proj-ml mono">{project.metric.label}</div>
+            </div>
+            <div className="overlay-chart">
+              <ProjectChart kind={project.chart} color="var(--burgundy)" />
+            </div>
+            <div className="overlay-pieces">
+              <div className="overlay-piece">
+                <div className="mono">scope</div>
+                <div>End-to-end</div>
+              </div>
+              <div className="overlay-piece">
+                <div className="mono">timeline</div>
+                <div>~3–6 mo</div>
+              </div>
+              <div className="overlay-piece">
+                <div className="mono">stack</div>
+                <div>{project.tools[0]}</div>
+              </div>
             </div>
           </div>
         </div>
-        <div className="detail-body">{p.description}</div>
-        <div className="detail-section-title">Responsibilities</div>
-        <ul className="resp-list">
-          {p.responsibilities.map((r, i) => <li key={i}>{r}</li>)}
-        </ul>
-        <div className="detail-section-title">Impact</div>
-        <div className="impact-box"><p>{p.impact}</p></div>
       </div>
-    </motion.div>
+    </div>
+  );
+}
+
+// ─── THEME ───────────────────────────────────────────────
+
+function applyTheme(dark: boolean) {
+  const r = document.documentElement.style;
+  if (dark) {
+    r.setProperty("--green", "#3d6b3f");
+    r.setProperty("--burgundy", "#a8344a");
+    r.setProperty("--beige", "#1a1a18");
+    r.setProperty("--ink", "#f1ead8");
+    r.setProperty("--paper", "#232220");
+    r.setProperty("--nav-bg", "rgba(255,255,255,.06)");
+    r.setProperty("--nav-border", "rgba(255,255,255,.12)");
+    r.setProperty("--nav-active", "rgba(255,255,255,.14)");
+  } else {
+    r.setProperty("--green", "#2d4a2b");
+    r.setProperty("--burgundy", "#6b1f2a");
+    r.setProperty("--beige", "#f1ead8");
+    r.setProperty("--ink", "#1a1a18");
+    r.setProperty("--paper", "#f7f1de");
+    r.setProperty("--nav-bg", "rgba(0,0,0,.04)");
+    r.setProperty("--nav-border", "rgba(0,0,0,.08)");
+    r.setProperty("--nav-active", "rgba(0,0,0,.08)");
+  }
+  document.body.style.background = dark ? "#1a1a18" : "#f1ead8";
+  document.body.style.color = dark ? "#f1ead8" : "#1a1a18";
+}
+
+// ─── STYLES ──────────────────────────────────────────────
+
+const CSS = `
+  :root {
+    --green:    #2d4a2b;
+    --burgundy: #6b1f2a;
+    --beige:    #f1ead8;
+    --ink:      #1a1a18;
+    --paper:    #f7f1de;
+    --nav-bg:     rgba(0,0,0,.04);
+    --nav-border: rgba(0,0,0,.08);
+    --nav-active: rgba(0,0,0,.08);
+    --font-display: "Instrument Serif", Georgia, serif;
+    --font-body:    "DM Sans", ui-sans-serif, system-ui, sans-serif;
+    --font-mono:    "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--font-body);
+    background: var(--beige);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+  #root { min-height: 100vh; }
+  ::selection { background: var(--burgundy); color: var(--beige); }
+  body::-webkit-scrollbar { width: 10px; }
+  body::-webkit-scrollbar-track { background: transparent; }
+  body::-webkit-scrollbar-thumb { background: rgba(0,0,0,.18); border-radius: 6px; }
+
+  /* ── Nav ── */
+  .nav-wrap {
+    position: fixed; top: 18px; left: 0; right: 0; z-index: 50;
+    display: flex; justify-content: center; pointer-events: none;
+    padding: 0 24px; transition: top .25s ease;
+  }
+  .nav-wrap.scrolled { top: 14px; }
+  .nav-pill {
+    pointer-events: auto;
+    display: grid; grid-template-columns: 1fr auto 1fr;
+    align-items: center; width: 100%; max-width: 1320px;
+    padding: 6px 8px; border-radius: 999px;
+    background: rgba(255,255,255,.14);
+    backdrop-filter: blur(28px) saturate(180%);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    border: 1px solid rgba(255,255,255,.22);
+    box-shadow: 0 10px 40px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.25);
+    color: var(--ink);
+  }
+  .nav-brand {
+    justify-self: start; background: none; border: 0;
+    font-family: var(--font-body); font-size: 13px; font-weight: 600;
+    letter-spacing: -.01em; color: inherit; cursor: pointer;
+    padding: 8px 14px; opacity: .92;
+  }
+  .nav-brand:hover { opacity: 1; }
+  .nav-center { justify-self: center; display: flex; gap: 2px; align-items: center; }
+  .nav-link {
+    background: none; border: 0;
+    font-family: var(--font-body); font-size: 13px; letter-spacing: .005em;
+    padding: 8px 14px; border-radius: 999px; cursor: pointer; color: inherit;
+    opacity: .7; transition: opacity .2s, background .2s, color .2s;
+  }
+  .nav-link:hover { opacity: 1; }
+  .nav-link.active {
+    background: rgba(0,0,0,.32);
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    color: #fff; opacity: 1;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.08);
+  }
+  .nav-mode {
+    justify-self: end; background: transparent; border: 0;
+    width: 32px; height: 32px; border-radius: 999px; cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center;
+    color: inherit; opacity: .85;
+  }
+  .nav-mode:hover { background: rgba(255,255,255,.12); opacity: 1; }
+  @media (max-width: 760px) { .nav-wrap { display: none; } }
+
+  /* ── Mobile nav ── */
+  .mnav-wrap {
+    position: fixed; bottom: 18px; left: 0; right: 0; z-index: 50;
+    display: none; justify-content: center; pointer-events: none;
+  }
+  @media (max-width: 760px) { .mnav-wrap { display: flex; } }
+  .mnav-pill {
+    pointer-events: auto; display: flex; align-items: center; gap: 2px;
+    padding: 6px; border-radius: 999px;
+    background: rgba(255,255,255,.14); backdrop-filter: blur(28px) saturate(180%);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    border: 1px solid rgba(255,255,255,.22);
+    box-shadow: 0 10px 30px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.25);
+    color: var(--ink);
+    max-width: calc(100vw - 24px); overflow: hidden;
+  }
+  .mnav-link {
+    background: none; border: 0;
+    font-family: var(--font-body); font-size: 12px;
+    padding: 8px 12px; border-radius: 999px; cursor: pointer;
+    color: inherit; opacity: .75;
+  }
+  .mnav-link.active {
+    background: rgba(0,0,0,.32);
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    color: #fff; opacity: 1;
+  }
+  .mnav-sep { width: 1px; height: 18px; background: currentColor; opacity: .2; margin: 0 2px; }
+  .mnav-mode { padding: 8px; display: inline-flex; opacity: .85; }
+
+  /* ── Rooms ── */
+  .room { position: relative; }
+  .room-hero   { background: var(--beige);   color: var(--ink); }
+  .room-about  { background: var(--green);   color: var(--beige); }
+  .room-work   { background: var(--beige);   color: var(--ink); }
+  .room-skills { background: var(--burgundy); color: var(--beige); }
+  .room-exp    { background: var(--ink);     color: var(--beige); }
+
+  .shell { max-width: 1240px; margin: 0 auto; padding: 140px 32px 120px; position: relative; }
+  @media (max-width: 760px) { .shell { padding: 120px 20px 100px; } }
+
+  .sec-divider { display: block; width: 100%; height: 120px; margin: -1px 0; }
+
+  /* ── Eyebrow ── */
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: .14em;
+    text-transform: uppercase; opacity: .7; margin-bottom: 28px;
+  }
+  .eyebrow-dot { width: 6px; height: 6px; border-radius: 999px; background: currentColor; opacity: .5; }
+  .mono { font-family: var(--font-mono); font-size: .85em; letter-spacing: .01em; }
+
+  /* ── Typography ── */
+  .h1 {
+    font-family: var(--font-display); font-weight: 400;
+    font-size: clamp(56px, 9vw, 128px); line-height: .95; letter-spacing: -.02em;
+    margin: 0 0 36px; max-width: 14ch; text-wrap: balance;
+  }
+  .h1 em { font-style: italic; color: var(--burgundy); }
+
+  .h2 {
+    font-family: var(--font-display); font-weight: 400;
+    font-size: clamp(40px, 5.5vw, 76px); line-height: 1.02; letter-spacing: -.015em;
+    margin: 0 0 48px; max-width: 18ch; text-wrap: balance;
+  }
+  .h2 em { font-style: italic; color: var(--burgundy); }
+  .room-about .h2 em  { color: var(--paper); opacity: .85; }
+  .room-skills .h2 em { color: var(--paper); opacity: .9; }
+  .room-exp .h2 em    { color: var(--burgundy); filter: brightness(1.3) saturate(1.2); }
+
+  .lead {
+    font-size: clamp(17px, 1.6vw, 21px); line-height: 1.5;
+    max-width: 54ch; margin: 0 0 36px; opacity: .85; text-wrap: pretty;
+  }
+
+  /* ── CTAs ── */
+  .cta-row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .cta {
+    font-family: var(--font-body); font-size: 14px; font-weight: 500;
+    padding: 14px 22px; border-radius: 999px; border: 1px solid transparent;
+    cursor: pointer; display: inline-flex; align-items: center; gap: 8px;
+    transition: transform .15s, background .2s; text-decoration: none;
+  }
+  .cta:hover { transform: translateY(-1px); }
+  .cta-primary { background: var(--burgundy); color: var(--beige); }
+  .cta-primary:hover { background: var(--ink); }
+  .cta-ghost { background: transparent; color: inherit; border-color: currentColor; opacity: .85; }
+  .cta-ghost:hover { background: rgba(0,0,0,.04); opacity: 1; }
+  .room-about .cta-ghost:hover,
+  .room-skills .cta-ghost:hover,
+  .room-exp .cta-ghost:hover { background: rgba(255,255,255,.08); }
+  .arr { font-family: var(--font-mono); font-size: 13px; }
+
+  /* ── Hero strip ── */
+  .hero-strip {
+    margin-top: 80px;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px;
+  }
+  .hero-stat { padding-right: 20px; }
+  .stat-val {
+    font-family: var(--font-display); font-size: clamp(40px, 4vw, 56px);
+    line-height: 1; color: var(--burgundy); letter-spacing: -.02em;
+  }
+  .stat-label { font-size: 14px; margin-top: 8px; font-weight: 500; }
+  .stat-suffix { font-family: var(--font-mono); font-size: 11px; opacity: .55; margin-top: 4px; letter-spacing: .02em; }
+  @media (max-width: 760px) {
+    .hero-strip { grid-template-columns: repeat(2, 1fr); }
+    .hero-stat { padding: 18px 14px 18px 0; border-bottom: 1px solid rgba(0,0,0,.1); }
+  }
+
+  /* ── About ── */
+  .about-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 80px; }
+  .about-body p { font-size: 18px; line-height: 1.55; margin: 0 0 18px; max-width: 54ch; opacity: .88; text-wrap: pretty; }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+  .a-pill {
+    display: inline-block; font-family: var(--font-mono); font-size: 11px; letter-spacing: .04em;
+    padding: 6px 11px; border-radius: 999px;
+    background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.18);
+  }
+  .room-hero .a-pill, .room-work .a-pill { background: rgba(0,0,0,.04); border-color: rgba(0,0,0,.12); }
+  .overlay-card .a-pill { background: rgba(0,0,0,.05); border-color: rgba(0,0,0,.14); }
+  .side-h {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: .14em;
+    text-transform: uppercase; opacity: .6;
+    margin-bottom: 18px; padding-bottom: 14px; border-bottom: 1px solid currentColor;
+  }
+  .how { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 18px; }
+  .how li { display: grid; grid-template-columns: 32px 1fr; gap: 12px; font-size: 15px; line-height: 1.5; opacity: .92; }
+  .how-n { opacity: .55; }
+  @media (max-width: 860px) { .about-grid { grid-template-columns: 1fr; gap: 48px; } }
+
+  /* ── Projects ── */
+  .work-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 48px; margin-bottom: 32px; }
+  .h2-work   { margin-bottom: 0; }
+  .lead-work { margin-bottom: 0; max-width: 36ch; }
+  @media (max-width: 860px) { .work-head { flex-direction: column; align-items: flex-start; gap: 20px; } }
+
+  .projects { list-style: none; padding: 0; margin: 0; }
+  .project {
+    display: grid; grid-template-columns: 64px 1.4fr 1fr 32px; gap: 32px; align-items: center;
+    padding: 32px 0; border-top: 1px solid rgba(0,0,0,.15); cursor: pointer;
+    transition: padding .2s, background .2s;
+  }
+  .project:last-child { border-bottom: 1px solid rgba(0,0,0,.15); }
+  .project:hover { padding: 32px 24px; background: var(--paper); }
+  .project:hover .proj-arr { transform: translateX(4px); color: var(--burgundy); }
+
+  .proj-n { color: var(--burgundy); font-size: 13px; font-weight: 600; opacity: .7; }
+  .proj-title {
+    font-family: var(--font-display); font-weight: 400;
+    font-size: clamp(22px, 2.2vw, 30px); line-height: 1.1; margin: 0 0 6px; letter-spacing: -.01em;
+  }
+  .proj-meta { font-size: 11.5px; opacity: .6; margin-bottom: 10px; }
+  .proj-sum  { font-size: 14px; line-height: 1.5; margin: 0 0 14px; opacity: .78; max-width: 46ch; }
+  .proj-tools { display: flex; flex-wrap: wrap; gap: 6px; }
+  .proj-chart { display: grid; grid-template-rows: auto 1fr; gap: 8px; color: var(--burgundy); min-width: 0; }
+  .proj-metric { display: flex; align-items: baseline; gap: 10px; }
+  .proj-mv { font-family: var(--font-display); font-size: 30px; line-height: 1; color: var(--ink); letter-spacing: -.01em; }
+  .proj-ml { font-size: 10.5px; opacity: .55; }
+  .proj-arr { font-family: var(--font-mono); font-size: 18px; opacity: .4; transition: transform .25s, color .25s; }
+
+  @media (max-width: 860px) {
+    .project { grid-template-columns: 48px 1fr; gap: 18px; }
+    .proj-chart, .proj-arr { display: none; }
+  }
+
+  /* ── Skills ── */
+  .skills-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; margin-bottom: 80px; }
+  .skill-col { padding-right: 16px; }
+  .skill-h { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; opacity: .65; margin-bottom: 16px; }
+  .skill-col ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+  .skill-col li { font-size: 15px; }
+  .skill-col li::before { content: "— "; opacity: .5; }
+  @media (max-width: 760px) {
+    .skills-grid { grid-template-columns: 1fr 1fr; }
+    .skill-col { border-bottom: 1px solid rgba(255,255,255,.12); padding-right: 16px; padding-bottom: 24px; }
+  }
+
+  .soft, .edu { margin-top: 48px; }
+  .soft-list, .edu-list {
+    list-style: none; padding: 0; margin: 0;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 24px 48px;
+  }
+  @media (max-width: 760px) { .soft-list, .edu-list { grid-template-columns: 1fr; } }
+  .soft-list li { display: grid; grid-template-columns: 24px 1fr; gap: 8px; font-size: 15px; line-height: 1.55; opacity: .9; }
+  .edu-list li { padding: 18px 0; border-bottom: 1px solid rgba(255,255,255,.15); }
+  .edu-title { font-family: var(--font-display); font-size: 22px; font-weight: 400; letter-spacing: -.005em; }
+  .edu-school { font-size: 11.5px; opacity: .65; margin-top: 4px; }
+  .edu-note { font-size: 14px; margin-top: 8px; opacity: .78; }
+
+  /* ── Experience ── */
+  .timeline { list-style: none; padding: 0; margin: 0 0 80px; }
+  .tl-item {
+    display: grid; grid-template-columns: 200px 1fr; gap: 48px;
+    padding: 32px 0; border-top: 1px solid rgba(255,255,255,.15);
+  }
+  .tl-item:last-child { border-bottom: 1px solid rgba(255,255,255,.15); }
+  .tl-time { font-size: 12px; opacity: .6; padding-top: 6px; }
+  .tl-role { font-family: var(--font-display); font-size: clamp(22px, 2.2vw, 30px); font-weight: 400; letter-spacing: -.005em; }
+  .tl-org  { font-size: 12px; opacity: .65; margin-top: 4px; }
+  .tl-note { font-size: 15px; margin-top: 10px; opacity: .82; max-width: 60ch; line-height: 1.5; }
+  @media (max-width: 760px) { .tl-item { grid-template-columns: 1fr; gap: 8px; } }
+
+  /* ── Contact ── */
+  .contact-block {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 64px;
+    padding: 80px 0 32px; border-top: 1px solid rgba(255,255,255,.15);
+  }
+  .contact-title {
+    font-family: var(--font-display); font-weight: 400;
+    font-size: clamp(40px, 5vw, 72px); letter-spacing: -.02em;
+    margin: 18px 0 8px; line-height: 1;
+  }
+  .contact-title em { font-style: italic; color: var(--burgundy); filter: brightness(1.4) saturate(1.2); }
+  .contact-sub { margin: 0 0 24px; opacity: .75; }
+  .contact-r { list-style: none; padding: 0; margin: 0; }
+  .contact-r li {
+    display: grid; grid-template-columns: 120px 1fr; gap: 24px;
+    padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,.12); font-size: 15px;
+  }
+  .contact-r li span:first-child { opacity: .55; font-size: 12px; align-self: center; letter-spacing: .06em; text-transform: uppercase; }
+  @media (max-width: 760px) { .contact-block { grid-template-columns: 1fr; gap: 32px; } }
+
+  .foot {
+    display: flex; justify-content: space-between;
+    padding: 32px 0; opacity: .5; font-size: 11px;
+    border-top: 1px solid rgba(255,255,255,.1);
+  }
+
+  /* ── Overlay ── */
+  .overlay {
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(0,0,0,.65); backdrop-filter: blur(10px);
+    display: flex; align-items: center; justify-content: center;
+    padding: 24px; animation: fadeIn .2s ease-out;
+  }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .overlay-card {
+    background: var(--beige); color: var(--ink);
+    max-width: 980px; width: 100%; max-height: 88vh; overflow: auto;
+    border-radius: 20px; padding: 48px; position: relative;
+    animation: popIn .25s cubic-bezier(.22,1,.36,1);
+  }
+  @keyframes popIn { from { transform: scale(.96); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  .overlay-x {
+    position: absolute; top: 20px; right: 20px;
+    width: 36px; height: 36px; border-radius: 999px;
+    border: 1px solid rgba(0,0,0,.15); background: transparent;
+    font-size: 20px; cursor: pointer; line-height: 1;
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .overlay-x:hover { background: var(--ink); color: var(--beige); border-color: var(--ink); }
+  .overlay-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 48px; }
+  @media (max-width: 760px) { .overlay-grid { grid-template-columns: 1fr; } .overlay-card { padding: 32px 24px; } }
+  .overlay-eb { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; opacity: .6; margin-bottom: 10px; }
+  .overlay-title {
+    font-family: var(--font-display); font-size: clamp(32px, 4vw, 52px); font-weight: 400;
+    line-height: 1.05; letter-spacing: -.015em; margin: 0 0 8px;
+  }
+  .overlay-role { font-size: 12px; opacity: .6; margin-bottom: 20px; }
+  .overlay-body p { font-size: 15px; line-height: 1.65; opacity: .85; margin: 0 0 14px; }
+  .overlay-section-label {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: .12em;
+    text-transform: uppercase; opacity: .55; margin-bottom: 10px;
+  }
+  .overlay-resp { list-style: none; padding: 0; margin: 0 0 16px; display: flex; flex-direction: column; gap: 8px; }
+  .overlay-resp li { font-size: 14px; line-height: 1.55; opacity: .85; padding-left: 16px; position: relative; }
+  .overlay-resp li::before { content: "—"; position: absolute; left: 0; opacity: .5; }
+  .overlay-impact { font-size: 14px; line-height: 1.55; opacity: .85; font-weight: 500; margin-bottom: 0; }
+  .overlay-tools { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 20px; }
+  .overlay-side {
+    background: var(--paper); border-radius: 16px; padding: 24px;
+    display: flex; flex-direction: column; gap: 24px;
+  }
+  .overlay-metric { display: flex; align-items: baseline; gap: 10px; }
+  .ov-mv { font-size: 48px !important; color: var(--burgundy) !important; }
+  .overlay-chart { color: var(--burgundy); }
+  .overlay-pieces {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+    border-top: 1px solid rgba(0,0,0,.1); padding-top: 20px;
+  }
+  .overlay-piece div:first-child { font-size: 10px; letter-spacing: .1em; text-transform: uppercase; opacity: .5; margin-bottom: 4px; font-family: var(--font-mono); }
+  .overlay-piece div:last-child { font-size: 14px; font-weight: 500; }
+`;
+
+// ─── APP ─────────────────────────────────────────────────
+
+export default function App() {
+  const [dark, setDark] = useState(false);
+  const [openId, setOpenId] = useState<string | null>(null);
+  const project = PROJECTS.find(p => p.id === openId) ?? null;
+
+  useEffect(() => { applyTheme(dark); }, [dark]);
+
+  return (
+    <>
+      <style>{CSS}</style>
+      <Nav dark={dark} onToggleDark={() => setDark(d => !d)} />
+      <main>
+        <HeroSection />
+        <Divider from="var(--beige)" to="var(--green)" variant="wave" />
+        <AboutSection />
+        <Divider from="var(--green)" to="var(--beige)" variant="curve" />
+        <WorkSection onOpen={setOpenId} />
+        <Divider from="var(--beige)" to="var(--burgundy)" variant="wave" />
+        <SkillsSection />
+        <Divider from="var(--burgundy)" to="var(--ink)" variant="diagonal" />
+        <ExperienceSection />
+      </main>
+      <ProjectOverlay project={project} onClose={() => setOpenId(null)} />
+    </>
   );
 }
