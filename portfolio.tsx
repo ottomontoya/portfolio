@@ -354,7 +354,7 @@ function Nav({ dark, onToggleDark }: { dark: boolean; onToggleDark: () => void }
       <header className={`nav-wrap${scrolled ? " scrolled" : ""}`}>
         <div className="nav-pill">
           <button className="nav-brand" onClick={() => scrollTo("home")}>
-            <img src={dark ? "/assets/logo-light.svg" : "/assets/logo.svg"} alt="" width="20" height="20" />
+            <img src={dark ? "/assets/logo-light.svg" : "/assets/logo.svg"} alt="" width="26" height="26" />
             Otto Montoya
           </button>
           <nav ref={navCenterRef} className="nav-center">
@@ -600,13 +600,13 @@ function ExperienceSection() {
             <Eyebrow>Get in touch</Eyebrow>
             <h3 className="contact-title">Let's work <em>together.</em></h3>
             <p className="contact-sub">Open to new projects and collaborations.</p>
-            <a href="mailto:hello@ottomontoya.com" className="cta cta-primary">
+            <a href="mailto:work@ottomontoya.com" className="cta cta-primary">
               Say hello <span className="arr">→</span>
             </a>
           </div>
           <ul className="contact-r">
-            <li><span className="mono">Email</span><span>hello@ottomontoya.com</span></li>
-            <li><span className="mono">LinkedIn</span><span>in/ottomontoya</span></li>
+            <li><span className="mono">Email</span><span>work@ottomontoya.com</span></li>
+            <li><span className="mono">Connect</span><a href="https://www.linkedin.com/in/ottomontoya/" target="_blank" rel="noopener noreferrer" className="contact-linkedin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="22" height="22" aria-label="LinkedIn"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a></li>
             <li><span className="mono">Based in</span><span>Mérida, México</span></li>
           </ul>
         </div>
@@ -1023,6 +1023,8 @@ const CSS = `
     padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,.12); font-size: 15px;
   }
   .contact-r li span:first-child { opacity: .55; font-size: 12px; align-self: center; letter-spacing: .06em; text-transform: uppercase; }
+  .contact-linkedin { display: inline-flex; align-items: center; opacity: .75; transition: opacity .18s; color: inherit; }
+  .contact-linkedin:hover { opacity: 1; }
   @media (max-width: 760px) { .contact-block { grid-template-columns: 1fr; gap: 32px; } }
 
   .foot {
