@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 // ─── TYPES ───────────────────────────────────────────────
 
@@ -274,20 +274,18 @@ const NAV_ITEMS = [
 function useActiveSection() {
   const [active, setActive] = useState("home");
   useEffect(() => {
-    const obs = new IntersectionObserver(
-      (entries) => {
-        const visible = entries.filter(e => e.isIntersecting);
-        if (!visible.length) return;
-        visible.sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-        setActive(visible[0].target.id);
-      },
-      { threshold: [0.25, 0.5, 0.75], rootMargin: "-30% 0px -30% 0px" }
-    );
-    NAV_ITEMS.forEach(it => {
-      const el = document.getElementById(it.id);
-      if (el) obs.observe(el);
-    });
-    return () => obs.disconnect();
+    const update = () => {
+      const threshold = window.innerHeight * 0.4;
+      let current = NAV_ITEMS[0].id;
+      for (const item of NAV_ITEMS) {
+        const el = document.getElementById(item.id);
+        if (el && el.getBoundingClientRect().top <= threshold) current = item.id;
+      }
+      setActive(current);
+    };
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    return () => window.removeEventListener("scroll", update);
   }, []);
   return active;
 }
@@ -313,6 +311,15 @@ function Nav({ dark, onToggleDark }: { dark: boolean; onToggleDark: () => void }
   const active = useActiveSection();
   const [scrolled, setScrolled] = useState(false);
 
+  const navCenterRef = useRef<HTMLElement>(null);
+  const mnavPillRef = useRef<HTMLDivElement>(null);
+  const desktopRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+  const mobileRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+
+  type PillRect = { left: number; top: number; width: number; height: number; ready: boolean };
+  const [dPill, setDPill] = useState<PillRect>({ left: 0, top: 0, width: 0, height: 0, ready: false });
+  const [mPill, setMPill] = useState<PillRect>({ left: 0, top: 0, width: 0, height: 0, ready: false });
+
   useEffect(() => {
     const on = () => setScrolled(window.scrollY > 24);
     on();
@@ -320,14 +327,39 @@ function Nav({ dark, onToggleDark }: { dark: boolean; onToggleDark: () => void }
     return () => window.removeEventListener("scroll", on);
   }, []);
 
+  useEffect(() => {
+    const measure = () => {
+      const dEl = desktopRefs.current[active];
+      const dNav = navCenterRef.current;
+      if (dEl && dNav) {
+        const nr = dNav.getBoundingClientRect();
+        const er = dEl.getBoundingClientRect();
+        setDPill({ left: er.left - nr.left, top: er.top - nr.top, width: er.width, height: er.height, ready: true });
+      }
+      const mEl = mobileRefs.current[active];
+      const mNav = mnavPillRef.current;
+      if (mEl && mNav) {
+        const nr = mNav.getBoundingClientRect();
+        const er = mEl.getBoundingClientRect();
+        setMPill({ left: er.left - nr.left, top: er.top - nr.top, width: er.width, height: er.height, ready: true });
+      }
+    };
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, [active]);
+
   return (
     <>
       <header className={`nav-wrap${scrolled ? " scrolled" : ""}`}>
         <div className="nav-pill">
           <button className="nav-brand" onClick={() => scrollTo("home")}>Otto Montoya</button>
-          <nav className="nav-center">
+          <nav ref={navCenterRef} className="nav-center">
+            {dPill.ready && (
+              <span className="nav-active-pill" style={{ left: dPill.left, top: dPill.top, width: dPill.width, height: dPill.height }} />
+            )}
             {NAV_ITEMS.map(it => (
-              <button key={it.id} className={`nav-link${active === it.id ? " active" : ""}`} onClick={() => scrollTo(it.id)}>
+              <button key={it.id} ref={el => { desktopRefs.current[it.id] = el; }} className={`nav-link${active === it.id ? " active" : ""}`} onClick={() => scrollTo(it.id)}>
                 {it.label}
               </button>
             ))}
@@ -339,9 +371,12 @@ function Nav({ dark, onToggleDark }: { dark: boolean; onToggleDark: () => void }
       </header>
 
       <div className="mnav-wrap">
-        <div className="mnav-pill">
+        <div ref={mnavPillRef} className="mnav-pill">
+          {mPill.ready && (
+            <span className="mnav-active-pill" style={{ left: mPill.left, top: mPill.top, width: mPill.width, height: mPill.height }} />
+          )}
           {NAV_ITEMS.map(it => (
-            <button key={it.id} className={`mnav-link${active === it.id ? " active" : ""}`} onClick={() => scrollTo(it.id)}>
+            <button key={it.id} ref={el => { mobileRefs.current[it.id] = el; }} className={`mnav-link${active === it.id ? " active" : ""}`} onClick={() => scrollTo(it.id)}>
               {it.label}
             </button>
           ))}
@@ -733,20 +768,23 @@ const CSS = `
     padding: 8px 14px; opacity: .92;
   }
   .nav-brand:hover { opacity: 1; }
-  .nav-center { justify-self: center; display: flex; gap: 2px; align-items: center; }
+  .nav-center { justify-self: center; display: flex; gap: 2px; align-items: center; position: relative; }
+  .nav-active-pill {
+    position: absolute; border-radius: 999px; pointer-events: none; z-index: 0;
+    background: rgba(0,0,0,.32);
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.08);
+    transition: left .3s cubic-bezier(.4,0,.2,1), width .3s cubic-bezier(.4,0,.2,1), top .3s cubic-bezier(.4,0,.2,1);
+  }
   .nav-link {
     background: none; border: 0;
     font-family: var(--font-body); font-size: 13px; letter-spacing: .005em;
     padding: 8px 14px; border-radius: 999px; cursor: pointer; color: inherit;
-    opacity: .7; transition: opacity .2s, background .2s, color .2s;
+    opacity: .7; transition: opacity .2s, color .2s;
+    position: relative; z-index: 1;
   }
   .nav-link:hover { opacity: 1; }
-  .nav-link.active {
-    background: rgba(0,0,0,.32);
-    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-    color: #fff; opacity: 1;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,.08);
-  }
+  .nav-link.active { background: none; color: #fff; opacity: 1; }
   .nav-mode {
     justify-self: end; background: transparent; border: 0;
     width: 32px; height: 32px; border-radius: 999px; cursor: pointer;
@@ -764,7 +802,7 @@ const CSS = `
   @media (max-width: 760px) { .mnav-wrap { display: flex; } }
   .mnav-pill {
     pointer-events: auto; display: flex; align-items: center; gap: 2px;
-    padding: 6px; border-radius: 999px;
+    padding: 6px; border-radius: 999px; position: relative;
     background: rgba(255,255,255,.14); backdrop-filter: blur(28px) saturate(180%);
     -webkit-backdrop-filter: blur(28px) saturate(180%);
     border: 1px solid rgba(255,255,255,.22);
@@ -772,17 +810,20 @@ const CSS = `
     color: var(--ink);
     max-width: calc(100vw - 24px); overflow: hidden;
   }
+  .mnav-active-pill {
+    position: absolute; border-radius: 999px; pointer-events: none; z-index: 0;
+    background: rgba(0,0,0,.32);
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    transition: left .3s cubic-bezier(.4,0,.2,1), width .3s cubic-bezier(.4,0,.2,1), top .3s cubic-bezier(.4,0,.2,1);
+  }
   .mnav-link {
     background: none; border: 0;
     font-family: var(--font-body); font-size: 12px;
     padding: 8px 12px; border-radius: 999px; cursor: pointer;
     color: inherit; opacity: .75;
+    position: relative; z-index: 1;
   }
-  .mnav-link.active {
-    background: rgba(0,0,0,.32);
-    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-    color: #fff; opacity: 1;
-  }
+  .mnav-link.active { background: none; color: #fff; opacity: 1; }
   .mnav-sep { width: 1px; height: 18px; background: currentColor; opacity: .2; margin: 0 2px; }
   .mnav-mode { padding: 8px; display: inline-flex; opacity: .85; }
 
