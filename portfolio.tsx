@@ -219,7 +219,7 @@ function Nav({ dark, onToggleDark }: { dark: boolean; onToggleDark: () => void }
 
 // ─── DIVIDERS ────────────────────────────────────────────
 
-function Divider({ from, to, variant = "wave" }: { from: string; to: string; variant?: "wave" | "curve" | "diagonal" }) {
+function Divider({ from, to, variant = "wave" }: { from: string; to: string; variant?: "wave" | "curve" | "diagonal" | "sine" }) {
   if (variant === "diagonal") {
     return (
       <svg className="sec-divider" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true">
@@ -233,6 +233,14 @@ function Divider({ from, to, variant = "wave" }: { from: string; to: string; var
       <svg className="sec-divider" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
         <rect x="0" y="0" width="1440" height="120" style={{ fill: from }} />
         <path d="M0,120 C 360,40 1080,40 1440,120 L1440,120 L0,120 Z" style={{ fill: to }} />
+      </svg>
+    );
+  }
+  if (variant === "sine") {
+    return (
+      <svg className="sec-divider" viewBox="0 0 1440 100" preserveAspectRatio="none" aria-hidden="true">
+        <rect x="0" y="0" width="1440" height="100" style={{ fill: from }} />
+        <path d="M0,50 C87.4,18 152.6,18 240,50 C327.4,82 392.6,82 480,50 C567.4,18 632.6,18 720,50 C807.4,82 872.6,82 960,50 C1047.4,18 1112.6,18 1200,50 C1287.4,82 1352.6,82 1440,50 L1440,100 L0,100 Z" style={{ fill: to }} />
       </svg>
     );
   }
@@ -991,13 +999,13 @@ export default function App() {
       <Nav dark={dark} onToggleDark={() => setDark(d => !d)} />
       <main>
         <HeroSection />
-        <Divider from="var(--beige)" to="var(--green)" variant="wave" />
+        <Divider from="var(--beige)" to="var(--green)" variant="diagonal" />
         <AboutSection />
         <Divider from="var(--green)" to="var(--beige)" variant="curve" />
         <WorkSection onOpen={setOpenId} />
         <Divider from="var(--beige)" to="var(--burgundy)" variant="wave" />
         <SkillsSection />
-        <Divider from="var(--burgundy)" to="var(--ink)" variant="diagonal" />
+        <Divider from="var(--burgundy)" to="var(--ink)" variant="sine" />
         <ExperienceSection />
       </main>
       <ProjectOverlay project={project} onClose={() => setOpenId(null)} />
