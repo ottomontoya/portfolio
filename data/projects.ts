@@ -142,7 +142,7 @@ export const PROJECTS: Project[] = [
     client: "Global Heavy Industry Manufacturer",
     role: "BI Developer",
     summary: "Implemented a four-view real-time manufacturing analytics suite natively in AWS QuickSight from production design mockups, covering furnace process monitoring and a 2,000+ asset rotating equipment fleet.",
-    tools: ["AWS QuickSight"],
+    tools: ["Amazon QuickSight"],
     scope: "Implementation",
     timeline: "3 wk",
     metric: { value: "2,000+", label: "Assets monitored" },
@@ -155,7 +155,7 @@ export const PROJECTS: Project[] = [
       "Translated the design system's cognitive UI principles into native QuickSight components within the tool's constraints",
       "Iterated alongside the design team to preserve visual nuance and intent through implementation",
     ],
-    impact: "Delivered a fully native AWS QuickSight dashboard suite implementing the cognitive UI design system at production scale, giving operators real-time visibility into furnace process health and a 2,000+ asset rotating equipment fleet.",
+    impact: "Delivered a fully native Amazon QuickSight dashboard suite implementing the cognitive UI design system at production scale, giving operators real-time visibility into furnace process health and a 2,000+ asset rotating equipment fleet.",
     caseStudy: "https://drive.google.com/file/d/1cEBafEFpml5bAGyRRCeVfIlInrbt4Eu0/view?usp=sharing",
     images: [
       "/assets/projects/p6/FPO.webp",

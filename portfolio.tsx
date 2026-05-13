@@ -522,7 +522,7 @@ function ProjectOverlay({ project, onClose }: { project: Project | null; onClose
             </div>
             {project.tools.length > 1 && (
               <div className="overlay-side-section">
-                <div className="overlay-section-label">Stack</div>
+                <div className="overlay-section-label">Tools</div>
                 <div className="overlay-tools">
                   {project.tools.map(t => <Pill key={t}>{t}</Pill>)}
                 </div>
