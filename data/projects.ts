@@ -15,6 +15,8 @@ export interface Project {
   description: string;
   responsibilities: string[];
   impact: string;
+  images?: string[];
+  caseStudy?: string;
 }
 
 export const PROJECTS: Project[] = [
@@ -44,24 +46,26 @@ export const PROJECTS: Project[] = [
   {
     id: "p2",
     n: "02",
-    title: "Legacy BI Migration for a Global Manufacturer",
-    client: "Automotive Manufacturing",
+    title: "Market Research Dashboards for a Global Automotive Manufacturer",
+    client: "Leading German Automotive Manufacturer",
     role: "BI Developer",
-    summary: "Rebuilt ~15 legacy internal dashboards as modern Tableau views embedded into the client's internal portal, working from sketch-based designs.",
+    summary: "Built the Tableau visualization layer of a custom market research analytics platform, delivering ~15 dashboards from sketch-based designs that surface customer insights by market segment.",
     tools: ["Tableau"],
     scope: "Implementation",
     timeline: "6 mo",
-    metric: { value: "15", label: "Dashboards rebuilt" },
+    metric: { value: "15", label: "Dashboards delivered" },
     chart: "bars",
-    description: "The client was migrating their internal BI tooling to Tableau and needed their existing dashboards — defined only as sketch-based designs — rebuilt as modern, embeddable views.\n\nI was responsible for translating approximately 15 sketch-based designs into fully functional Tableau dashboards, working with datasets prepared by the data engineering team for each use case. Each dashboard went through iterative review cycles: I submitted completed work, the client provided feedback, and I refined until function and visuals matched both the original sketches and the client's expectations.\n\nIn parallel, I conducted R&D on Tableau Extensions to evaluate how third-party visual components could accelerate future development, offer richer chart types, and reduce reliance on complex calculated fields — simplifying both knowledge transfer and long-term maintenance.",
+    description: "The client, one of the largest globally recognized German automotive manufacturers, commissioned a custom market research analytics platform to uncover why specific customer segments prefer particular products and inform targeted marketing and production strategies. The platform combined automated data ingestion from sources like SPSS files, a research-oriented data warehouse supporting longitudinal analysis, and cross-tabulation tools for exploring behavioral patterns and trends. My work covered the visualization layer.\n\nI translated approximately 15 sketch-based designs into fully functional Tableau dashboards, working with datasets prepared by the data engineering team for each market research use case. Each dashboard went through iterative review cycles where I submitted completed work, the client provided feedback, and I refined until function and visuals matched both the original sketches and the client's expectations. The dashboards were then embedded into the client's internal portal as part of the platform's enterprise integration.\n\nIn parallel, I conducted R&D on Tableau Extensions to evaluate how third-party visual components could accelerate future development, offer richer chart types, and reduce reliance on complex calculated fields, simplifying both knowledge transfer and long-term maintenance.",
     responsibilities: [
-      "Rebuilt ~15 dashboards from sketch-based designs end-to-end in Tableau",
-      "Worked with datasets prepared by the data engineering team per use case",
-      "Iterated based on client feedback through multiple review cycles",
-      "Researched Tableau Extensions to expand visual options and simplify maintenance",
-      "Coordinated with embedding team on technical constraints and integration readiness",
+      "Built the Tableau visualization layer for a custom market research analytics platform",
+      "Translated ~15 sketch-based designs into production Tableau dashboards end-to-end",
+      "Worked with datasets prepared by the data engineering team across multiple market research use cases",
+      "Iterated through multiple client review cycles to align function and visuals with expectations",
+      "Researched Tableau Extensions to expand visual options and simplify long-term maintenance",
+      "Coordinated with the embedding team on technical constraints and integration readiness",
     ],
-    impact: "Full legacy dashboard suite migrated. Dashboards embedded and live in the client's internal portal.",
+    impact: "Delivered the full dashboard suite for the platform, live and embedded in the client's internal portal, enabling cross-tabulation and longitudinal analysis of customer behavior to support targeted marketing and production decisions.",
+    caseStudy: "https://www.stxnext.com/case-study/market-research-platform",
   },
   {
     id: "p3",
@@ -130,5 +134,34 @@ export const PROJECTS: Project[] = [
       "Configured Neon data sources with scheduled refreshes for reliable, timely data",
     ],
     impact: "Fragmented Salesforce reports consolidated. Company-wide QuickSight rollout delivered with full structure and governance.",
+  },
+  {
+    id: "p6",
+    n: "06",
+    title: "Real-Time Manufacturing Analytics for a Global Heavy Industry Manufacturer",
+    client: "Global Heavy Industry Manufacturer",
+    role: "BI Developer",
+    summary: "Implemented a four-view real-time manufacturing analytics suite natively in AWS QuickSight from production design mockups, covering furnace process monitoring and a 2,000+ asset rotating equipment fleet.",
+    tools: ["AWS QuickSight"],
+    scope: "Implementation",
+    timeline: "3 wk",
+    metric: { value: "2,000+", label: "Assets monitored" },
+    chart: "bars",
+    description: "The client, a global manufacturer running highly complex industrial operations, needed a real-time monitoring tool built ground-up to replace standard BI templates that struggled to prioritize critical signals across millions of raw sensor readings. The production design team partnered with subject matter experts to translate physical plant infrastructure into an intuitive digital ecosystem grounded in cognitive UI principles, and I owned the implementation of that design in AWS QuickSight.\n\nI built the full interactive dashboard layer across four interconnected views: a Furnace Process Overview surfacing high-level situational awareness for safety calls, a Detailed Metrics view exposing point diagnostics without visual clutter, a Rotating Equipment Fleet view monitoring 2,000+ assets with intelligent status prioritization, and an Asset Deep Dive that walks operators through a clear diagnostic narrative tied to direct work order actions.\n\nMy implementation work covered visual formatting and layout, conditional formatting tied to operational thresholds, interactive filtering, cross-view drill-down navigation, and every other in-dashboard behavior end users interact with. The result was a fully native QuickSight build that preserved the design system's nuance while handling production-scale fleet data.",
+    responsibilities: [
+      "Built the full QuickSight dashboard suite end-to-end from production design team mockups",
+      "Implemented conditional formatting tied to operational thresholds for at-a-glance status reads",
+      "Wired up interactive filtering and cross-view navigation between fleet, asset, and process views",
+      "Translated the design system's cognitive UI principles into native QuickSight components within the tool's constraints",
+      "Iterated alongside the design team to preserve visual nuance and intent through implementation",
+    ],
+    impact: "Delivered a fully native AWS QuickSight dashboard suite implementing the cognitive UI design system at production scale, giving operators real-time visibility into furnace process health and a 2,000+ asset rotating equipment fleet.",
+    caseStudy: "https://drive.google.com/file/d/1cEBafEFpml5bAGyRRCeVfIlInrbt4Eu0/view?usp=sharing",
+    images: [
+      "/assets/projects/p6/FPO.webp",
+      "/assets/projects/p6/FPDV.webp",
+      "/assets/projects/p6/ADD.webp",
+      "/assets/projects/p6/REF.webp",
+    ],
   },
 ];

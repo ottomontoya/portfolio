@@ -326,7 +326,7 @@ function WorkSection({ onOpen }: { onOpen: (id: string) => void }) {
       <div className="shell">
         <Eyebrow dot>Selected work</Eyebrow>
         <div className="work-head">
-          <h2 className="h2 h2-work">Five projects, <em>five industries.</em></h2>
+          <h2 className="h2 h2-work">Six projects, <em>six industries.</em></h2>
           <p className="lead lead-work">From access governance to legacy migrations — each one ended with a dashboard people actually used.</p>
         </div>
         <ul className="projects">
@@ -446,22 +446,41 @@ function ExperienceSection() {
 // ─── PROJECT OVERLAY ─────────────────────────────────────
 
 function ProjectOverlay({ project, onClose }: { project: Project | null; onClose: () => void }) {
+  const [lightbox, setLightbox] = useState<string | null>(null);
+
   useEffect(() => {
     if (!project) return;
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        if (lightbox) setLightbox(null);
+        else onClose();
+      }
+    };
     document.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
     return () => {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
     };
-  }, [project, onClose]);
+  }, [project, onClose, lightbox]);
 
   if (!project) return null;
   return (
     <div className="overlay" onClick={onClose}>
       <div className="overlay-card" onClick={e => e.stopPropagation()}>
         <button className="overlay-x" onClick={onClose} aria-label="Close">×</button>
+        {project.images && project.images.length > 0 && (
+          <div className="overlay-images">
+            {project.images.map((src, i) => (
+              <img key={i} src={src} alt="" className="overlay-img" onClick={() => setLightbox(src)} />
+            ))}
+          </div>
+        )}
+        {lightbox && (
+          <div className="lightbox" onClick={() => setLightbox(null)}>
+            <img src={lightbox} alt="" className="lightbox-img" />
+          </div>
+        )}
         <div className="overlay-grid">
           <div>
             <div className="mono overlay-eb">{project.n} · {project.client}</div>
@@ -474,11 +493,6 @@ function ProjectOverlay({ project, onClose }: { project: Project | null; onClose
             <ul className="overlay-resp">
               {project.responsibilities.map((r, i) => <li key={i}>{r}</li>)}
             </ul>
-            <div className="overlay-section-label" style={{ marginTop: 20 }}>Impact</div>
-            <div className="overlay-impact">{project.impact}</div>
-            <div className="overlay-tools">
-              {project.tools.map(t => <Pill key={t}>{t}</Pill>)}
-            </div>
           </div>
           <div className="overlay-side">
             <div className="overlay-metric">
@@ -502,6 +516,23 @@ function ProjectOverlay({ project, onClose }: { project: Project | null; onClose
                 <div>{project.tools[0]}</div>
               </div>
             </div>
+            <div className="overlay-side-section">
+              <div className="overlay-section-label">Impact</div>
+              <div className="overlay-impact">{project.impact}</div>
+            </div>
+            {project.tools.length > 1 && (
+              <div className="overlay-side-section">
+                <div className="overlay-section-label">Stack</div>
+                <div className="overlay-tools">
+                  {project.tools.map(t => <Pill key={t}>{t}</Pill>)}
+                </div>
+              </div>
+            )}
+            {project.caseStudy && (
+              <a href={project.caseStudy} target="_blank" rel="noopener noreferrer" className="cta cta-ghost overlay-case-study">
+                View case study <span className="arr">→</span>
+              </a>
+            )}
           </div>
         </div>
       </div>
@@ -897,7 +928,10 @@ const CSS = `
   .overlay-resp li { font-size: 14px; line-height: 1.55; opacity: .85; padding-left: 16px; position: relative; }
   .overlay-resp li::before { content: "—"; position: absolute; left: 0; opacity: .5; }
   .overlay-impact { font-size: 14px; line-height: 1.55; opacity: .85; font-weight: 500; margin-bottom: 0; }
-  .overlay-tools { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 20px; }
+  .overlay-tools { display: flex; flex-wrap: wrap; gap: 6px; }
+  .overlay-side-section { border-top: 1px solid rgba(0,0,0,.1); padding-top: 16px; }
+  .overlay-side-section .overlay-section-label { margin-bottom: 8px; }
+  .overlay-case-study { align-self: flex-start; }
   .overlay-side {
     background: var(--paper); border-radius: 16px; padding: 24px;
     display: flex; flex-direction: column; gap: 24px;
@@ -911,6 +945,35 @@ const CSS = `
   }
   .overlay-piece div:first-child { font-size: 10px; letter-spacing: .1em; text-transform: uppercase; opacity: .5; margin-bottom: 4px; font-family: var(--font-mono); }
   .overlay-piece div:last-child { font-size: 14px; font-weight: 500; }
+
+  /* ── Overlay images ── */
+  .overlay-images {
+    display: flex; gap: 12px; overflow-x: auto;
+    margin-bottom: 36px; padding-bottom: 4px;
+    scrollbar-width: thin; scrollbar-color: rgba(0,0,0,.2) transparent;
+  }
+  .overlay-images::-webkit-scrollbar { height: 4px; }
+  .overlay-images::-webkit-scrollbar-thumb { background: rgba(0,0,0,.2); border-radius: 999px; }
+  .overlay-img {
+    height: 260px; width: auto; flex-shrink: 0;
+    border-radius: 10px; object-fit: cover;
+    border: 1px solid rgba(0,0,0,.1);
+    cursor: zoom-in; transition: opacity .15s;
+  }
+  .overlay-img:hover { opacity: .88; }
+
+  /* ── Lightbox ── */
+  .lightbox {
+    position: fixed; inset: 0; z-index: 300;
+    background: rgba(0,0,0,.88); backdrop-filter: blur(12px);
+    display: flex; align-items: center; justify-content: center;
+    padding: 32px; cursor: zoom-out; animation: fadeIn .15s ease-out;
+  }
+  .lightbox-img {
+    max-width: 100%; max-height: 100%;
+    object-fit: contain; border-radius: 8px;
+    box-shadow: 0 32px 80px rgba(0,0,0,.5);
+  }
 `;
 
 // ─── APP ─────────────────────────────────────────────────
