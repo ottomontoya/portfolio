@@ -1,0 +1,195 @@
+# Otto Montoya — Data Analyst
+
+> Clear insights from complex data. End-to-end across the BI stack.
+
+Otto Montoya is a Data Analyst based in Mexico, with a Bachelor's in Informatics Engineering and Digital Business. He specializes in Tableau and Amazon QuickSight and has delivered end-to-end BI work — from KPI definition and data modeling to dashboard design, governance, and adoption — across cybersecurity, automotive, non-profit, energy, and SaaS industries.
+
+Contact / portfolio: https://ottomontoya.com
+
+---
+
+## About
+
+I'm a Data Analyst with a Bachelor's in Informatics Engineering and Digital Business. From understanding business questions and defining KPIs, to designing dashboards, to building the governance models that keep data secure and trustworthy.
+
+I specialize in Tableau and Amazon QuickSight, and I've built interactive reporting and internal tools with Retool across e-commerce, education, non-profit, energy, and cybersecurity.
+
+What I enjoy most is translating messy requirements into clean data models and intuitive dashboards — and working closely with stakeholders so the result actually fits their workflow.
+
+**How I work:**
+- Gather requirements through working sessions and daily syncs — high-level ideas into concrete specs.
+- Validate every metric against source systems before a dashboard goes to production.
+- Write documentation and run demos so teams can actually use what I build.
+- Adapt quickly to new industries — the data problems are often more similar than they appear.
+
+**Career highlights:**
+- Consolidated 696 → 12 access paths for one Tableau deployment
+- Served 5 industries: cybersecurity, automotive, non-profit, energy, SaaS
+- Rebuilt ~15 legacy dashboards for a global manufacturer
+- 3+ years end-to-end BI, from KPI to delivery
+
+---
+
+## Skills
+
+**BI & Visualization:** Tableau, Tableau Online, Amazon QuickSight, Power BI
+
+**Data & Cloud:** Snowflake, Amazon Athena, Amazon S3, Neon, Azure ETL
+
+**Dev & Workflow:** Retool, SQL, Python, Pandas, Jupyter, dbt, ETL pipelines
+
+**Supporting:** Excel-based BI, Laravel / PHP, Dashboard embedding, Tableau Extensions
+
+**Areas of expertise:** Data governance, Analytics engineering, Dashboard design, Stakeholder collaboration, Data quality
+
+---
+
+## Projects
+
+### Project 01 — Governed Data Access at Scale
+**Client:** Cybersecurity SaaS
+**Role:** Data Analyst & BI Specialist
+**Tools:** Tableau, Snowflake, dbt
+**Timeline:** 1 year | End-to-end
+
+Redesigned row-level security in Tableau, reducing 696 access paths to 12 maintainable rules and eliminating all risky data sources.
+
+The client's Tableau environment had grown organically, resulting in 696 disparate access paths, dozens of risky data sources with PII exposure, and a folder structure of ~30 team-specific spaces that made governance nearly impossible. I analyzed Tableau usage data, user activity patterns, and data-source configurations to understand the full surface area of the problem. From this analysis I designed a new group-based Row Level Security model that reduced 696 access paths to 3 default cases and 9 special cases, while removing 100% of identified risky data sources. I restructured content from ~30 team folders into 5 global, access-regulated folders and built admin monitoring dashboards that reduced admin workload by approximately 70%.
+
+**Responsibilities:**
+- Analyzed Tableau usage data, user activity, and PII exposure across all data sources
+- Designed group-based RLS model reducing 696 access paths to 12 rules
+- Restructured ~30 team folders into 5 global, access-regulated folders
+- Built admin monitoring dashboards reducing admin workload ~70%
+- Maintained Data Catalog with dbt tagging and metadata in Snowflake
+- Prepared documentation, demos, and onboarding materials for all users
+
+**Impact:** 696 → 12 access paths. 100% risky data sources removed. ~70% reduction in admin workload.
+
+---
+
+### Project 02 — Market Research Dashboards for a Global Automotive Manufacturer
+**Client:** Leading German Automotive Manufacturer
+**Role:** BI Developer
+**Tools:** Tableau
+**Timeline:** 6 months | Implementation
+
+Built the Tableau visualization layer of a custom market research analytics platform, delivering ~15 dashboards from sketch-based designs that surface customer insights by market segment.
+
+The client commissioned a custom market research analytics platform combining automated data ingestion from SPSS files, a research-oriented data warehouse supporting longitudinal analysis, and cross-tabulation tools. I translated approximately 15 sketch-based designs into fully functional Tableau dashboards, iterating through client review cycles until function and visuals matched expectations. The dashboards were then embedded into the client's internal portal. In parallel, I conducted R&D on Tableau Extensions to evaluate third-party visual components for future development.
+
+**Responsibilities:**
+- Built the Tableau visualization layer for a custom market research analytics platform
+- Translated ~15 sketch-based designs into production Tableau dashboards end-to-end
+- Iterated through multiple client review cycles to align function and visuals with expectations
+- Researched Tableau Extensions to expand visual options and simplify long-term maintenance
+- Coordinated with the embedding team on technical constraints and integration readiness
+
+**Impact:** Delivered the full dashboard suite, live and embedded in the client's internal portal, enabling cross-tabulation and longitudinal analysis of customer behavior.
+
+**Case study:** https://www.stxnext.com/case-study/market-research-platform
+
+---
+
+### Project 03 — BI Layer for an Open Source Foundation's Salesforce Migration
+**Client:** Major Open Source Software Foundation
+**Role:** BI Consultant
+**Tools:** Amazon QuickSight, Snowflake
+**Timeline:** 3 months | End-to-end
+
+Designed and built three QuickSight dashboards on a Snowflake-backed data layer covering CRM, web analytics, and community activity, redesigned from scratch as part of the client's move off Salesforce reporting.
+
+The client was rebuilding their analytics away from Salesforce to gain full data ownership. The data engineering team migrated source systems into Snowflake, and I built the QuickSight dashboard layer. Working from high-level requirements, I designed and iterated on dashboard concepts in weekly client reviews, delivering three production dashboards covering Salesforce CRM, web analytics, and GitHub community activity. I authored specification documents for the data engineering team and performed data validation before handoff.
+
+**Responsibilities:**
+- Designed and built three QuickSight dashboards iterating through weekly client review cycles
+- Redesigned CRM and web analytics views from scratch, using existing reports only as KPI reference
+- Designed a net-new GitHub community activity dashboard end-to-end from requirements alone
+- Authored data specification documents for upstream Snowflake model alignment
+- Performed data validation against source systems before handoff
+
+**Impact:** Three data sources unified in a single controlled BI environment, giving the client consolidated visibility into funnel, web, and community performance independent of Salesforce.
+
+**Case study:** https://www.stxnext.com/case-study/salesforce-optimization
+
+---
+
+### Project 04 — Revenue Reporting & Workflow Apps for an Energy Company
+**Client:** Energy & Digital Assets
+**Role:** BI & Workflow Applications Developer
+**Tools:** Amazon QuickSight, Retool, AWS
+**Timeline:** Ongoing | End-to-end
+
+Built revenue reporting dashboards and interactive Retool workflow apps to automate manual processes and improve data quality.
+
+The client needed both reporting visibility and operational tooling. In QuickSight I designed and implemented scheduled revenue reports. In Retool I built highly interactive, data-entry-oriented applications with dynamic fields, conditional logic, and validation rules to minimize user error in complex operational workflows. Requirements were gathered through daily syncs and working sessions that also served as live demos and training.
+
+**Responsibilities:**
+- Gathered and refined reporting and workflow requirements directly from the client
+- Built QuickSight dashboards for fixed-schedule revenue reporting
+- Developed Retool apps with dynamic fields, conditional logic, and validation rules
+- Collaborated with a product designer on high-level mockups before implementation
+- Led working sessions, demos, and training for client team adoption
+- Produced how-to guides and documentation for ongoing use
+
+**Impact:** Manual processes automated. Data quality improved through validation guardrails. Client team fully onboarded.
+
+---
+
+### Project 05 — Rationalized BI for an Email Client Product Team
+**Client:** Software Product — Email Client
+**Role:** BI Consultant
+**Tools:** Amazon QuickSight, Neon, Salesforce
+**Timeline:** 3 months | End-to-end
+
+Standardized a fragmented Salesforce reporting landscape by introducing QuickSight and consolidating many overlapping dashboards into flexible KPI views.
+
+The client had accumulated many disconnected Salesforce reports with separate versions for each time grain. I helped evaluate BI tools and led the recommendation toward QuickSight, then designed KPI-oriented mockups from scratch and implemented a unified dashboard structure where users could switch between daily, weekly, monthly, quarterly, and yearly views. I also built out the full QuickSight project structure: folders, user groups, core dashboards, data sources connected to Neon, and scheduled refreshes.
+
+**Responsibilities:**
+- Supported BI tool evaluation and recommended Amazon QuickSight
+- Designed KPI-oriented mockups from scratch using Salesforce reports as input
+- Built unified dashboards with flexible time-range switching (daily → yearly)
+- Consolidated many overlapping dashboards into a small, maintainable set
+- Designed full QuickSight structure: folders, user groups, data sources, schedules
+- Configured Neon data sources with scheduled refreshes for reliable, timely data
+
+**Impact:** Fragmented Salesforce reports consolidated. Company-wide QuickSight rollout delivered with full structure and governance.
+
+---
+
+### Project 06 — Real-Time Manufacturing Analytics for a Global Heavy Industry Manufacturer
+**Client:** Global Heavy Industry Manufacturer
+**Role:** BI Developer
+**Tools:** Amazon QuickSight
+**Timeline:** 3 weeks | Implementation
+
+Implemented a four-view real-time manufacturing analytics suite in AWS QuickSight from production design mockups, covering furnace process monitoring and a 2,000+ asset rotating equipment fleet.
+
+The client needed a real-time monitoring tool to replace standard BI templates that struggled to prioritize critical signals across millions of raw sensor readings. I built the full interactive dashboard layer across four interconnected views: a Furnace Process Overview for safety situational awareness, a Detailed Metrics view for point diagnostics, a Rotating Equipment Fleet view monitoring 2,000+ assets with intelligent status prioritization, and an Asset Deep Dive tied to direct work order actions.
+
+**Responsibilities:**
+- Built the full QuickSight dashboard suite end-to-end from production design team mockups
+- Implemented conditional formatting tied to operational thresholds for at-a-glance status reads
+- Wired up interactive filtering and cross-view navigation between fleet, asset, and process views
+- Translated cognitive UI design principles into native QuickSight components
+- Iterated alongside the design team to preserve visual nuance through implementation
+
+**Impact:** Delivered a fully native Amazon QuickSight dashboard suite at production scale, giving operators real-time visibility into furnace process health and a 2,000+ asset rotating equipment fleet.
+
+---
+
+## Experience
+
+- **Data Analyst** at STX Next (Present) — Leading dashboard and governance work end-to-end across multiple client industries.
+- **Jr. Data Analyst** at STX Next (2024–2025) — Shipped client BI work in Tableau and QuickSight; supported migrations and data modeling.
+- **Jr. Data Analyst** at Inquire Business Consulting (2023–2024) — Reporting and analytics for cross-industry clients; early dashboard design work.
+- **Software Engineer Intern** at Inquire Business Consulting (2023) — Internship across data and product systems; foundation in engineering practices.
+
+---
+
+## Education
+
+- **Data Science and Machine Learning** — MIT Schwarzman College of Computing. Advanced modeling, experimentation, and decision-making with data.
+- **Python Data Structures** — Universidad Austral. Foundations of Python data structures for analytics workflows.
+- **Bachelor's in Informatics Engineering & Digital Business** — Universidad Anáhuac Mayab. Core computing, systems, and digital business foundations.
