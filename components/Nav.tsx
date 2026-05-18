@@ -12,6 +12,80 @@ export function scrollTo(id: string) {
   document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
+// All sections whose background can conflict with the nav.
+const ALL_WATCHED_IDS = ["about", "skills", "experience"];
+
+type NavScheme = "default" | "over-dark" | "over-light";
+
+// Classify which CSS state the nav needs based on which sections are visible.
+// Light mode dark sections: about (green), skills (burgundy), experience (ink).
+// Dark mode: those three sections are still dark enough — EXCEPT experience,
+// which uses var(--ink) that flips to light beige (#f1ead8) in dark mode.
+function classify(ids: string[], dark: boolean): NavScheme {
+  if (dark) {
+    if (ids.includes("experience")) return "over-light";
+    return "default";
+  }
+  if (ids.some(id => ["about", "skills", "experience"].includes(id))) return "over-dark";
+  return "default";
+}
+
+function useNavScheme(dark: boolean) {
+  const [desktopIds, setDesktopIds] = useState<string[]>([]);
+  const [mobileIds, setMobileIds] = useState<string[]>([]);
+
+  useEffect(() => {
+    const dActive = new Set<string>();
+    const mActive = new Set<string>();
+
+    const build = () => {
+      const strip = 80;
+      const vh = window.innerHeight;
+
+      const dObs = new IntersectionObserver(
+        entries => {
+          entries.forEach(e => e.isIntersecting ? dActive.add(e.target.id) : dActive.delete(e.target.id));
+          setDesktopIds([...dActive]);
+        },
+        { rootMargin: `0px 0px -${Math.max(0, vh - strip)}px 0px` }
+      );
+
+      const mObs = new IntersectionObserver(
+        entries => {
+          entries.forEach(e => e.isIntersecting ? mActive.add(e.target.id) : mActive.delete(e.target.id));
+          setMobileIds([...mActive]);
+        },
+        { rootMargin: `-${Math.max(0, vh - strip)}px 0px 0px 0px` }
+      );
+
+      ALL_WATCHED_IDS.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) { dObs.observe(el); mObs.observe(el); }
+      });
+
+      return [dObs, mObs] as const;
+    };
+
+    let [dObs, mObs] = build();
+    const onResize = () => {
+      dObs.disconnect(); mObs.disconnect();
+      dActive.clear(); mActive.clear();
+      [dObs, mObs] = build();
+    };
+
+    window.addEventListener("resize", onResize);
+    return () => {
+      dObs.disconnect(); mObs.disconnect();
+      window.removeEventListener("resize", onResize);
+    };
+  }, []); // observers never need rebuilding for dark changes — classify() handles it
+
+  return {
+    desktopScheme: classify(desktopIds, dark),
+    mobileScheme: classify(mobileIds, dark),
+  };
+}
+
 function useActiveSection() {
   const [active, setActive] = useState("home");
   useEffect(() => {
@@ -46,6 +120,7 @@ const MoonIcon = ({ size = 16 }: { size?: number }) => (
 
 export function Nav({ dark, onToggleDark }: { dark: boolean; onToggleDark: () => void }) {
   const active = useActiveSection();
+  const { desktopScheme, mobileScheme } = useNavScheme(dark);
   const [scrolled, setScrolled] = useState(false);
 
   const navCenterRef = useRef<HTMLElement>(null);
@@ -88,10 +163,10 @@ export function Nav({ dark, onToggleDark }: { dark: boolean; onToggleDark: () =>
 
   return (
     <>
-      <header className={`nav-wrap${scrolled ? " scrolled" : ""}`}>
+      <header className={`nav-wrap${scrolled ? " scrolled" : ""}${desktopScheme !== "default" ? ` nav-${desktopScheme}` : ""}`}>
         <div className="nav-pill">
           <button className="nav-brand" onClick={() => scrollTo("home")}>
-            <img src={dark ? "/assets/logo-light.svg" : "/assets/logo.svg"} alt="" width="26" height="26" />
+            <img src={desktopScheme === "over-dark" || (dark && desktopScheme !== "over-light") ? "/assets/logo-light.svg" : "/assets/logo.svg"} alt="" width="26" height="26" />
             Otto Montoya
           </button>
           <nav ref={navCenterRef} className="nav-center">
@@ -111,7 +186,7 @@ export function Nav({ dark, onToggleDark }: { dark: boolean; onToggleDark: () =>
       </header>
 
       <div className="mnav-wrap">
-        <div ref={mnavPillRef} className="mnav-pill">
+        <div ref={mnavPillRef} className={`mnav-pill${mobileScheme !== "default" ? ` nav-${mobileScheme}` : ""}`}>
           {mPill.ready && (
             <span className="mnav-active-pill" style={{ left: mPill.left, top: mPill.top, width: mPill.width, height: mPill.height }} />
           )}
