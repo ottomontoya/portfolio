@@ -20,9 +20,8 @@ body {
   color: var(--ink);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  overflow-x: hidden;
 }
-#root { min-height: 100vh; }
+#root { min-height: 100vh; overflow-x: hidden; }
 ::selection { background: var(--burgundy); color: var(--beige); }
 body::-webkit-scrollbar { width: 10px; }
 body::-webkit-scrollbar-track { background: transparent; }
