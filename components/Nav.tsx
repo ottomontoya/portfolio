@@ -6,10 +6,12 @@ export const NAV_ITEMS = [
   { id: "work", label: "Work" },
   { id: "skills", label: "Skills" },
   { id: "experience", label: "Experience" },
+  { id: "contact", label: "Contact" },
 ];
 
 export function scrollTo(id: string) {
-  document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  document.getElementById(id)?.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
 }
 
 // All sections whose background can conflict with the nav.
@@ -17,16 +19,12 @@ const ALL_WATCHED_IDS = ["about", "skills", "experience"];
 
 type NavScheme = "default" | "over-dark" | "over-light";
 
-// Classify which CSS state the nav needs based on which sections are visible.
-// Light mode dark sections: about (green), skills (burgundy), experience (ink).
-// Dark mode: those three sections are still dark enough — EXCEPT experience,
-// which uses var(--ink) that flips to light beige (#f1ead8) in dark mode.
+// Classify the rendered wall beneath the nav rather than treating the theme as
+// a proxy for contrast. About and Skills remain colored dark rooms in both
+// themes; Experience alone flips from a dark wall to a light wall.
 function classify(ids: string[], dark: boolean): NavScheme {
-  if (dark) {
-    if (ids.includes("experience")) return "over-light";
-    return "default";
-  }
-  if (ids.some(id => ["about", "skills", "experience"].includes(id))) return "over-dark";
+  if (ids.includes("experience")) return dark ? "over-light" : "over-dark";
+  if (ids.some(id => id === "about" || id === "skills")) return "over-dark";
   return "default";
 }
 
@@ -124,13 +122,15 @@ export function Nav({ dark, onToggleDark }: { dark: boolean; onToggleDark: () =>
   const [scrolled, setScrolled] = useState(false);
 
   const navCenterRef = useRef<HTMLElement>(null);
-  const mnavPillRef = useRef<HTMLDivElement>(null);
+  const mnavPillRef = useRef<HTMLElement>(null);
   const desktopRefs = useRef<Record<string, HTMLButtonElement | null>>({});
   const mobileRefs = useRef<Record<string, HTMLButtonElement | null>>({});
 
-  type PillRect = { left: number; top: number; width: number; height: number; ready: boolean };
-  const [dPill, setDPill] = useState<PillRect>({ left: 0, top: 0, width: 0, height: 0, ready: false });
-  const [mPill, setMPill] = useState<PillRect>({ left: 0, top: 0, width: 0, height: 0, ready: false });
+  type PillClip = { clipPath: string; ready: boolean };
+  type MobilePill = { left: number; width: number; ready: boolean };
+  const emptyPill: PillClip = { clipPath: "inset(0 100% 0 0 round 999px)", ready: false };
+  const [dPill, setDPill] = useState<PillClip>(emptyPill);
+  const [mPill, setMPill] = useState<MobilePill>({ left: 0, width: 0, ready: false });
 
   useEffect(() => {
     const on = () => setScrolled(window.scrollY > 24);
@@ -140,20 +140,29 @@ export function Nav({ dark, onToggleDark }: { dark: boolean; onToggleDark: () =>
   }, []);
 
   useEffect(() => {
+    const getClip = (navRect: DOMRect, itemRect: DOMRect) => {
+      const top = Math.max(0, itemRect.top - navRect.top);
+      const right = Math.max(0, navRect.right - itemRect.right);
+      const bottom = Math.max(0, navRect.bottom - itemRect.bottom);
+      const left = Math.max(0, itemRect.left - navRect.left);
+      return `inset(${top}px ${right}px ${bottom}px ${left}px round 999px)`;
+    };
+
     const measure = () => {
       const dEl = desktopRefs.current[active];
       const dNav = navCenterRef.current;
       if (dEl && dNav) {
         const nr = dNav.getBoundingClientRect();
         const er = dEl.getBoundingClientRect();
-        setDPill({ left: er.left - nr.left, top: er.top - nr.top, width: er.width, height: er.height, ready: true });
+        setDPill({ clipPath: getClip(nr, er), ready: true });
       }
       const mEl = mobileRefs.current[active];
       const mNav = mnavPillRef.current;
       if (mEl && mNav) {
-        const nr = mNav.getBoundingClientRect();
-        const er = mEl.getBoundingClientRect();
-        setMPill({ left: er.left - nr.left, top: er.top - nr.top, width: er.width, height: er.height, ready: true });
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const left = mEl.offsetLeft - (mNav.clientWidth - mEl.offsetWidth) / 2;
+        mNav.scrollTo({ left, behavior: reduceMotion ? "auto" : "smooth" });
+        setMPill({ left: mEl.offsetLeft, width: mEl.offsetWidth, ready: true });
       }
     };
     measure();
@@ -169,34 +178,60 @@ export function Nav({ dark, onToggleDark }: { dark: boolean; onToggleDark: () =>
             <img src={desktopScheme === "over-dark" || (dark && desktopScheme !== "over-light") ? "/assets/logo-light.svg" : "/assets/logo.svg"} alt="" width="26" height="26" />
             Otto Montoya
           </button>
-          <nav ref={navCenterRef} className="nav-center">
+          <nav ref={navCenterRef} className="nav-center" aria-label="Primary navigation">
             {dPill.ready && (
-              <span className="nav-active-pill" style={{ left: dPill.left, top: dPill.top, width: dPill.width, height: dPill.height }} />
+              <span className="nav-active-pill" style={{ clipPath: dPill.clipPath }} />
             )}
             {NAV_ITEMS.map(it => (
-              <button key={it.id} ref={el => { desktopRefs.current[it.id] = el; }} className={`nav-link${active === it.id ? " active" : ""}`} onClick={() => scrollTo(it.id)}>
+              <button
+                key={it.id}
+                ref={el => { desktopRefs.current[it.id] = el; }}
+                className={`nav-link${active === it.id ? " active" : ""}`}
+                onClick={() => scrollTo(it.id)}
+                aria-current={active === it.id ? "location" : undefined}
+              >
                 {it.label}
               </button>
             ))}
           </nav>
-          <button className="nav-mode" onClick={onToggleDark} aria-label="Toggle dark mode">
+          <button
+            className="nav-mode"
+            onClick={onToggleDark}
+            aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
+            aria-pressed={dark}
+          >
             {dark ? <SunIcon /> : <MoonIcon />}
           </button>
         </div>
       </header>
 
       <div className="mnav-wrap">
-        <div ref={mnavPillRef} className={`mnav-pill${mobileScheme !== "default" ? ` nav-${mobileScheme}` : ""}`}>
-          {mPill.ready && (
-            <span className="mnav-active-pill" style={{ left: mPill.left, top: mPill.top, width: mPill.width, height: mPill.height }} />
-          )}
-          {NAV_ITEMS.map(it => (
-            <button key={it.id} ref={el => { mobileRefs.current[it.id] = el; }} className={`mnav-link${active === it.id ? " active" : ""}`} onClick={() => scrollTo(it.id)}>
-              {it.label}
-            </button>
-          ))}
-          <span className="mnav-sep" />
-          <button className="mnav-link mnav-mode" onClick={onToggleDark} aria-label="Toggle dark mode">
+        <div className="mnav-cluster">
+          <nav ref={mnavPillRef} className={`mnav-pill${mobileScheme !== "default" ? ` nav-${mobileScheme}` : ""}`} aria-label="Primary navigation">
+            {mPill.ready && (
+              <span
+                className="mnav-active-pill"
+                style={{ width: mPill.width, transform: `translateX(${mPill.left}px)` }}
+              />
+            )}
+            {NAV_ITEMS.map(it => (
+              <button
+                key={it.id}
+                ref={el => { mobileRefs.current[it.id] = el; }}
+                className={`mnav-link${active === it.id ? " active" : ""}`}
+                onClick={() => scrollTo(it.id)}
+                aria-current={active === it.id ? "location" : undefined}
+              >
+                {it.label}
+              </button>
+            ))}
+          </nav>
+          <button
+            className={`mnav-theme${mobileScheme !== "default" ? ` nav-${mobileScheme}` : ""}`}
+            onClick={onToggleDark}
+            aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
+            aria-pressed={dark}
+          >
             {dark ? <SunIcon size={14} /> : <MoonIcon size={14} />}
           </button>
         </div>

@@ -1,0 +1,4 @@
+# Codex settings scoped to this repository.
+# Keep model selection personal/global; this project only defines safe execution defaults.
+sandbox_mode = "workspace-write"
+model_reasoning_effort = "medium"

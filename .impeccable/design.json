@@ -1,0 +1,231 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-07-26T21:52:46Z",
+  "title": "Design System: Otto Montoya — Portfolio",
+  "extensions": {
+    "colorMeta": {
+      "field-green": {
+        "role": "secondary",
+        "displayName": "Field Green",
+        "canonical": "#2d4a2b",
+        "tonalRamp": ["oklch(15% 0.035 143)", "oklch(22% 0.045 143)", "oklch(29% 0.055 143)", "oklch(35% 0.06 143)", "oklch(45% 0.065 143)", "oklch(58% 0.06 143)", "oklch(75% 0.045 143)", "oklch(92% 0.02 143)"]
+      },
+      "oxblood": {
+        "role": "primary",
+        "displayName": "Oxblood",
+        "canonical": "#6b1f2a",
+        "tonalRamp": ["oklch(15% 0.06 18)", "oklch(22% 0.08 18)", "oklch(28% 0.10 18)", "oklch(35% 0.11 18)", "oklch(46% 0.13 18)", "oklch(60% 0.14 18)", "oklch(78% 0.09 18)", "oklch(93% 0.035 18)"]
+      },
+      "bone-paper": {
+        "role": "neutral",
+        "displayName": "Bone Paper",
+        "canonical": "#f1ead8",
+        "tonalRamp": ["oklch(20% 0.012 92)", "oklch(32% 0.016 92)", "oklch(45% 0.02 92)", "oklch(58% 0.024 92)", "oklch(70% 0.028 92)", "oklch(82% 0.03 92)", "oklch(93% 0.03 92)", "oklch(97% 0.018 92)"]
+      },
+      "warm-paper": {
+        "role": "neutral",
+        "displayName": "Warm Paper",
+        "canonical": "#f7f1de",
+        "tonalRamp": ["oklch(21% 0.012 92)", "oklch(33% 0.016 92)", "oklch(46% 0.02 92)", "oklch(59% 0.024 92)", "oklch(72% 0.028 92)", "oklch(84% 0.03 92)", "oklch(95% 0.03 92)", "oklch(98% 0.015 92)"]
+      },
+      "charcoal-ink": {
+        "role": "neutral",
+        "displayName": "Charcoal Ink",
+        "canonical": "#1a1a18",
+        "tonalRamp": ["oklch(12% 0.003 110)", "oklch(18% 0.004 110)", "oklch(26% 0.005 110)", "oklch(36% 0.006 110)", "oklch(48% 0.006 110)", "oklch(62% 0.005 110)", "oklch(78% 0.004 110)", "oklch(93% 0.003 110)"]
+      },
+      "field-green-dark": {
+        "role": "secondary",
+        "displayName": "Field Green (dark mode)",
+        "canonical": "#3d6b3f",
+        "tonalRamp": ["oklch(15% 0.035 143)", "oklch(22% 0.045 143)", "oklch(29% 0.055 143)", "oklch(38% 0.065 143)", "oklch(48% 0.07 143)", "oklch(60% 0.06 143)", "oklch(76% 0.043 143)", "oklch(93% 0.018 143)"]
+      },
+      "oxblood-dark": {
+        "role": "primary",
+        "displayName": "Oxblood (dark mode)",
+        "canonical": "#a8344a",
+        "tonalRamp": ["oklch(15% 0.06 18)", "oklch(22% 0.08 18)", "oklch(30% 0.10 18)", "oklch(40% 0.12 18)", "oklch(52% 0.14 18)", "oklch(64% 0.13 18)", "oklch(79% 0.085 18)", "oklch(94% 0.03 18)"]
+      },
+      "accent-on-dark": {
+        "role": "primary",
+        "displayName": "Oxblood Highlight",
+        "canonical": "#ca6276",
+        "tonalRamp": ["oklch(15% 0.06 14)", "oklch(23% 0.08 14)", "oklch(31% 0.10 14)", "oklch(41% 0.12 14)", "oklch(54% 0.14 14)", "oklch(67% 0.13 14)", "oklch(81% 0.08 14)", "oklch(95% 0.025 14)"]
+      },
+      "bone-paper-dark": {
+        "role": "neutral",
+        "displayName": "Bone Paper (dark-mode surface)",
+        "canonical": "#1a1a18",
+        "tonalRamp": ["oklch(12% 0.003 110)", "oklch(18% 0.004 110)", "oklch(26% 0.005 110)", "oklch(36% 0.006 110)", "oklch(48% 0.006 110)", "oklch(62% 0.005 110)", "oklch(78% 0.004 110)", "oklch(93% 0.003 110)"]
+      },
+      "charcoal-ink-dark": {
+        "role": "neutral",
+        "displayName": "Charcoal Ink (dark-mode text)",
+        "canonical": "#f1ead8",
+        "tonalRamp": ["oklch(20% 0.012 92)", "oklch(32% 0.016 92)", "oklch(45% 0.02 92)", "oklch(58% 0.024 92)", "oklch(70% 0.028 92)", "oklch(82% 0.03 92)", "oklch(93% 0.03 92)", "oklch(97% 0.018 92)"]
+      },
+      "warm-paper-dark": {
+        "role": "neutral",
+        "displayName": "Warm Paper (dark-mode interactive surface)",
+        "canonical": "#353431",
+        "tonalRamp": ["oklch(15% 0.004 85)", "oklch(22% 0.006 85)", "oklch(30% 0.008 85)", "oklch(40% 0.01 85)", "oklch(52% 0.012 85)", "oklch(64% 0.01 85)", "oklch(79% 0.007 85)", "oklch(94% 0.003 85)"]
+      },
+      "overlay-step": {
+        "role": "neutral",
+        "displayName": "Overlay Step",
+        "canonical": "#e2d6bd",
+        "tonalRamp": ["oklch(15% 0.025 88)", "oklch(23% 0.035 88)", "oklch(32% 0.045 88)", "oklch(42% 0.055 88)", "oklch(54% 0.065 88)", "oklch(66% 0.06 88)", "oklch(80% 0.04 88)", "oklch(94% 0.015 88)"]
+      },
+      "overlay-step-dark": {
+        "role": "neutral",
+        "displayName": "Overlay Step (dark mode)",
+        "canonical": "#6b675e",
+        "tonalRamp": ["oklch(15% 0.008 85)", "oklch(23% 0.012 85)", "oklch(31% 0.016 85)", "oklch(41% 0.02 85)", "oklch(52% 0.024 85)", "oklch(64% 0.022 85)", "oklch(79% 0.014 85)", "oklch(94% 0.005 85)"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display Serif", "purpose": "Hero headline only. Capped at 14ch with text-wrap: balance." },
+      "headline": { "displayName": "Room Headline", "purpose": "One per room, capped at 18ch. Carries one Oxblood italic phrase." },
+      "title": { "displayName": "Title Serif", "purpose": "Project titles, timeline roles, education entries, overlay headings." },
+      "lead": { "displayName": "Lead Paragraph", "purpose": "The paragraph under a headline. Capped at 54ch at 85% opacity." },
+      "body": { "displayName": "Body Sans", "purpose": "List items, notes, responsibilities. 46–60ch measure, 82–92% opacity." },
+      "label": { "displayName": "Mono Label", "purpose": "Metadata only — eyebrows, keys, tools, dates. Uppercase, never a sentence." }
+    },
+    "shadows": [
+      { "name": "glass-float-default", "value": "0 10px 40px color-mix(in srgb, var(--ink) 18%, transparent), inset 0 1px 0 color-mix(in srgb, #ffffff 58%, transparent)", "purpose": "Nav pill over the default room scheme. Mobile uses a 30px spread." },
+      { "name": "glass-float-over-dark", "value": "0 10px 40px color-mix(in srgb, #000000 32%, transparent), inset 0 1px 0 color-mix(in srgb, #ffffff 25%, transparent)", "purpose": "Nav pill over Field Green, Oxblood, or Charcoal Ink rooms — deeper ambient with a restrained top highlight." },
+      { "name": "glass-float-over-light", "value": "0 10px 40px color-mix(in srgb, #000000 10%, transparent), inset 0 1px 0 color-mix(in srgb, #ffffff 60%, transparent)", "purpose": "Nav pill over a pale surface in dark mode — light ambient, bright top edge." },
+      { "name": "lightbox-lift", "value": "0 32px 80px color-mix(in srgb, #000000 50%, transparent)", "purpose": "The zoomed image only. The single deep shadow in the system." }
+    ],
+    "motion": [
+      { "name": "ease-standard", "value": "cubic-bezier(.4,0,.2,1)", "purpose": "Nav active-pill slide (300ms, compositor-friendly clip-path)." },
+      { "name": "ease-pop", "value": "cubic-bezier(.22,1,.36,1)", "purpose": "Overlay card entrance — scale .96 → 1 over 250ms." },
+      { "name": "duration-micro", "value": "150ms", "purpose": "Button lift on hover (translateY -1px)." },
+      { "name": "duration-state", "value": "200ms", "purpose": "Fills, opacity, and the project row's padding/background shift." },
+      { "name": "duration-scheme", "value": "350ms", "purpose": "Nav cross-fade between default / over-dark / over-light schemes." },
+      { "name": "duration-enter", "value": "250ms", "purpose": "Overlay and lightbox entrance; nav top offset on scroll." },
+      { "name": "reduced-motion", "value": "0ms", "purpose": "Navigation, CTA, project, overlay, and lightbox state changes become immediate while preserving their visible hierarchy." }
+    ],
+    "breakpoints": [
+      { "name": "structural", "value": "860px" },
+      { "name": "overlay", "value": "820px" },
+      { "name": "device", "value": "760px" },
+      { "name": "compact-nav", "value": "420px" },
+      { "name": "compact-device", "value": "340px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary CTA",
+      "kind": "button",
+      "refersTo": "cta-primary",
+      "description": "The single action button — Oxblood fill with a trailing mono arrow. Used for 'View work' and 'Say hello'.",
+      "html": "<button class=\"ds-cta ds-cta-primary\">View work <span class=\"ds-arr\">→</span></button>",
+      "css": ".ds-cta { font-family: var(--font-body, 'DM Sans', ui-sans-serif, system-ui, sans-serif); font-size: 14px; font-weight: 500; padding: 14px 22px; border-radius: 999px; border: 1px solid transparent; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; transition: transform .15s, background .2s, color .2s; } .ds-cta-primary { background: var(--accent-text, #6b1f2a); color: var(--on-accent, #f7f1de); } .ds-cta-primary:hover { background: var(--on-wall-hero, #1a1a18); color: var(--wall-hero, #f1ead8); transform: translateY(-1px); } .ds-cta-primary:focus-visible { outline: 2px solid currentColor; outline-offset: -3px; } .ds-arr { font-family: var(--font-mono, 'JetBrains Mono', ui-monospace, monospace); font-size: 13px; }"
+    },
+    {
+      "name": "Ghost CTA",
+      "kind": "button",
+      "refersTo": "cta-ghost",
+      "description": "Secondary action that inherits the room's text color via currentColor, so it re-colors itself on any wall.",
+      "html": "<button class=\"ds-cta ds-cta-ghost\">About me</button>",
+      "css": ".ds-cta-ghost { font-family: var(--font-body, 'DM Sans', ui-sans-serif, system-ui, sans-serif); font-size: 14px; font-weight: 500; padding: 14px 22px; border-radius: 999px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; background: transparent; color: inherit; border: 1px solid currentColor; opacity: .85; transition: transform .15s, background .2s, opacity .2s; } .ds-cta-ghost:hover { background: var(--wash, color-mix(in srgb, currentColor 7%, transparent)); opacity: 1; transform: translateY(-1px); } .ds-cta-ghost:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }"
+    },
+    {
+      "name": "Tag Pill",
+      "kind": "chip",
+      "refersTo": "tag-pill",
+      "description": "Read-only mono label for tools and expertise areas. Its currentColor-derived wash and rule follow the foreground of each room.",
+      "html": "<span class=\"ds-pill\">Tableau</span><span class=\"ds-pill\">Snowflake</span><span class=\"ds-pill\">dbt</span>",
+      "css": ".ds-pill { display: inline-block; font-family: var(--font-mono, 'JetBrains Mono', ui-monospace, monospace); font-size: 11px; letter-spacing: .04em; padding: 6px 11px; margin-right: 6px; border-radius: 999px; background: var(--wash, color-mix(in srgb, currentColor 7%, transparent)); border: 1px solid var(--rule, color-mix(in srgb, currentColor 15%, transparent)); color: inherit; }"
+    },
+    {
+      "name": "Eyebrow Label",
+      "kind": "custom",
+      "refersTo": "label",
+      "description": "The mono section marker that opens every room, with an optional dot.",
+      "html": "<div class=\"ds-eyebrow\"><span class=\"ds-eyebrow-dot\"></span><span>Selected work</span></div>",
+      "css": ".ds-eyebrow { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-mono, 'JetBrains Mono', ui-monospace, monospace); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; opacity: var(--label-opacity, .74); color: inherit; } .ds-eyebrow-dot { width: 6px; height: 6px; border-radius: 999px; background: currentColor; opacity: .5; }"
+    },
+    {
+      "name": "Glass Nav Pill",
+      "kind": "nav",
+      "refersTo": "nav-pill",
+      "description": "The floating navigation. Translucent, blurred, hairline-bordered, and classified by the rendered wall beneath it, with a clipped sliding active indicator. Shown here in its default scheme.",
+      "html": "<div class=\"ds-nav\"><button class=\"ds-nav-brand\">Otto Montoya</button><nav class=\"ds-nav-center\"><button class=\"ds-nav-link ds-nav-link-active\">Home</button><button class=\"ds-nav-link\">About</button><button class=\"ds-nav-link\">Work</button><button class=\"ds-nav-link\">Skills</button></nav><button class=\"ds-nav-mode\" aria-label=\"Toggle dark mode\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z\"/></svg></button></div>",
+      "css": ".ds-nav { display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: 999px; background: color-mix(in srgb, #ffffff 72%, transparent); backdrop-filter: blur(28px) saturate(180%); border: 1px solid color-mix(in srgb, #ffffff 44%, transparent); box-shadow: 0 10px 40px color-mix(in srgb, #1a1a18 18%, transparent), inset 0 1px 0 color-mix(in srgb, #ffffff 58%, transparent); color: var(--ink, #1a1a18); transition: color .35s ease, background .35s ease, border-color .35s ease, box-shadow .35s ease; } .ds-nav-over-dark { color: #f7f1de; background: color-mix(in srgb, #000000 18%, transparent); backdrop-filter: blur(28px); border-color: color-mix(in srgb, #ffffff 22%, transparent); } .ds-nav-brand { background: none; border: 0; font-family: var(--font-body, 'DM Sans', sans-serif); font-size: 13px; font-weight: 600; letter-spacing: -.01em; color: inherit; cursor: pointer; padding: 8px 14px; opacity: .92; } .ds-nav-brand:hover { opacity: 1; } .ds-nav-center { display: flex; gap: 2px; align-items: center; } .ds-nav-link { min-width: 44px; min-height: 44px; background: none; border: 0; font-family: var(--font-body, 'DM Sans', sans-serif); font-size: 13px; letter-spacing: .005em; padding: 8px 14px; border-radius: 999px; cursor: pointer; color: inherit; opacity: .74; transition: opacity .2s, color .2s; } .ds-nav-link:hover { opacity: 1; } .ds-nav-link-active { background: color-mix(in srgb, #1a1a18 88%, transparent); backdrop-filter: blur(16px); box-shadow: inset 0 1px 0 color-mix(in srgb, #ffffff 58%, transparent); color: #f1ead8; opacity: 1; } .ds-nav-link:focus-visible { outline: 2px solid currentColor; outline-offset: -3px; } .ds-nav-mode:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; } .ds-nav-mode { background: transparent; border: 0; width: 44px; height: 44px; border-radius: 999px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; color: inherit; opacity: .85; } .ds-nav-mode:hover { background: color-mix(in srgb, currentColor 7%, transparent); opacity: 1; }"
+    },
+    {
+      "name": "Project Row",
+      "kind": "custom",
+      "refersTo": "project-row",
+      "description": "The Work room's entire interface: a keyboard-operable, hairline-separated grid row that widens into the page on hover or focus. No card.",
+      "html": "<ul class=\"ds-projects\"><li class=\"ds-project\"><button class=\"ds-project-trigger\" aria-label=\"Open project details for Governed Data Access at Scale\"></button><div class=\"ds-proj-n\">01</div><div><h3 class=\"ds-proj-title\">Governed Data Access at Scale</h3><div class=\"ds-proj-meta\">Global Cybersecurity Platform · Data Analyst &amp; BI Specialist</div><p class=\"ds-proj-sum\">Redesigned Tableau row-level security for a 1,500-user environment, consolidating 696 ad-hoc access paths into 12 maintainable access groups.</p></div><div class=\"ds-proj-chart\"><div class=\"ds-proj-metric\"><span class=\"ds-proj-mv\">696 → 12</span><span class=\"ds-proj-ml\">Access paths</span></div><svg viewBox=\"0 0 240 80\" width=\"100%\" preserveAspectRatio=\"none\" aria-hidden=\"true\"><path d=\"M4,4 L236,74.7\" stroke=\"currentColor\" stroke-width=\"1.5\" fill=\"none\" stroke-opacity=\".45\" stroke-linecap=\"round\"/><circle cx=\"4\" cy=\"4\" r=\"2.5\" fill=\"currentColor\"/><circle cx=\"236\" cy=\"74.7\" r=\"3\" fill=\"currentColor\"/></svg></div><div class=\"ds-proj-arr\">→</div></li></ul>",
+      "css": ".ds-projects { list-style: none; padding: 0; margin: 0; } .ds-project { position: relative; display: grid; grid-template-columns: 64px 1.4fr 1fr 32px; gap: 32px; align-items: center; padding: 32px 0; border-top: 1px solid var(--rule, color-mix(in srgb, currentColor 15%, transparent)); border-bottom: 1px solid var(--rule, color-mix(in srgb, currentColor 15%, transparent)); cursor: pointer; transition: padding .2s, background .2s; } .ds-project-trigger { position: absolute; inset: 0; z-index: 2; width: 100%; border: 0; border-radius: 2px; background: transparent; cursor: pointer; } .ds-project:hover, .ds-project:focus-within { padding: 32px 24px; background: var(--paper, #f7f1de); } .ds-project:hover .ds-proj-arr, .ds-project:focus-within .ds-proj-arr { transform: translateX(4px); color: var(--accent-text, #6b1f2a); } .ds-project-trigger:focus-visible { outline: 2px solid currentColor; outline-offset: -3px; } .ds-proj-n { font-family: var(--font-mono, 'JetBrains Mono', monospace); color: var(--accent-text, #6b1f2a); font-size: 13px; font-weight: 600; } .ds-proj-title { font-family: var(--font-display, 'Instrument Serif', Georgia, serif); font-weight: 400; font-size: clamp(22px, 2.2vw, 30px); line-height: 1.1; margin: 0 0 6px; letter-spacing: -.01em; } .ds-proj-meta { font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 11.5px; opacity: .74; margin-bottom: 10px; } .ds-proj-sum { font-family: var(--font-body, 'DM Sans', sans-serif); font-size: 14px; line-height: 1.5; margin: 0; opacity: .78; max-width: 46ch; } .ds-proj-chart { display: grid; grid-template-rows: auto 1fr; gap: 8px; color: var(--accent-text, #6b1f2a); min-width: 0; } .ds-proj-metric { display: flex; align-items: baseline; gap: 10px; } .ds-proj-mv { font-family: var(--font-display, 'Instrument Serif', Georgia, serif); font-size: 30px; line-height: 1; color: currentColor; letter-spacing: -.01em; } .ds-proj-ml { font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 10.5px; opacity: .74; } .ds-proj-arr { font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 18px; opacity: .4; transition: transform .25s, color .25s; }"
+    },
+    {
+      "name": "Stat Block",
+      "kind": "custom",
+      "refersTo": "display",
+      "description": "The canonical way to present a number: serif figure in Oxblood, plain label, quiet mono qualifier.",
+      "html": "<div class=\"ds-stat\"><div class=\"ds-stat-val\">696→12</div><div class=\"ds-stat-label\">Access paths consolidated</div><div class=\"ds-stat-suffix\">for one Tableau deployment</div></div>",
+      "css": ".ds-stat { padding-right: 20px; } .ds-stat-val { font-family: var(--font-display, 'Instrument Serif', Georgia, serif); font-size: clamp(40px, 4vw, 56px); line-height: 1; color: var(--accent-text, #6b1f2a); letter-spacing: -.02em; } .ds-stat-label { font-family: var(--font-body, 'DM Sans', sans-serif); font-size: 14px; margin-top: 8px; font-weight: 500; } .ds-stat-suffix { font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 11px; opacity: var(--label-opacity, .74); margin-top: 4px; letter-spacing: .02em; }"
+    },
+    {
+      "name": "Overlay Side Panel",
+      "kind": "card",
+      "refersTo": "overlay-side",
+      "description": "The project detail sidebar — a dedicated parchment tonal step inside the Bone Paper overlay card, with a darker neutral counterpart in dark mode.",
+      "html": "<div class=\"ds-side\"><div class=\"ds-side-metric\"><span class=\"ds-side-mv\">696 → 12</span><span class=\"ds-side-ml\">Access groups</span></div><div class=\"ds-side-pieces\"><div class=\"ds-side-piece ds-side-piece-wide\"><div class=\"ds-side-key\">scope</div><div class=\"ds-side-val\">End-to-end</div></div><div class=\"ds-side-piece\"><div class=\"ds-side-key\">timeline</div><div class=\"ds-side-val\">~12 months</div></div><div class=\"ds-side-piece\"><div class=\"ds-side-key\">stack</div><div class=\"ds-side-val\">Tableau</div></div></div></div>",
+      "css": ".ds-side { background: var(--overlay-step, #e2d6bd); color: var(--on-overlay-wall, #1a1a18); border: 1px solid var(--rule, color-mix(in srgb, currentColor 15%, transparent)); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 24px; max-width: 340px; } .ds-side-metric { display: grid; gap: 8px; } .ds-side-mv { font-family: var(--font-display, 'Instrument Serif', Georgia, serif); font-size: clamp(42px, 4.5vw, 52px); line-height: 1; color: var(--accent-on-panel, #6b1f2a); letter-spacing: -.01em; white-space: nowrap; } .ds-side-ml { font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 10.5px; opacity: var(--label-opacity, .74); max-width: 24ch; } .ds-side-pieces { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; border-top: 1px solid var(--rule, color-mix(in srgb, currentColor 15%, transparent)); padding-top: 20px; } .ds-side-piece-wide { grid-column: 1 / -1; } .ds-side-key { font-family: var(--font-mono, 'JetBrains Mono', monospace); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; opacity: var(--label-opacity, .74); margin-bottom: 4px; } .ds-side-val { font-family: var(--font-body, 'DM Sans', sans-serif); font-size: 14px; font-weight: 500; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Analyst's Study",
+    "overview": "A quiet, book-lined room. Forest green and oxblood on cream paper, serif italics carrying the warmth, hairline rules doing the structural work — and glass as the only modern intrusion, floating above everything in the form of a nav pill. The system reads as considered rather than fashionable: nothing here is trend-dated, and nothing announces that it was made by a template.\n\nThe spatial idea is rooms. Five full-bleed sections each own a single wall color — Bone Paper for the hero, Field Green for About, Bone Paper again for Work, Oxblood for Skills, Charcoal Ink for Experience — and you know which section you are in by the color surrounding you, not by a heading. Sections carry no cards, no panels, no boxed containers. Content sits directly on the wall, separated by 1px rules at low alpha. The result is dense with information but never busy, because the only structural devices are color, type, and line.\n\nType does the expressive work. Instrument Serif at display sizes with a single italic phrase per headline; DM Sans for everything readable; JetBrains Mono, uppercase and wide-tracked, for every piece of metadata. The italic uses Oxblood on light rooms and adapts to the foreground/accent pairing on colored or dark rooms. Data appears as small, un-labelled SVG evidence marks and unit strips in the accent color — plotted marks that read as texture on the page rather than as charts to be analyzed. This is a portfolio for a BI analyst that deliberately refuses to look like BI software.",
+    "keyCharacteristics": [
+      "Five full-bleed color rooms; section identity lives in the background color",
+      "Heritage palette: forest green, oxblood, bone, charcoal — no blue, no gradient",
+      "Instrument Serif display with exactly one semantically colored italic phrase per headline",
+      "Uppercase mono metadata at 11px / 0.14em tracking as the connective tissue",
+      "Hairline rules (1px, currentColor at 15% alpha) instead of cards, borders, or boxes",
+      "Pill geometry (999px) on everything interactive; large soft radii only on floating layers",
+      "A glass nav pill that re-schemes itself depending on the room beneath it",
+      "Evidence marks as page texture, not as dashboards"
+    ],
+    "rules": [
+      { "name": "The One Room Rule", "body": "Every section owns exactly one background color, edge to edge. Content sits directly on that color — no cards, no inner panels, no competing surface. If a new section needs a different color, it becomes a new room with its own wall, not a box inside an existing one.", "section": "colors" },
+      { "name": "The One Voice Rule", "body": "Oxblood is the system's single accent and appears on well under 10% of any viewport: one italic phrase, the numbers, the chart marks, one button. A second accent hue does not exist in this system. Introducing one dissolves the palette.", "section": "colors" },
+      { "name": "The Wall Pair Rule", "body": "Every room owns an explicit wall/foreground pair (--wall-* and --on-wall-*) in each theme. Dark mode changes those pairs through [data-theme=\"dark\"]; it never infers text color by globally swapping paper and ink. Components inherit from the rendered wall, while accent, overlay, and navigation colors use their own semantic tokens.", "section": "colors" },
+      { "name": "The Italic Emphasis Rule", "body": "Every display and headline carries exactly one italic phrase, and that phrase is the sentence's point. The italic is set in Oxblood on light rooms; on Field Green and Oxblood rooms it uses the room foreground, and on dark surfaces it uses --accent-on-dark. One italic per headline — never two, never zero.", "section": "typography" },
+      { "name": "The Mono Label Rule", "body": "JetBrains Mono is metadata only: eyebrows, client/role meta lines, tool names, timeline dates, scope/timeline/stack keys, the footer. It never sets a sentence anyone has to read for content.", "section": "typography" },
+      { "name": "The No-Bold-Prose Rule", "body": "Emphasis in sentences comes from size, italic, color, and case. Prose does not exceed weight 500; 600 is reserved for compact navigation branding and project indices.", "section": "typography" },
+      { "name": "The Evidence Never Drops", "body": "Verified evidence is primary information, regardless of viewport or zoom. A breakpoint may reflow a metric's value and label, but it must never hide, abbreviate, or demote them. Only the decorative representation of that evidence may drop when space is constrained.", "section": "layout" },
+      { "name": "The Drop-Don't-Squeeze Rule", "body": "Secondary visual elements are removed at narrow widths rather than compressed. The project row's evidence graphic and arrow display: none below 860px instead of shrinking; the desktop nav is not miniaturized, it is replaced. Nothing in this system survives a breakpoint at an illegible size.", "section": "layout" },
+      { "name": "The Glass-Is-For-Floating Rule", "body": "backdrop-filter signals this element is not part of the page — nav, overlay scrim, lightbox. Ambient shadow is reserved for the nav and zoomed image. An element that scrolls with the content does not get either treatment.", "section": "elevation" },
+      { "name": "The Pill-or-Line Rule", "body": "At small scale this system offers two shapes: a 999px pill or a 1px rule. If a new element is neither, it probably wants to be one of them.", "section": "shapes" }
+    ],
+    "dos": [
+      "Do give every new full-bleed section a single wall color and let content sit directly on it (The One Room Rule).",
+      "Do put exactly one italic phrase in every headline, make it the phrase that carries the meaning, and color it through the room's semantic pairing.",
+      "Do use semantic wall, foreground, accent, overlay, and navigation tokens rather than assuming that any primitive color has the same role in both themes (The Wall Pair Rule).",
+      "Do use uppercase JetBrains Mono at 11px / 0.14em for any label, key, or piece of metadata.",
+      "Do separate rows with 1px hairlines derived from currentColor at 15% alpha.",
+      "Do make interactive elements pills (999px) and give them a real hover response — a lift, a fill change, or a padding shift like the project row.",
+      "Do preserve every verified metric's value and label across responsive and zoom-driven breakpoints (The Evidence Never Drops).",
+      "Do drop secondary elements at narrow widths rather than shrinking them (The Drop-Don't-Squeeze Rule).",
+      "Do keep measures capped: 14ch display, 18ch headline, 54ch lead, 46–60ch body."
+    ],
+    "donts": [
+      "Don't hardcode #f1ead8 or #1a1a18 where a semantic wall/foreground token exists — the explicit theme pairs may assign those values to opposite roles.",
+      "Don't introduce a second accent color. Oxblood is the only one, and its rarity is what makes it work.",
+      "Don't wrap room content in cards, panels, or bordered boxes. Structure comes from color and hairlines.",
+      "Don't let the evidence marks become dashboard charts — no axes, gridlines, legends, tooltips, or value labels. This site presents BI work; it must never imitate Tableau or QuickSight chrome.",
+      "Don't classify a metric value or its label as expendable breakpoint decoration; only its redundant visual mark may drop.",
+      "Don't ship the default AI-portfolio look: purple-blue gradients, glassmorphic feature cards, floating 3D blobs, emoji-waving hero copy. The heritage palette and serif are the entire defense against it.",
+      "Don't use gradients as fills. The only gradient-adjacent surfaces in this system are the translucent glass layers.",
+      "Don't escalate font weight past 500 for emphasis — use size, italic, color, or case.",
+      "Don't apply backdrop-filter or ambient shadow to anything that scrolls with the page (The Glass-Is-For-Floating Rule)."
+    ]
+  }
+}

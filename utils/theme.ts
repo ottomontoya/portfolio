@@ -1,24 +1,29 @@
-export function applyTheme(dark: boolean) {
-  const r = document.documentElement.style;
-  if (dark) {
-    r.setProperty("--green", "#3d6b3f");
-    r.setProperty("--burgundy", "#a8344a");
-    r.setProperty("--beige", "#1a1a18");
-    r.setProperty("--ink", "#f1ead8");
-    r.setProperty("--paper", "#232220");
-    r.setProperty("--nav-bg", "rgba(255,255,255,.06)");
-    r.setProperty("--nav-border", "rgba(255,255,255,.12)");
-    r.setProperty("--nav-active", "rgba(255,255,255,.14)");
-  } else {
-    r.setProperty("--green", "#2d4a2b");
-    r.setProperty("--burgundy", "#6b1f2a");
-    r.setProperty("--beige", "#f1ead8");
-    r.setProperty("--ink", "#1a1a18");
-    r.setProperty("--paper", "#f7f1de");
-    r.setProperty("--nav-bg", "rgba(0,0,0,.04)");
-    r.setProperty("--nav-border", "rgba(0,0,0,.08)");
-    r.setProperty("--nav-active", "rgba(0,0,0,.08)");
+const THEME_STORAGE_KEY = "portfolio-theme";
+
+export function getInitialTheme(): boolean {
+  let stored: string | null = null;
+  try {
+    stored = window.localStorage.getItem(THEME_STORAGE_KEY);
+  } catch {
+    // Storage may be unavailable in hardened or private browser contexts.
   }
-  document.body.style.background = dark ? "#1a1a18" : "#f1ead8";
-  document.body.style.color = dark ? "#f1ead8" : "#1a1a18";
+  if (stored === "dark") return true;
+  if (stored === "light") return false;
+  return window.matchMedia("(prefers-color-scheme: dark)").matches;
+}
+
+export function initializeTheme(): boolean {
+  const dark = getInitialTheme();
+  document.documentElement.dataset.theme = dark ? "dark" : "light";
+  return dark;
+}
+
+export function applyTheme(dark: boolean) {
+  const theme = dark ? "dark" : "light";
+  document.documentElement.dataset.theme = theme;
+  try {
+    window.localStorage.setItem(THEME_STORAGE_KEY, theme);
+  } catch {
+    // The visual theme still applies when persistence is unavailable.
+  }
 }

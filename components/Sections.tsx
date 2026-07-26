@@ -1,17 +1,18 @@
-import { PROJECTS } from "../data/projects";
+import { INDUSTRY_COUNT, PROJECT_COUNT, PROJECTS, getProjectMetric } from "../data/projects";
 import { EDUCATION, EXPERIENCE } from "../data/education";
-import { SKILL_GROUPS, SOFT_SKILLS, ABOUT_TAGS } from "../data/skills";
+import { ABOUT_TAGS, CAPABILITY_STAGES, SKILL_GROUPS } from "../data/skills";
 import { STATS, ABOUT_BODY, HOW_I_WORK } from "../data/about";
+import { CONTACT } from "../data/contact";
 import { Eyebrow, Pill } from "./ui";
 import { ProjectChart } from "./Charts";
 import { scrollTo } from "./Nav";
 
 export function HeroSection() {
   return (
-    <section id="home" className="room room-hero">
+    <section id="home" className="room room-hero" aria-labelledby="home-title">
       <div className="shell">
         <Eyebrow dot>Data Analyst · BI Specialist</Eyebrow>
-        <h1 className="h1">
+        <h1 className="h1" id="home-title">
           Clear insights<br />from <em>complex</em> data.
         </h1>
         <p className="lead">
@@ -37,10 +38,10 @@ export function HeroSection() {
 
 export function AboutSection() {
   return (
-    <section id="about" className="room room-about">
+    <section id="about" className="room room-about" aria-labelledby="about-title">
       <div className="shell">
         <Eyebrow dot>About</Eyebrow>
-        <h2 className="h2">I turn messy data <em>into reliable insights.</em></h2>
+        <h2 className="h2" id="about-title">I turn messy data <em>into reliable insights.</em></h2>
         <div className="about-grid">
           <div className="about-body">
             {ABOUT_BODY.map((p, i) => <p key={i}>{p}</p>)}
@@ -49,7 +50,7 @@ export function AboutSection() {
             </div>
           </div>
           <div className="about-side">
-            <div className="side-h">How I work</div>
+            <h3 className="side-h">How I work</h3>
             <ul className="how">
               {HOW_I_WORK.map((h, i) => (
                 <li key={i}>
@@ -67,35 +68,48 @@ export function AboutSection() {
 
 export function WorkSection({ onOpen }: { onOpen: (id: string) => void }) {
   return (
-    <section id="work" className="room room-work">
+    <section id="work" className="room room-work" aria-labelledby="work-title">
       <div className="shell">
         <Eyebrow dot>Selected work</Eyebrow>
         <div className="work-head">
-          <h2 className="h2 h2-work">Six projects, <em>six industries.</em></h2>
+          <h2 className="h2 h2-work" id="work-title">{PROJECT_COUNT} projects, <em>{INDUSTRY_COUNT} industries.</em></h2>
           <p className="lead lead-work">From access governance to legacy migrations — each one ended with a dashboard people actually used.</p>
         </div>
         <ul className="projects">
-          {PROJECTS.map((p) => (
-            <li key={p.id} className="project" onClick={() => onOpen(p.id)}>
-              <div className="proj-n mono">{p.n}</div>
-              <div className="proj-main">
-                <h3 className="proj-title">{p.title}</h3>
-                <div className="proj-meta mono">{p.client} · {p.role}</div>
-                <p className="proj-sum">{p.summary}</p>
-                <div className="proj-tools">
-                  {p.tools.map(t => <Pill key={t}>{t}</Pill>)}
+          {PROJECTS.map((p) => {
+            const metric = getProjectMetric(p.evidence);
+            return (
+              <li key={p.id} className="project">
+                <button
+                  type="button"
+                  className="project-trigger"
+                  onClick={() => onOpen(p.id)}
+                  aria-haspopup="dialog"
+                  aria-label={`Open project details for ${p.title}`}
+                />
+                <div className="proj-n mono">{p.n}</div>
+                <div className="proj-main">
+                  <h3 className="proj-title">{p.title}</h3>
+                  <div className="proj-meta mono">{p.client} · {p.role}</div>
+                  <p className="proj-sum">{p.summary}</p>
+                  <div className="proj-tools">
+                    {p.tools.map(t => <Pill key={t}>{t}</Pill>)}
+                  </div>
                 </div>
-              </div>
-              <div className="proj-chart">
-                <div className="proj-metric">
-                  <div className="proj-mv">{p.metric.value}</div>
-                  <div className="proj-ml mono">{p.metric.label}</div>
+                <div className="proj-chart">
+                  <div className="proj-metric">
+                    <div className="proj-mv">{metric.value}</div>
+                    <div className="proj-ml mono">{metric.label}</div>
+                  </div>
+                  <ProjectChart evidence={p.evidence} color="currentColor" />
                 </div>
-                <ProjectChart kind={p.chart} color="currentColor" />
-              </div>
-              <div className="proj-arr">→</div>
-            </li>
-          ))}
+                <div className="proj-affordance" aria-hidden="true">
+                  View project <span>→</span>
+                </div>
+                <div className="proj-arr" aria-hidden="true">→</div>
+              </li>
+            );
+          })}
         </ul>
       </div>
     </section>
@@ -104,42 +118,50 @@ export function WorkSection({ onOpen }: { onOpen: (id: string) => void }) {
 
 export function SkillsSection() {
   return (
-    <section id="skills" className="room room-skills">
+    <section id="skills" className="room room-skills" aria-labelledby="skills-title">
       <div className="shell">
         <Eyebrow dot>Skills</Eyebrow>
-        <h2 className="h2">Tools, knowledge, <em>and ways of working.</em></h2>
-        <div className="skills-grid">
+        <div className="skills-head">
+          <h2 className="h2" id="skills-title">From business question <em>to trusted decision.</em></h2>
+          <div className="skills-promise">
+            <div className="skills-promise-label mono">End-to-end ownership</div>
+            <p>I connect the conversation, the model, and the interface—not just the final chart.</p>
+          </div>
+        </div>
+
+        <ol className="capability-path" aria-label="End-to-end BI capabilities">
+          {CAPABILITY_STAGES.map((stage, index) => (
+            <li className="capability-stage" key={stage.phase}>
+              <div className="capability-step mono" aria-hidden="true">{String(index + 1).padStart(2, "0")}</div>
+              <div className="capability-heading">
+                <div className="capability-phase mono">{stage.phase}</div>
+                <h3>{stage.title}</h3>
+              </div>
+              <div className="capability-detail">
+                <p>{stage.description}</p>
+                <ul aria-label={`${stage.phase} capabilities`}>
+                  {stage.capabilities.map(capability => <li key={capability}>{capability}</li>)}
+                </ul>
+              </div>
+            </li>
+          ))}
+        </ol>
+
+        <div className="toolkit-head">
+          <h3 className="side-h">Technical toolkit</h3>
+          <p>Platforms and tools I use to carry that work from source to delivery.</p>
+        </div>
+        <div className="skills-grid" aria-label="Platforms and tools">
           {SKILL_GROUPS.map(g => (
             <div className="skill-col" key={g.label}>
-              <div className="skill-h mono">{g.label}</div>
+              <div className="skill-col-head">
+                <h3 className="skill-h mono">{g.label}</h3>
+              </div>
               <ul>
                 {g.items.map(it => <li key={it}>{it}</li>)}
               </ul>
             </div>
           ))}
-        </div>
-        <div className="soft">
-          <div className="side-h">How I show up</div>
-          <ul className="soft-list">
-            {SOFT_SKILLS.map((s, i) => (
-              <li key={i}>
-                <span className="mono how-n">·</span>
-                <span>{s}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="edu">
-          <div className="side-h">Education & certifications</div>
-          <ul className="edu-list">
-            {EDUCATION.map((e, i) => (
-              <li key={i}>
-                <div className="edu-title">{e.title}</div>
-                <div className="edu-school mono">{e.school}</div>
-                <div className="edu-note">{e.note}</div>
-              </li>
-            ))}
-          </ul>
         </div>
       </div>
     </section>
@@ -147,38 +169,65 @@ export function SkillsSection() {
 }
 
 export function ExperienceSection() {
+  const [contactHeadingStart, contactHeadingEnd] = CONTACT.contactHeading.split(CONTACT.contactEmphasis);
+
   return (
-    <section id="experience" className="room room-exp">
+    <section id="experience" className="room room-exp" aria-labelledby="experience-title">
       <div className="shell">
         <Eyebrow dot>Experience</Eyebrow>
-        <h2 className="h2">A path through <em>data, dashboards & teams.</em></h2>
+        <h2 className="h2" id="experience-title">A path through <em>data, dashboards & teams.</em></h2>
         <ol className="timeline">
           {EXPERIENCE.map((e, i) => (
             <li className="tl-item" key={i}>
               <div className="tl-time mono">{e.time}</div>
               <div className="tl-body">
-                <div className="tl-role">{e.role}</div>
+                <h3 className="tl-role">{e.role}</h3>
                 <div className="tl-org mono">{e.org}</div>
                 <div className="tl-note">{e.note}</div>
               </div>
             </li>
           ))}
         </ol>
-        <div className="contact-block">
-          <div className="contact-l">
-            <Eyebrow>Get in touch</Eyebrow>
-            <h3 className="contact-title">Let's work <em>together.</em></h3>
-            <p className="contact-sub">Open to new projects and collaborations.</p>
-            <a href="mailto:work@ottomontoya.com" className="cta cta-primary">
-              Say hello <span className="arr">→</span>
-            </a>
+        <section className="experience-education" aria-labelledby="education-title">
+          <div className="experience-education-head">
+            <h3 className="side-h" id="education-title">Education & certifications</h3>
+            <p>Formal foundations that support the work.</p>
           </div>
-          <ul className="contact-r">
-            <li><span className="mono">Email</span><span>work@ottomontoya.com</span></li>
-            <li><span className="mono">Connect</span><a href="https://www.linkedin.com/in/ottomontoya/" target="_blank" rel="noopener noreferrer" className="contact-linkedin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="22" height="22" aria-label="LinkedIn"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a></li>
-            <li><span className="mono">Based in</span><span>Mérida, México</span></li>
+          <ul className="edu-list">
+            {EDUCATION.map((e) => (
+              <li key={e.title}>
+                <h4 className="edu-title">{e.title}</h4>
+                <div className="edu-school mono">{e.school}</div>
+                <div className="edu-note">{e.note}</div>
+              </li>
+            ))}
           </ul>
-        </div>
+        </section>
+        <section id="contact" className="contact-block" aria-labelledby="contact-title">
+          <div className="contact-intro">
+            <Eyebrow dot>{CONTACT.contactEyebrow}</Eyebrow>
+            <h3 className="contact-title" id="contact-title">
+              {contactHeadingStart}<em>{CONTACT.contactEmphasis}</em>{contactHeadingEnd}
+            </h3>
+            <p className="contact-sub">{CONTACT.contactBody}</p>
+          </div>
+          <div className="contact-actions">
+            <a href={`mailto:${CONTACT.email}`} className="contact-email-cta">
+              <span className="contact-email-label mono">Start with an email</span>
+              <span className="contact-email-address">{CONTACT.email}</span>
+              <span className="contact-email-arrow" aria-hidden="true">→</span>
+            </a>
+            <ul className="contact-r">
+              <li>
+                <span className="mono">LinkedIn</span>
+                <a href={CONTACT.linkedInUrl} target="_blank" rel="noopener noreferrer">
+                  Connect with Otto <span aria-hidden="true">↗</span>
+                </a>
+              </li>
+              <li><span className="mono">Based in</span><span>{CONTACT.location}</span></li>
+            </ul>
+          </div>
+        </section>
         <footer className="foot mono">
           <span>© 2026 Otto Montoya</span>
           <span>Made with care · Mérida, MX</span>
