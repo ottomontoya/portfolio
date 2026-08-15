@@ -1,6 +1,6 @@
 const THEME_STORAGE_KEY = "portfolio-theme";
 
-export function getInitialTheme(): boolean {
+export function getStoredTheme(): boolean | null {
   let stored: string | null = null;
   try {
     stored = window.localStorage.getItem(THEME_STORAGE_KEY);
@@ -9,6 +9,12 @@ export function getInitialTheme(): boolean {
   }
   if (stored === "dark") return true;
   if (stored === "light") return false;
+  return null;
+}
+
+export function getInitialTheme(): boolean {
+  const stored = getStoredTheme();
+  if (stored !== null) return stored;
   return window.matchMedia("(prefers-color-scheme: dark)").matches;
 }
 
@@ -19,10 +25,12 @@ export function initializeTheme(): boolean {
 }
 
 export function applyTheme(dark: boolean) {
-  const theme = dark ? "dark" : "light";
-  document.documentElement.dataset.theme = theme;
+  document.documentElement.dataset.theme = dark ? "dark" : "light";
+}
+
+export function persistTheme(dark: boolean) {
   try {
-    window.localStorage.setItem(THEME_STORAGE_KEY, theme);
+    window.localStorage.setItem(THEME_STORAGE_KEY, dark ? "dark" : "light");
   } catch {
     // The visual theme still applies when persistence is unavailable.
   }

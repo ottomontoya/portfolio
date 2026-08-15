@@ -157,7 +157,7 @@ function renderProjectHtml(project: (typeof PROJECTS)[number]): string {
     ? `\n          <p>Case study: <a href="${escapeHtml(project.caseStudy)}">${escapeHtml(project.caseStudy)}</a></p>`
     : "";
   const images = project.images?.length
-    ? `\n          <div aria-label="Dashboard views">\n${project.images.map(image => `            <img src="${escapeHtml(image.src)}" srcset="${escapeHtml(image.srcSet)}" sizes="(max-width: 760px) calc(100vw - 48px), (max-width: 1280px) 50vw, 600px" width="${image.width}" height="${image.height}" loading="lazy" alt="${escapeHtml(image.alt)}" />`).join("\n")}\n          </div>`
+    ? `\n          <div role="group" aria-label="Dashboard views">\n${project.images.map(image => `            <img src="${escapeHtml(image.src)}" srcset="${escapeHtml(image.srcSet)}" sizes="(max-width: 760px) calc(100vw - 48px), (max-width: 1280px) 50vw, 600px" width="${image.width}" height="${image.height}" loading="lazy" alt="${escapeHtml(image.alt)}" />`).join("\n")}\n          </div>`
     : "";
   const contactHref = `mailto:${CONTACT.email}?subject=${encodeURIComponent(`Project inquiry — ${project.title}`)}`;
 

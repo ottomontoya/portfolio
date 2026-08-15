@@ -3,9 +3,9 @@ import "./portfolio.css";
 import { PROJECTS } from "./data/projects";
 import { Nav } from "./components/Nav";
 import { Divider } from "./components/Divider";
-import { HeroSection, AboutSection, WorkSection, SkillsSection, ExperienceSection } from "./components/Sections";
+import { HeroSection, AboutSection, WorkSection, SkillsSection, ExperienceSection, SiteFooter } from "./components/Sections";
 import { ProjectOverlay } from "./components/ProjectOverlay";
-import { applyTheme, getInitialTheme } from "./utils/theme";
+import { applyTheme, getInitialTheme, getStoredTheme, persistTheme } from "./utils/theme";
 
 const PROJECT_HISTORY_KEY = "portfolioProject";
 
@@ -22,10 +22,19 @@ function historyStateWithProject(value: boolean) {
 
 export default function App() {
   const [dark, setDark] = useState(getInitialTheme);
+  const [themeIsExplicit, setThemeIsExplicit] = useState(() => getStoredTheme() !== null);
   const [openId, setOpenId] = useState<string | null>(projectIdFromHash);
   const project = PROJECTS.find(p => p.id === openId) ?? null;
 
   useEffect(() => { applyTheme(dark); }, [dark]);
+
+  useEffect(() => {
+    if (themeIsExplicit) return;
+    const media = window.matchMedia("(prefers-color-scheme: dark)");
+    const syncSystemTheme = (event: MediaQueryListEvent) => setDark(event.matches);
+    media.addEventListener("change", syncSystemTheme);
+    return () => media.removeEventListener("change", syncSystemTheme);
+  }, [themeIsExplicit]);
 
   useEffect(() => {
     const syncProjectFromUrl = () => setOpenId(projectIdFromHash());
@@ -62,10 +71,18 @@ export default function App() {
     setOpenId(null);
   }, []);
 
+  const toggleTheme = useCallback(() => {
+    const next = !dark;
+    applyTheme(next);
+    persistTheme(next);
+    setDark(next);
+    setThemeIsExplicit(true);
+  }, [dark]);
+
   return (
     <>
       <a className="skip-link" href="#main-content">Skip to main content</a>
-      <Nav dark={dark} onToggleDark={() => setDark(d => !d)} />
+      <Nav dark={dark} onToggleDark={toggleTheme} />
       <main id="main-content" tabIndex={-1}>
         <HeroSection />
         <Divider from="var(--beige)" to="var(--green)" variant="diagonal" />
@@ -74,9 +91,10 @@ export default function App() {
         <WorkSection onOpen={openProject} />
         <Divider from="var(--beige)" to="var(--burgundy)" variant="wave" />
         <SkillsSection />
-        <Divider from="var(--burgundy)" to="var(--ink)" variant="sine" />
+        <Divider from="var(--burgundy)" to="var(--wall-exp)" variant="sine" />
         <ExperienceSection />
       </main>
+      <SiteFooter />
       <ProjectOverlay project={project} onClose={closeProject} onNavigate={navigateProject} />
     </>
   );

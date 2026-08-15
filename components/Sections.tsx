@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { INDUSTRY_COUNT, PROJECT_COUNT, PROJECTS, getProjectMetric } from "../data/projects";
 import { EDUCATION, EXPERIENCE } from "../data/education";
 import { ABOUT_TAGS, CAPABILITY_STAGES, SKILL_GROUPS } from "../data/skills";
@@ -5,7 +6,20 @@ import { STATS, ABOUT_BODY, HOW_I_WORK } from "../data/about";
 import { CONTACT } from "../data/contact";
 import { Eyebrow, Pill } from "./ui";
 import { ProjectChart } from "./Charts";
-import { scrollTo } from "./Nav";
+
+function useWideEvidenceMarks() {
+  const [show, setShow] = useState(() => window.matchMedia("(min-width: 861px)").matches);
+
+  useEffect(() => {
+    const media = window.matchMedia("(min-width: 861px)");
+    const sync = () => setShow(media.matches);
+    sync();
+    media.addEventListener("change", sync);
+    return () => media.removeEventListener("change", sync);
+  }, []);
+
+  return show;
+}
 
 export function HeroSection() {
   return (
@@ -19,8 +33,8 @@ export function HeroSection() {
           I work end-to-end across the BI stack — from understanding the question, to defining KPIs, to shipping dashboards teams actually use.
         </p>
         <div className="cta-row">
-          <button className="cta cta-primary" onClick={() => scrollTo("work")}>View work <span className="arr">→</span></button>
-          <button className="cta cta-ghost" onClick={() => scrollTo("about")}>About me</button>
+          <a className="cta cta-primary" href="#work">View work <span className="arr">→</span></a>
+          <a className="cta cta-ghost" href="#about">About me</a>
         </div>
         <div className="hero-strip">
           {STATS.map((s, i) => (
@@ -67,6 +81,8 @@ export function AboutSection() {
 }
 
 export function WorkSection({ onOpen }: { onOpen: (id: string) => void }) {
+  const showEvidenceMarks = useWideEvidenceMarks();
+
   return (
     <section id="work" className="room room-work" aria-labelledby="work-title">
       <div className="shell">
@@ -82,6 +98,7 @@ export function WorkSection({ onOpen }: { onOpen: (id: string) => void }) {
               <li key={p.id} className="project">
                 <button
                   type="button"
+                  id={`project-trigger-${p.id}`}
                   className="project-trigger"
                   onClick={() => onOpen(p.id)}
                   aria-haspopup="dialog"
@@ -101,7 +118,7 @@ export function WorkSection({ onOpen }: { onOpen: (id: string) => void }) {
                     <div className="proj-mv">{metric.value}</div>
                     <div className="proj-ml mono">{metric.label}</div>
                   </div>
-                  <ProjectChart evidence={p.evidence} color="currentColor" />
+                  {showEvidenceMarks && <ProjectChart evidence={p.evidence} color="currentColor" />}
                 </div>
                 <div className="proj-affordance" aria-hidden="true">
                   View project <span>→</span>
@@ -147,22 +164,24 @@ export function SkillsSection() {
           ))}
         </ol>
 
-        <div className="toolkit-head">
-          <h3 className="side-h">Technical toolkit</h3>
-          <p>Platforms and tools I use to carry that work from source to delivery.</p>
-        </div>
-        <div className="skills-grid" aria-label="Platforms and tools">
-          {SKILL_GROUPS.map(g => (
-            <div className="skill-col" key={g.label}>
-              <div className="skill-col-head">
-                <h3 className="skill-h mono">{g.label}</h3>
+        <section className="toolkit" aria-labelledby="toolkit-title">
+          <div className="toolkit-head">
+            <h3 className="side-h" id="toolkit-title">Technical toolkit</h3>
+            <p>Platforms and tools I use to carry that work from source to delivery.</p>
+          </div>
+          <div className="skills-grid">
+            {SKILL_GROUPS.map(g => (
+              <div className="skill-col" key={g.label}>
+                <div className="skill-col-head">
+                  <h3 className="skill-h mono">{g.label}</h3>
+                </div>
+                <ul>
+                  {g.items.map(it => <li key={it}>{it}</li>)}
+                </ul>
               </div>
-              <ul>
-                {g.items.map(it => <li key={it}>{it}</li>)}
-              </ul>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        </section>
       </div>
     </section>
   );
@@ -173,7 +192,7 @@ export function ExperienceSection() {
 
   return (
     <section id="experience" className="room room-exp" aria-labelledby="experience-title">
-      <div className="shell">
+      <div className="shell experience-shell">
         <Eyebrow dot>Experience</Eyebrow>
         <h2 className="h2" id="experience-title">A path through <em>data, dashboards & teams.</em></h2>
         <ol className="timeline">
@@ -228,11 +247,20 @@ export function ExperienceSection() {
             </ul>
           </div>
         </section>
-        <footer className="foot mono">
-          <span>© 2026 Otto Montoya</span>
-          <span>Made with care · Mérida, MX</span>
-        </footer>
       </div>
     </section>
+  );
+}
+
+export function SiteFooter() {
+  return (
+    <footer className="site-footer room-exp">
+      <div className="shell footer-shell">
+        <div className="foot mono">
+          <span>© 2026 Otto Montoya</span>
+          <span>Made with care · Mérida, MX</span>
+        </div>
+      </div>
+    </footer>
   );
 }

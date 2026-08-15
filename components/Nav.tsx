@@ -9,11 +9,6 @@ export const NAV_ITEMS = [
   { id: "contact", label: "Contact" },
 ];
 
-export function scrollTo(id: string) {
-  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  document.getElementById(id)?.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
-}
-
 // All sections whose background can conflict with the nav.
 const ALL_WATCHED_IDS = ["about", "skills", "experience"];
 
@@ -21,14 +16,14 @@ type NavScheme = "default" | "over-dark" | "over-light";
 
 // Classify the rendered wall beneath the nav rather than treating the theme as
 // a proxy for contrast. About and Skills remain colored dark rooms in both
-// themes; Experience alone flips from a dark wall to a light wall.
-function classify(ids: string[], dark: boolean): NavScheme {
-  if (ids.includes("experience")) return dark ? "over-light" : "over-dark";
+// themes; Experience remains a dark Charcoal Ink room in both themes.
+function classify(ids: string[]): NavScheme {
+  if (ids.includes("experience")) return "over-dark";
   if (ids.some(id => id === "about" || id === "skills")) return "over-dark";
   return "default";
 }
 
-function useNavScheme(dark: boolean) {
+function useNavScheme() {
   const [desktopIds, setDesktopIds] = useState<string[]>([]);
   const [mobileIds, setMobileIds] = useState<string[]>([]);
 
@@ -79,8 +74,8 @@ function useNavScheme(dark: boolean) {
   }, []); // observers never need rebuilding for dark changes — classify() handles it
 
   return {
-    desktopScheme: classify(desktopIds, dark),
-    mobileScheme: classify(mobileIds, dark),
+    desktopScheme: classify(desktopIds),
+    mobileScheme: classify(mobileIds),
   };
 }
 
@@ -118,19 +113,11 @@ const MoonIcon = ({ size = 16 }: { size?: number }) => (
 
 export function Nav({ dark, onToggleDark }: { dark: boolean; onToggleDark: () => void }) {
   const active = useActiveSection();
-  const { desktopScheme, mobileScheme } = useNavScheme(dark);
+  const { desktopScheme, mobileScheme } = useNavScheme();
   const [scrolled, setScrolled] = useState(false);
 
-  const navCenterRef = useRef<HTMLElement>(null);
   const mnavPillRef = useRef<HTMLElement>(null);
-  const desktopRefs = useRef<Record<string, HTMLButtonElement | null>>({});
-  const mobileRefs = useRef<Record<string, HTMLButtonElement | null>>({});
-
-  type PillClip = { clipPath: string; ready: boolean };
-  type MobilePill = { left: number; width: number; ready: boolean };
-  const emptyPill: PillClip = { clipPath: "inset(0 100% 0 0 round 999px)", ready: false };
-  const [dPill, setDPill] = useState<PillClip>(emptyPill);
-  const [mPill, setMPill] = useState<MobilePill>({ left: 0, width: 0, ready: false });
+  const mobileRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
 
   useEffect(() => {
     const on = () => setScrolled(window.scrollY > 24);
@@ -140,29 +127,13 @@ export function Nav({ dark, onToggleDark }: { dark: boolean; onToggleDark: () =>
   }, []);
 
   useEffect(() => {
-    const getClip = (navRect: DOMRect, itemRect: DOMRect) => {
-      const top = Math.max(0, itemRect.top - navRect.top);
-      const right = Math.max(0, navRect.right - itemRect.right);
-      const bottom = Math.max(0, navRect.bottom - itemRect.bottom);
-      const left = Math.max(0, itemRect.left - navRect.left);
-      return `inset(${top}px ${right}px ${bottom}px ${left}px round 999px)`;
-    };
-
     const measure = () => {
-      const dEl = desktopRefs.current[active];
-      const dNav = navCenterRef.current;
-      if (dEl && dNav) {
-        const nr = dNav.getBoundingClientRect();
-        const er = dEl.getBoundingClientRect();
-        setDPill({ clipPath: getClip(nr, er), ready: true });
-      }
       const mEl = mobileRefs.current[active];
       const mNav = mnavPillRef.current;
       if (mEl && mNav) {
         const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         const left = mEl.offsetLeft - (mNav.clientWidth - mEl.offsetWidth) / 2;
         mNav.scrollTo({ left, behavior: reduceMotion ? "auto" : "smooth" });
-        setMPill({ left: mEl.offsetLeft, width: mEl.offsetWidth, ready: true });
       }
     };
     measure();
@@ -174,24 +145,20 @@ export function Nav({ dark, onToggleDark }: { dark: boolean; onToggleDark: () =>
     <>
       <header className={`nav-wrap${scrolled ? " scrolled" : ""}${desktopScheme !== "default" ? ` nav-${desktopScheme}` : ""}`}>
         <div className="nav-pill">
-          <button className="nav-brand" onClick={() => scrollTo("home")}>
+          <a className="nav-brand" href="#home">
             <img src={desktopScheme === "over-dark" || (dark && desktopScheme !== "over-light") ? "/assets/logo-light.svg" : "/assets/logo.svg"} alt="" width="26" height="26" />
             Otto Montoya
-          </button>
-          <nav ref={navCenterRef} className="nav-center" aria-label="Primary navigation">
-            {dPill.ready && (
-              <span className="nav-active-pill" style={{ clipPath: dPill.clipPath }} />
-            )}
+          </a>
+          <nav className="nav-center" aria-label="Primary navigation">
             {NAV_ITEMS.map(it => (
-              <button
+              <a
                 key={it.id}
-                ref={el => { desktopRefs.current[it.id] = el; }}
                 className={`nav-link${active === it.id ? " active" : ""}`}
-                onClick={() => scrollTo(it.id)}
+                href={`#${it.id}`}
                 aria-current={active === it.id ? "location" : undefined}
               >
                 {it.label}
-              </button>
+              </a>
             ))}
           </nav>
           <button
@@ -208,22 +175,16 @@ export function Nav({ dark, onToggleDark }: { dark: boolean; onToggleDark: () =>
       <div className="mnav-wrap">
         <div className="mnav-cluster">
           <nav ref={mnavPillRef} className={`mnav-pill${mobileScheme !== "default" ? ` nav-${mobileScheme}` : ""}`} aria-label="Primary navigation">
-            {mPill.ready && (
-              <span
-                className="mnav-active-pill"
-                style={{ width: mPill.width, transform: `translateX(${mPill.left}px)` }}
-              />
-            )}
             {NAV_ITEMS.map(it => (
-              <button
+              <a
                 key={it.id}
                 ref={el => { mobileRefs.current[it.id] = el; }}
                 className={`mnav-link${active === it.id ? " active" : ""}`}
-                onClick={() => scrollTo(it.id)}
+                href={`#${it.id}`}
                 aria-current={active === it.id ? "location" : undefined}
               >
                 {it.label}
-              </button>
+              </a>
             ))}
           </nav>
           <button

@@ -1,3 +1,4 @@
+import { useId } from "react";
 import { ProjectEvidence } from "../data/projects";
 
 const WIDTH = 240;
@@ -50,28 +51,31 @@ function UnitDots({ count, color }: {
   count: number;
   color: string;
 }) {
+  const patternId = `unit-dots-${useId().replace(/:/g, "")}`;
   const columns = Math.ceil(Math.sqrt(count * (WIDTH / HEIGHT)));
   const rows = Math.ceil(count / columns);
   const cellWidth = WIDTH / columns;
   const cellHeight = HEIGHT / rows;
   const radius = Math.max(0.45, Math.min(cellWidth, cellHeight) * 0.28);
-  const dotPath = Array.from({ length: count }, (_, index) => {
-    const column = index % columns;
-    const row = Math.floor(index / columns);
-    const cx = (column + 0.5) * cellWidth;
-    const cy = (row + 0.5) * cellHeight;
-    const left = cx - radius;
-    const diameter = radius * 2;
-    return [
-      `M${left.toFixed(2)},${cy.toFixed(2)}`,
-      `a${radius.toFixed(2)},${radius.toFixed(2)} 0 1,0 ${diameter.toFixed(2)},0`,
-      `a${radius.toFixed(2)},${radius.toFixed(2)} 0 1,0 ${(-diameter).toFixed(2)},0`,
-    ].join(" ");
-  }).join(" ");
 
   return (
     <svg viewBox={`0 0 ${WIDTH} ${HEIGHT}`} width="100%" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-      <path d={dotPath} fill={color} opacity="0.72" />
+      <defs>
+        <pattern
+          id={patternId}
+          width={cellWidth}
+          height={cellHeight}
+          patternUnits="userSpaceOnUse"
+        >
+          <circle
+            cx={cellWidth / 2}
+            cy={cellHeight / 2}
+            r={radius}
+            fill={color}
+          />
+        </pattern>
+      </defs>
+      <rect width={WIDTH} height={HEIGHT} fill={`url(#${patternId})`} opacity="0.72" />
     </svg>
   );
 }

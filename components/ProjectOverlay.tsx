@@ -19,12 +19,24 @@ export function ProjectOverlay({
   const lightboxRef = useRef<HTMLDivElement>(null);
   const lightboxCloseRef = useRef<HTMLButtonElement>(null);
   const openerRef = useRef<HTMLElement | null>(null);
+  const openedFromPageRef = useRef(false);
   const imageOpenerRef = useRef<HTMLButtonElement | null>(null);
+  const lastProjectIdRef = useRef<string | null>(project?.id ?? null);
   const isOpen = Boolean(project);
 
   useEffect(() => {
+    if (project) lastProjectIdRef.current = project.id;
+  }, [project?.id]);
+
+  useEffect(() => {
     if (!isOpen) return;
-    openerRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    openedFromPageRef.current = Boolean(window.history.state?.portfolioProject);
+    const activeElement = document.activeElement;
+    openerRef.current = activeElement instanceof HTMLElement
+      && activeElement !== document.body
+      && activeElement !== document.documentElement
+      ? activeElement
+      : null;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
@@ -32,7 +44,11 @@ export function ProjectOverlay({
       document.body.style.overflow = previousOverflow;
       const opener = openerRef.current;
       window.requestAnimationFrame(() => {
-        if (opener?.isConnected) opener.focus();
+        const projectTrigger = lastProjectIdRef.current
+          ? document.getElementById(`project-trigger-${lastProjectIdRef.current}`)
+          : null;
+        const focusTarget = openedFromPageRef.current && opener?.isConnected ? opener : projectTrigger;
+        focusTarget?.focus();
       });
     };
   }, [isOpen]);
@@ -116,7 +132,7 @@ export function ProjectOverlay({
       >
         <button ref={closeRef} className="overlay-x" onClick={onClose} aria-label="Close project details">×</button>
         {project.images && project.images.length > 0 && (
-          <div className="overlay-images" aria-label={`${project.title} image previews`}>
+          <div className="overlay-images" role="group" aria-label={`${project.title} image previews`}>
             {project.images.map((image, i) => (
               <button
                 key={image.src}
