@@ -37,5 +37,3 @@ export const SKILL_GROUPS = [
   { label: "Data platforms", items: ["Snowflake", "Amazon Athena", "Amazon S3", "Neon", "Azure ETL"] },
   { label: "Delivery & integration", items: ["Excel-based BI", "Dashboard embedding", "Tableau Extensions", "Laravel / PHP"] },
 ];
-
-export const ABOUT_TAGS = ["Data governance", "Analytics engineering", "Dashboard design", "Stakeholder collaboration", "Data quality"];

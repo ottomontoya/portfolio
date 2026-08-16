@@ -60,7 +60,7 @@
 
 [data-theme="dark"] {
   color-scheme: dark;
-  --green: #3d6b3f;
+  --green: #35603a;
   --burgundy: #a8344a;
   --beige: #1a1a18;
   --ink: #f1ead8;
@@ -308,10 +308,10 @@ body::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 8px; }
 .room-skills { background: var(--wall-skills); color: var(--on-wall-skills); }
 .room-exp    { background: var(--wall-exp); color: var(--on-wall-exp); }
 [data-theme="dark"] .room-about,
-[data-theme="dark"] .room-skills { --label-opacity: .88; }
+[data-theme="dark"] .room-skills { --label-opacity: .92; }
 
 .shell { max-width: 1240px; margin: 0 auto; padding: 140px 32px 120px; position: relative; }
-@media (max-width: 760px) { .shell { padding: 120px 20px 100px; } }
+@media (max-width: 760px) { .shell { padding: 120px 20px 120px; } }
 
 .sec-divider { display: block; width: 100%; height: 120px; margin: -1px 0; }
 
@@ -449,7 +449,9 @@ body::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 8px; }
 /* ── About ── */
 .about-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 80px; }
 .about-body p { font-size: 18px; line-height: 1.55; margin: 0 0 18px; max-width: 54ch; opacity: .88; text-wrap: pretty; }
-.tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+/* The right column is two labelled blocks — the ledger, then the handover list —
+   separated at the sub-block interval so each keeps its own hairline. */
+.about-side { display: grid; align-content: start; gap: 48px; }
 .a-pill {
   display: inline-block; font-family: var(--font-mono); font-size: 11px; letter-spacing: .04em;
   padding: 6px 11px; border-radius: 999px;
@@ -461,8 +463,27 @@ body::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 8px; }
   text-transform: uppercase; opacity: var(--label-opacity);
   font-weight: 400; margin: 0 0 18px; padding-bottom: 14px; border-bottom: 1px solid var(--rule);
 }
+/* The room's evidence device: the Stat Block turned on its side — serif value,
+   plain label, mono qualifier — stacked so the figures read down the column
+   instead of across a band. Hairlines between entries, no panel around them. */
+.ledger { list-style: none; padding: 0; margin: 0; display: grid; }
+.ledger-item + .ledger-item { border-top: 1px solid var(--rule); margin-top: 24px; padding-top: 24px; }
+.ledger-fig {
+  font-family: var(--font-display); font-weight: 400;
+  font-size: clamp(28px, 2.6vw, 40px); line-height: 1; letter-spacing: -.02em;
+  font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.ledger-item-lead .ledger-fig { font-size: clamp(40px, 3.8vw, 56px); }
+.ledger-name { font-size: 14px; font-weight: 500; line-height: 1.35; margin-top: 12px; max-width: 30ch; }
+.ledger-note {
+  font-size: 11px; opacity: var(--label-opacity);
+  margin-top: 6px; letter-spacing: .02em; line-height: 1.45;
+}
+
 .how { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 18px; }
-.how li { display: grid; grid-template-columns: 32px 1fr; gap: 12px; font-size: 15px; line-height: 1.5; opacity: .92; }
+.how li { display: grid; grid-template-columns: 32px 1fr; gap: 12px; font-size: 15px; line-height: 1.5; }
+/* Opacity sits on the text, not the row, so the mono index never compounds it. */
+.how-t { opacity: .92; }
 .how-n { font-size: 11px; opacity: var(--label-opacity); }
 @media (max-width: 860px) { .about-grid { grid-template-columns: 1fr; gap: 48px; } }
 
@@ -1143,6 +1164,13 @@ body::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 8px; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+  .room-hero .eyebrow,
+  .room-hero .h1,
+  .room-hero .lead,
+  .room-hero .cta-row,
+  .hero-evidence {
+    animation: none;
+  }
   .nav-wrap,
   .nav-pill,
   .nav-link,

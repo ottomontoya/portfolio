@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { INDUSTRY_COUNT, PROJECT_COUNT, PROJECTS, getProjectMetric } from "../data/projects";
 import { EDUCATION, EXPERIENCE } from "../data/education";
-import { ABOUT_TAGS, CAPABILITY_STAGES, SKILL_GROUPS } from "../data/skills";
-import { STATS, ABOUT_BODY, HOW_I_WORK } from "../data/about";
+import { CAPABILITY_STAGES, SKILL_GROUPS } from "../data/skills";
+import { STATS, ABOUT_BODY, ABOUT_EMPHASIS, ABOUT_HEADLINE, ABOUT_LEDGER, HANDOVER } from "../data/about";
 import { CONTACT } from "../data/contact";
 import { Eyebrow, Pill } from "./ui";
 import { ProjectChart } from "./Charts";
@@ -59,28 +59,41 @@ export function HeroSection() {
 }
 
 export function AboutSection() {
+  const [headlineStart, headlineEnd] = ABOUT_HEADLINE.split(ABOUT_EMPHASIS);
+
   return (
     <section id="about" className="room room-about" aria-labelledby="about-title">
       <div className="shell">
         <Eyebrow dot>About</Eyebrow>
-        <h2 className="h2" id="about-title">I turn messy data <em>into reliable insights.</em></h2>
+        <h2 className="h2" id="about-title">{headlineStart}<em>{ABOUT_EMPHASIS}</em>{headlineEnd}</h2>
         <div className="about-grid">
           <div className="about-body">
             {ABOUT_BODY.map((p, i) => <p key={i}>{p}</p>)}
-            <div className="tags">
-              {ABOUT_TAGS.map(t => <Pill key={t}>{t}</Pill>)}
-            </div>
           </div>
           <div className="about-side">
-            <h3 className="side-h">How I work</h3>
-            <ul className="how">
-              {HOW_I_WORK.map((h, i) => (
-                <li key={i}>
-                  <span className="how-n mono">0{i + 1}</span>
-                  <span>{h}</span>
-                </li>
-              ))}
-            </ul>
+            <div className="side-block">
+              <h3 className="side-h">On record</h3>
+              <ul className="ledger">
+                {ABOUT_LEDGER.map((entry, index) => (
+                  <li className={`ledger-item${index === 0 ? " ledger-item-lead" : ""}`} key={entry.label}>
+                    <div className="ledger-fig">{entry.value}</div>
+                    <div className="ledger-name">{entry.label}</div>
+                    <div className="ledger-note mono">{entry.note}</div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="side-block">
+              <h3 className="side-h">What I hand over</h3>
+              <ul className="how">
+                {HANDOVER.map((item, index) => (
+                  <li key={index}>
+                    <span className="how-n mono" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+                    <span className="how-t">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -233,9 +246,9 @@ export function ExperienceSection() {
         <section id="contact" className="contact-block" aria-labelledby="contact-title">
           <div className="contact-intro">
             <Eyebrow dot>{CONTACT.contactEyebrow}</Eyebrow>
-            <h3 className="contact-title" id="contact-title">
+            <h2 className="contact-title" id="contact-title">
               {contactHeadingStart}<em>{CONTACT.contactEmphasis}</em>{contactHeadingEnd}
-            </h3>
+            </h2>
             <p className="contact-sub">{CONTACT.contactBody}</p>
           </div>
           <div className="contact-actions">

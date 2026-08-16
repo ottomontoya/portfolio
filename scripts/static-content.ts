@@ -1,7 +1,7 @@
-import { ABOUT_BODY, HOW_I_WORK, STATS } from "../data/about.ts";
+import { ABOUT_BODY, ABOUT_HEADLINE, ABOUT_LEDGER, HANDOVER, STATS } from "../data/about.ts";
 import { CONTACT } from "../data/contact.ts";
 import { EDUCATION, EXPERIENCE } from "../data/education.ts";
-import { ABOUT_TAGS, CAPABILITY_STAGES, SKILL_GROUPS } from "../data/skills.ts";
+import { CAPABILITY_STAGES, SKILL_GROUPS } from "../data/skills.ts";
 import {
   INDUSTRIES,
   INDUSTRY_COUNT,
@@ -33,6 +33,10 @@ function renderEvidence(evidence: ProjectEvidence): string {
 
 function renderStat(stat: (typeof STATS)[number]): string {
   return `${stat.value} ${stat.label} — ${stat.suffix}`;
+}
+
+function renderLedgerEntry(entry: (typeof ABOUT_LEDGER)[number]): string {
+  return `${entry.value} ${entry.label} — ${entry.note}`;
 }
 
 function renderProjectMarkdown(project: (typeof PROJECTS)[number]): string {
@@ -80,10 +84,15 @@ ${CONTACT.name} is a ${CONTACT.role} based in ${CONTACT.location}, with a Bachel
 
 ## About
 
+### ${ABOUT_HEADLINE}
+
 ${ABOUT_BODY.join("\n\n")}
 
-**How I work:**
-${HOW_I_WORK.map(item => `- ${item}`).join("\n")}
+**On record:**
+${ABOUT_LEDGER.map(entry => `- ${renderLedgerEntry(entry)}`).join("\n")}
+
+**What I hand over:**
+${HANDOVER.map(item => `- ${item}`).join("\n")}
 
 **Career highlights:**
 ${STATS.map(stat => `- ${renderStat(stat)}`).join("\n")}
@@ -102,8 +111,6 @@ ${stage.description}
 **Technical toolkit:**
 
 ${SKILL_GROUPS.map(group => `**${group.label}:** ${group.items.join(", ")}`).join("\n\n")}
-
-**Areas of expertise:** ${ABOUT_TAGS.join(", ")}
 
 ---
 
@@ -182,10 +189,16 @@ export function renderNoscript(): string {
       <main>
         <h1>${escapeHtml(CONTACT.name)} — ${escapeHtml(CONTACT.role)}</h1>
         <p>${escapeHtml(CONTACT.tagline)}</p>
+
+        <h2>${escapeHtml(ABOUT_HEADLINE)}</h2>
 ${ABOUT_BODY.map(paragraph => `        <p>${escapeHtml(paragraph)}</p>`).join("\n")}
-        <h2>How I work</h2>
+        <h3>On record</h3>
         <ul>
-${HOW_I_WORK.map(item => `          <li>${escapeHtml(item)}</li>`).join("\n")}
+${ABOUT_LEDGER.map(entry => `          <li>${escapeHtml(renderLedgerEntry(entry))}</li>`).join("\n")}
+        </ul>
+        <h3>What I hand over</h3>
+        <ul>
+${HANDOVER.map(item => `          <li>${escapeHtml(item)}</li>`).join("\n")}
         </ul>
 
         <h2>Career highlights</h2>
@@ -206,7 +219,6 @@ ${stage.capabilities.map(capability => `            <li>${escapeHtml(capability)
         <ul>
 ${SKILL_GROUPS.map(group => `          <li>${escapeHtml(group.label)}: ${escapeHtml(group.items.join(", "))}</li>`).join("\n")}
         </ul>
-        <p>Areas of expertise: ${escapeHtml(ABOUT_TAGS.join(", "))}</p>
 
         <h2>${PROJECT_COUNT} Projects Across ${INDUSTRY_COUNT} Industries</h2>
 ${PROJECTS.map(renderProjectHtml).join("\n\n")}

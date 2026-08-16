@@ -1,7 +1,5 @@
 import { INDUSTRIES, INDUSTRY_COUNT, PROJECTS, type ProjectEvidence } from "./projects.ts";
 
-const INDUSTRY_LIST = `${INDUSTRIES.slice(0, -1).join(", ")}, and ${INDUSTRIES[INDUSTRIES.length - 1]}`;
-
 export interface Stat {
   value: string;
   label: string;
@@ -24,15 +22,39 @@ export const STATS: Stat[] = [
   { value: "3+", label: "Years end-to-end BI", suffix: "from KPI to delivery" },
 ];
 
+/** The room's headline. Lives here so the static generator emits it too. */
+export const ABOUT_HEADLINE = "I turn messy data into reliable insights.";
+export const ABOUT_EMPHASIS = "into reliable insights.";
+
 export const ABOUT_BODY = [
-  "I'm a Data Analyst with a Bachelor's in Informatics Engineering and Digital Business. From understanding business questions and defining KPIs, to designing dashboards, to building the governance models that keep data secure and trustworthy.",
-  `I specialize in Tableau and Amazon QuickSight, and I've built interactive reporting and internal tools with Retool. The projects here span ${INDUSTRY_LIST}.`,
-  "What I enjoy most is translating messy requirements into clean data models and intuitive dashboards — and working closely with stakeholders so the result actually fits their workflow.",
+  "I work client-side at STX Next — multiple clients at a time, each with its own systems, vocabulary, and definition of a good number. Requirements arrive in working sessions and daily syncs, not as a written spec.",
+  "The starting point is usually someone else's artifact: a sketch, a design team's mockup, an existing Salesforce report used only as a KPI reference. So the first real task is deciding what the numbers should mean before anything gets modeled.",
+  "What I hand over reflects that. The dashboard is the middle of the job, not the end of it.",
 ];
 
-export const HOW_I_WORK = [
-  "I gather requirements through working sessions and daily syncs — high-level ideas into concrete specs.",
-  "I validate every metric against source systems before a dashboard goes to production.",
-  "I write documentation and run demos so teams can actually use what I build.",
-  "I adapt quickly to new industries — the data problems are often more similar than they appear.",
+/** Two verified figures, in the Stat Block pattern: serif value, plain label, mono qualifier. */
+export interface LedgerEntry {
+  value: string;
+  label: string;
+  note: string;
+}
+
+export const ABOUT_LEDGER: LedgerEntry[] = [
+  {
+    value: "100%",
+    label: "of identified PII-exposed data sources retired",
+    note: "Tableau access governance · ~1,500 users",
+  },
+  {
+    value: "3 wks – ~12 mos",
+    label: "Engagement range, kickoff to handover",
+    note: "multiple clients · shortest to longest",
+  },
+];
+
+export const HANDOVER = [
+  "A written KPI definition, agreed in working sessions before anything gets built, so the metric reads the same to everyone.",
+  "A specification the data engineering team can build against — the model, the grain, and the fields the report needs.",
+  "A validation pass against the source systems, every metric reconciled before the dashboard reaches production.",
+  "How-to guides, a live demo, and training — so the work keeps running after the engagement ends.",
 ];
