@@ -1,11 +1,26 @@
-import { INDUSTRIES, INDUSTRY_COUNT } from "./projects.ts";
+import { INDUSTRIES, INDUSTRY_COUNT, PROJECTS, type ProjectEvidence } from "./projects.ts";
 
 const INDUSTRY_LIST = `${INDUSTRIES.slice(0, -1).join(", ")}, and ${INDUSTRIES[INDUSTRIES.length - 1]}`;
 
-export const STATS = [
-  { value: "696→12", label: "Access paths consolidated", suffix: "for one Tableau deployment" },
+export interface Stat {
+  value: string;
+  label: string;
+  suffix: string;
+  /** Present on the lead stat only — the ledger draws its evidence mark. */
+  evidence?: ProjectEvidence;
+}
+
+const accessGovernance = PROJECTS.find(project => project.id === "p1");
+
+export const STATS: Stat[] = [
+  {
+    value: "696 → 12",
+    label: "Access paths consolidated",
+    suffix: "for one Tableau deployment · ~1,500 users",
+    evidence: accessGovernance?.evidence,
+  },
   { value: String(INDUSTRY_COUNT), label: "Industries served", suffix: INDUSTRIES.join(" · ") },
-  { value: "~15", label: "Dashboards built from sketches", suffix: "for a global automotive manufacturer" },
+  { value: "~70%", label: "Admin workload reduced", suffix: "manual reviews consolidated into one monitoring dashboard" },
   { value: "3+", label: "Years end-to-end BI", suffix: "from KPI to delivery" },
 ];
 

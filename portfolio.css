@@ -327,8 +327,8 @@ body::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 8px; }
 /* ── Typography ── */
 .h1 {
   font-family: var(--font-display); font-weight: 400;
-  font-size: clamp(56px, 9vw, 128px); line-height: .95; letter-spacing: -.02em;
-  margin: 0 0 36px; max-width: 14ch; text-wrap: balance;
+  font-size: clamp(52px, 7.4vw, 104px); line-height: .95; letter-spacing: -.02em;
+  margin: 0 0 48px; max-width: 19ch; text-wrap: balance;
 }
 .h1 em { font-style: italic; color: var(--accent-text); }
 
@@ -370,22 +370,81 @@ body::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 8px; }
 .room-exp .cta-ghost:hover { background: var(--wash); }
 .arr { font-family: var(--font-mono); font-size: 13px; }
 
-/* ── Hero strip ── */
-.hero-strip {
-  margin-top: 80px;
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px;
+/* ── Hero: the title page ──
+   The room is a full viewport with three full-width bands — eyebrow at the top
+   edge, the cover optically centred, evidence along the bottom edge. No columns,
+   so there is no left/right weight to balance. */
+.hero-shell {
+  min-height: 100svh;
+  padding-top: 124px; padding-bottom: 48px;
+  display: grid; grid-template-rows: auto 1fr auto; gap: 48px;
 }
-.hero-stat { padding-right: 20px; }
-.stat-val {
-  font-family: var(--font-display); font-size: clamp(40px, 4vw, 56px);
+.hero-mark { align-self: start; }
+.hero-mark .eyebrow { margin-bottom: 0; }
+
+.hero-cover { align-self: center; padding: 24px 0; }
+.hero-cover .lead { margin-bottom: 36px; }
+
+/* ── Evidence band ── */
+.evidence-band {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: 1.7fr 1fr 1fr 1fr;
+  border-top: 1px solid var(--rule);
+}
+.evidence-cell { padding: 22px 28px 0 0; }
+.evidence-cell + .evidence-cell { border-left: 1px solid var(--rule); padding-left: 28px; }
+/* Figures sit on a shared floor so every name in the band starts on one line,
+   whatever size its figure is. */
+.evidence-fig {
+  font-family: var(--font-display); font-size: clamp(28px, 2.6vw, 40px);
   line-height: 1; color: var(--accent-text); letter-spacing: -.02em;
+  font-variant-numeric: tabular-nums; white-space: nowrap;
+  display: flex; align-items: flex-end; min-height: clamp(40px, 3.8vw, 56px);
 }
-.stat-label { font-size: 14px; margin-top: 8px; font-weight: 500; }
-.stat-suffix { font-family: var(--font-mono); font-size: 11px; opacity: var(--label-opacity); margin-top: 4px; letter-spacing: .02em; }
-@media (max-width: 760px) {
-  .hero-strip { grid-template-columns: repeat(2, 1fr); }
-  .hero-stat { padding: 18px 14px 18px 0; border-bottom: 1px solid var(--rule); }
+.evidence-cell-lead .evidence-fig { font-size: clamp(40px, 3.8vw, 56px); }
+.evidence-name { font-size: 13px; font-weight: 500; margin-top: 10px; }
+.evidence-note {
+  font-size: 11px; opacity: var(--label-opacity);
+  margin-top: 5px; letter-spacing: .02em; line-height: 1.45;
 }
+
+@media (max-width: 860px) {
+  .hero-shell { min-height: 0; padding-bottom: 40px; gap: 40px; }
+  .hero-cover { padding: 0; }
+  .evidence-band { grid-template-columns: 1fr 1fr; }
+  .evidence-cell { padding: 18px 20px 18px 0; border-top: 1px solid var(--rule); }
+  .evidence-cell:nth-child(-n+2) { border-top: 0; }
+  .evidence-cell:nth-child(odd) { border-left: 0; padding-left: 0; }
+  .evidence-cell:nth-child(even) { border-left: 1px solid var(--rule); padding-left: 20px; }
+}
+@media (max-width: 420px) {
+  .evidence-band { grid-template-columns: 1fr; }
+  .evidence-cell,
+  .evidence-cell + .evidence-cell {
+    border-left: 0; border-top: 1px solid var(--rule);
+    padding: 16px 0 0;
+  }
+  .evidence-cell:first-child { border-top: 0; }
+}
+
+/* The one authored entrance in the system: the hero settles once on arrival.
+   The animated state is the default rendering, so without animation support —
+   or with reduced motion — every element is already in place. */
+@keyframes hero-settle {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: none; }
+}
+.room-hero .eyebrow,
+.room-hero .h1,
+.room-hero .lead,
+.room-hero .cta-row,
+.hero-evidence {
+  animation: hero-settle .7s cubic-bezier(.16, 1, .3, 1) both;
+}
+.room-hero .h1       { animation-delay: .06s; }
+.room-hero .lead     { animation-delay: .14s; }
+.room-hero .cta-row  { animation-delay: .19s; }
+.hero-evidence       { animation-delay: .26s; }
 
 /* ── About ── */
 .about-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 80px; }

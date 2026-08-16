@@ -27,9 +27,9 @@ What I enjoy most is translating messy requirements into clean data models and i
 - I adapt quickly to new industries — the data problems are often more similar than they appear.
 
 **Career highlights:**
-- 696→12 Access paths consolidated — for one Tableau deployment
+- 696 → 12 Access paths consolidated — for one Tableau deployment · ~1,500 users
 - 6 Industries served — cybersecurity · automotive · non-profit · energy · SaaS · manufacturing
-- ~15 Dashboards built from sketches — for a global automotive manufacturer
+- ~70% Admin workload reduced — manual reviews consolidated into one monitoring dashboard
 - 3+ Years end-to-end BI — from KPI to delivery
 
 ---

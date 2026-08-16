@@ -24,26 +24,34 @@ function useWideEvidenceMarks() {
 export function HeroSection() {
   return (
     <section id="home" className="room room-hero" aria-labelledby="home-title">
-      <div className="shell">
-        <Eyebrow dot>Data Analyst · BI Specialist</Eyebrow>
-        <h1 className="h1" id="home-title">
-          Clear insights<br />from <em>complex</em> data.
-        </h1>
-        <p className="lead">
-          I work end-to-end across the BI stack — from understanding the question, to defining KPIs, to shipping dashboards teams actually use.
-        </p>
-        <div className="cta-row">
-          <a className="cta cta-primary" href="#work">View work <span className="arr">→</span></a>
-          <a className="cta cta-ghost" href="#about">About me</a>
+      <div className="shell hero-shell">
+        <div className="hero-mark">
+          <Eyebrow dot>Data Analyst · BI Specialist</Eyebrow>
         </div>
-        <div className="hero-strip">
-          {STATS.map((s, i) => (
-            <div className="hero-stat" key={i}>
-              <div className="stat-val">{s.value}</div>
-              <div className="stat-label">{s.label}</div>
-              <div className="stat-suffix">{s.suffix}</div>
-            </div>
-          ))}
+
+        <div className="hero-cover">
+          <h1 className="h1" id="home-title">
+            Clear insights from <em>complex</em> data.
+          </h1>
+          <p className="lead">
+            I work end-to-end across the BI stack — from understanding the question, to defining KPIs, to shipping dashboards teams actually use.
+          </p>
+          <div className="cta-row">
+            <a className="cta cta-primary" href="#work">View work <span className="arr">→</span></a>
+            <a className="cta cta-ghost" href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
+          </div>
+        </div>
+
+        <div className="hero-evidence">
+          <ul className="evidence-band" aria-label="Verified evidence">
+            {STATS.map((stat, index) => (
+              <li className={`evidence-cell${index === 0 ? " evidence-cell-lead" : ""}`} key={stat.label}>
+                <div className="evidence-fig">{stat.value}</div>
+                <div className="evidence-name">{stat.label}</div>
+                <div className="evidence-note mono">{stat.suffix}</div>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </section>
