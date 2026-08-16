@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-08-15T20:56:01Z",
+  "generatedAt": "2026-08-16T02:53:47.633Z",
   "title": "Design System: Otto Montoya — Portfolio",
   "extensions": {
     "colorMeta": {
@@ -107,7 +107,8 @@
       { "name": "reduced-motion", "value": "0ms", "purpose": "Navigation, CTA, project, overlay, and lightbox state changes become immediate while preserving their visible hierarchy." }
     ],
     "breakpoints": [
-      { "name": "structural", "value": "860px" },
+      { "name": "about-stack", "value": "1080px" },
+        { "name": "structural", "value": "860px" },
       { "name": "overlay", "value": "820px" },
       { "name": "device", "value": "760px" },
       { "name": "compact-nav", "value": "420px" },
@@ -178,6 +179,14 @@
       "description": "The project detail sidebar — a dedicated parchment tonal step inside the Bone Paper overlay card, with a darker neutral counterpart in dark mode.",
       "html": "<div class=\"ds-side\"><div class=\"ds-side-metric\"><span class=\"ds-side-mv\">696 → 12</span><span class=\"ds-side-ml\">Access groups</span></div><div class=\"ds-side-pieces\"><div class=\"ds-side-piece ds-side-piece-wide\"><div class=\"ds-side-key\">scope</div><div class=\"ds-side-val\">End-to-end</div></div><div class=\"ds-side-piece\"><div class=\"ds-side-key\">timeline</div><div class=\"ds-side-val\">~12 months</div></div><div class=\"ds-side-piece\"><div class=\"ds-side-key\">stack</div><div class=\"ds-side-val\">Tableau</div></div></div></div>",
       "css": ".ds-side { background: var(--overlay-step, #e2d6bd); color: var(--on-overlay-wall, #1a1a18); border: 1px solid var(--rule, color-mix(in srgb, currentColor 15%, transparent)); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 24px; max-width: 340px; } .ds-side-metric { display: grid; gap: 8px; } .ds-side-mv { font-family: var(--font-display, 'Instrument Serif', Georgia, serif); font-size: clamp(42px, 4.5vw, 52px); line-height: 1; color: var(--accent-on-panel, #6b1f2a); letter-spacing: -.01em; white-space: nowrap; } .ds-side-ml { font-family: var(--font-mono, 'JetBrains Mono', ui-monospace, monospace); font-size: 11px; opacity: var(--label-opacity, .74); max-width: 24ch; } .ds-side-pieces { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; border-top: 1px solid var(--rule, color-mix(in srgb, currentColor 15%, transparent)); padding-top: 20px; } .ds-side-piece-wide { grid-column: 1 / -1; } .ds-side-key { font-family: var(--font-mono, 'JetBrains Mono', ui-monospace, monospace); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; opacity: var(--label-opacity, .74); margin-bottom: 4px; } .ds-side-val { font-family: var(--font-body, 'DM Sans', ui-sans-serif, system-ui, sans-serif); font-size: 14px; font-weight: 500; }"
+    },
+    {
+      "name": "About Ledger",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "The About room evidence device: the Stat Block turned on its side so figures read down a column, hairline-separated, with no panel around them.",
+      "html": "<ul class=\"ds-ledger\"><li class=\"ds-ledger-item ds-ledger-item-lead\"><div class=\"ds-ledger-fig\">100%</div><div class=\"ds-ledger-name\">of identified PII-exposed data sources retired</div><div class=\"ds-ledger-note\">Tableau access governance &middot; ~1,500 users</div></li><li class=\"ds-ledger-item\"><div class=\"ds-ledger-fig\">~15</div><div class=\"ds-ledger-name\">Dashboards built from sketch-based designs</div><div class=\"ds-ledger-note\">global automotive manufacturer &middot; design intent into native Tableau</div></li></ul>",
+      "css": ".ds-ledger { list-style: none; padding: 0; margin: 0; display: grid; color: #f7f1de; background: #2d4a2b; } .ds-ledger-item + .ds-ledger-item { border-top: 1px solid color-mix(in srgb, currentColor 15%, transparent); margin-top: 24px; padding-top: 24px; } .ds-ledger-fig { font-family: \"Instrument Serif\", Georgia, serif; font-weight: 400; font-size: clamp(28px, 2.6vw, 40px); line-height: 1; letter-spacing: -.02em; font-variant-numeric: tabular-nums; white-space: nowrap; } .ds-ledger-item-lead .ds-ledger-fig { font-size: clamp(32px, 3.8vw, 56px); } .ds-ledger-name { font-family: \"DM Sans\", ui-sans-serif, system-ui, sans-serif; font-size: 14px; font-weight: 500; line-height: 1.35; margin-top: 12px; max-width: 30ch; text-wrap: pretty; } .ds-ledger-note { font-family: \"JetBrains Mono\", ui-monospace, monospace; font-size: 11px; opacity: .74; margin-top: 6px; letter-spacing: .02em; line-height: 1.45; }"
     }
   ],
   "narrative": {

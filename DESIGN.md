@@ -16,9 +16,20 @@ colors:
   overlay-step: "#e2d6bd"
   overlay-step-dark: "#6b675e"
 typography:
+  # The UI ramp: the small, non-fluid steps the interface actually reuses. The
+  # named roles below carry the fluid display sizes; these are the fixed ones.
+  scale:
+    micro: "11px"
+    micro-wide: "11.5px"
+    meta: "12px"
+    nav: "13px"
+    control: "14px"
+    body: "15px"
+    prose: "18px"
+    prose-lg: "20px"
   display:
     fontFamily: "Instrument Serif, Georgia, serif"
-    fontSize: "clamp(56px, 9vw, 128px)"
+    fontSize: "clamp(52px, 7.4vw, 104px)"
     fontWeight: 400
     lineHeight: 0.95
     letterSpacing: "-0.02em"
@@ -46,6 +57,18 @@ typography:
     fontWeight: 400
     lineHeight: 1.55
     letterSpacing: "normal"
+  figure:
+    fontFamily: "Instrument Serif, Georgia, serif"
+    fontSize: "clamp(32px, 3.8vw, 56px)"
+    fontWeight: 400
+    lineHeight: 1
+    letterSpacing: "-0.02em"
+  figure-sm:
+    fontFamily: "Instrument Serif, Georgia, serif"
+    fontSize: "clamp(28px, 2.6vw, 40px)"
+    fontWeight: 400
+    lineHeight: 1
+    letterSpacing: "-0.02em"
   label:
     fontFamily: "JetBrains Mono, ui-monospace, SFMono-Regular, monospace"
     fontSize: "11px"
@@ -194,9 +217,9 @@ A single centered column with generous vertical rooms. The content shell caps at
 
 **Vertical rhythm:** each room is padded 140px top / 120px bottom on desktop, 120px / 100px on mobile — asymmetric, so the eye lands slightly below center after a scroll jump. Major blocks inside a room separate by 80px; sub-blocks by 48px; list rows by 32px vertical padding with a hairline top border. Adjacent ruled blocks collapse the outer gap so two hairlines never frame empty space: the next block owns its interior breathing room. In Experience, the timeline's closing rule meets the contact block directly, and the contact content begins 80px inside that shared boundary.
 
-**Grids by room:** hero stats run 4 columns (2 on mobile); About splits 1.4fr / 1fr with an 80px gutter (stacking at 860px); Skills runs 4 columns (2 at 760px) with soft-skill and education lists in 2 columns (1 at 760px); the project row is a four-track grid — `64px 1.4fr 1fr 32px` — collapsing to `48px 1fr` at 860px, where the metric moves below the title block, the decorative evidence mark drops, and a text affordance replaces the standalone arrow; the timeline is `200px 1fr`, stacking at 760px. The overlay is an asymmetric named-area grid — `minmax(0, 1.45fr) minmax(280px, .9fr)` — with the header and story on the left and a persistent summary rail on the right; it becomes a one-column `header → summary → story` sequence at 820px.
+**Grids by room:** hero stats run 4 columns (2 on mobile); About splits `minmax(0, 1.2fr) minmax(360px, 1fr)` with a `clamp(56px, 5vw, 80px)` gutter, stacking at 1080px — the argument column carries the eyebrow, headline, and prose so the evidence column starts on the same line rather than below an empty band; Skills runs 4 columns (2 at 760px) with soft-skill and education lists in 2 columns (1 at 760px); the project row is a four-track grid — `64px 1.4fr 1fr 32px` — collapsing to `48px 1fr` at 860px, where the metric moves below the title block, the decorative evidence mark drops, and a text affordance replaces the standalone arrow; the timeline is `200px 1fr`, stacking at 760px. The overlay is an asymmetric named-area grid — `minmax(0, 1.45fr) minmax(280px, .9fr)` — with the header and story on the left and a persistent summary rail on the right; it becomes a one-column `header → summary → story` sequence at 820px.
 
-**Breakpoints:** 860px (structural: multi-column room grids collapse and project evidence reflows), 820px (the overlay summary rail enters the reading flow), 760px (device: desktop nav swaps for the bottom mobile pill and padding tightens), 420px (mobile-nav type and padding compact), and 340px (the mobile-nav cluster tightens its viewport inset). There is no broad tablet treatment; the two structural breakpoints respond to the actual content pressure.
+**Breakpoints:** 1080px (About collapses to one column and its blocks reorder so the evidence ledger follows the headline), 860px (structural: the remaining multi-column room grids collapse and project evidence reflows), 820px (the overlay summary rail enters the reading flow), 760px (device: desktop nav swaps for the bottom mobile pill and padding tightens), 420px (mobile-nav type and padding compact), and 340px (the mobile-nav cluster tightens its viewport inset). There is no broad tablet treatment; each structural breakpoint is set where its own content actually fails, which is why About leaves two columns 220px earlier than every other room — its evidence column falls under 36ch by 1040px.
 
 ### Named Rules
 
@@ -271,7 +294,7 @@ The open project is durable URL state (`#p1`–`#p6`). Opening from the Work roo
 The Work room's entire interface. A four-track grid — index number, title block, data block, arrow — separated by hairline rules with no card around it. An invisible full-row button provides keyboard focus and dialog semantics. The number is Oxblood mono; the title is Instrument Serif; a mono meta line carries client and role; the summary caps at 46ch; tool pills sit at the bottom. The right column pairs a large serif metric value with its mono label above a `currentColor` evidence graphic. On hover or `:focus-within`, the entire row gains 24px of horizontal padding and a Warm Paper background — the row physically widens into the page — while the arrow shifts 4px right and turns Oxblood. `:active` keeps the Warm Paper response and gives the arrow a shorter pressed translation. Below 860px the metric reflows beneath the title block, the SVG drops, and “View project →” supplies a persistent interaction cue.
 
 ### Signature: The Stat Block
-Four of them under the hero. Serif value at clamp(40px, 4vw, 56px) in Oxblood, a 14px/500 label, and an 11px mono suffix at the shared label opacity (74% by default). No borders on desktop — the grid gutter is the only separation; below 760px each block picks up a hairline bottom rule. This is the pattern for presenting any number in this system: big serif figure, plain label, quiet mono qualifier.
+Four of them under the hero. The serif value runs in two tiers — a lead figure (`figure`, up to 56px) and a standard one (`figure-sm`, up to 40px) — in Oxblood, over a 14px/500 label and an 11px mono suffix at the shared label opacity (74% by default). The lead tier's floor drops to 32px in the About ledger, where the figure sits directly beneath a 40px headline on mobile and must not tie with it. No borders on desktop — the grid gutter is the only separation; below 760px each block picks up a hairline bottom rule. This is the pattern for presenting any number in this system: big serif figure, plain label, quiet mono qualifier.
 
 ### Signature: Evidence Marks
 Inline SVG built in `components/Charts.tsx` — endpoint deltas, equal unit bars or dots, and convergence paths, all drawn in `currentColor` or Oxblood with no axes, gridlines, legend, or labels. Every graphic consumes the same typed evidence object as its headline metric: known endpoints plot without invented intermediates, one mark represents each known unit when the cardinality is small, a bounded repeating geometry carries the same texture for high-cardinality evidence, and one path represents each named source. The adjacent metric value and label always carry the exact verified evidence. These marks render as page texture that suggests data work; they are not dashboards and must not acquire dashboard chrome.

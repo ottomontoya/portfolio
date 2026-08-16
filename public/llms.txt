@@ -24,7 +24,7 @@ What I hand over reflects that. The dashboard is the middle of the job, not the 
 
 **On record:**
 - 100% of identified PII-exposed data sources retired — Tableau access governance · ~1,500 users
-- 3 wks – ~12 mos Engagement range, kickoff to handover — multiple clients · shortest to longest
+- ~15 Dashboards built from sketch-based designs — global automotive manufacturer · design intent into native Tableau
 
 **What I hand over:**
 - A written KPI definition, agreed in working sessions before anything gets built, so the metric reads the same to everyone.

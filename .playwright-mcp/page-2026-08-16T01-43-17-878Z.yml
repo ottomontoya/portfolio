@@ -1,0 +1,364 @@
+- generic [ref=e2]:
+  - link "Skip to main content" [ref=e3] [cursor=pointer]:
+    - /url: "#main-content"
+  - banner:
+    - generic [ref=e4]:
+      - link "Otto Montoya" [ref=e5] [cursor=pointer]:
+        - /url: "#home"
+      - navigation "Primary navigation" [ref=e6]:
+        - link "Home" [ref=e7] [cursor=pointer]:
+          - /url: "#home"
+        - link "About" [ref=e8] [cursor=pointer]:
+          - /url: "#about"
+        - link "Work" [ref=e9] [cursor=pointer]:
+          - /url: "#work"
+        - link "Skills" [ref=e10] [cursor=pointer]:
+          - /url: "#skills"
+        - link "Experience" [ref=e11] [cursor=pointer]:
+          - /url: "#experience"
+        - link "Contact" [ref=e12] [cursor=pointer]:
+          - /url: "#contact"
+      - button "Switch to dark mode" [ref=e13] [cursor=pointer]
+  - main [ref=e16]:
+    - region [ref=e17]:
+      - generic [ref=e18]:
+        - generic [ref=e19]: Data Analyst · BI Specialist
+        - generic [ref=e23]:
+          - heading [level=1] [ref=e24]:
+            - text: Clear insights from
+            - emphasis [ref=e25]: complex
+            - text: data.
+          - paragraph [ref=e26]: I work end-to-end across the BI stack — from understanding the question, to defining KPIs, to shipping dashboards teams actually use.
+          - generic [ref=e27]:
+            - link "View work →" [ref=e28] [cursor=pointer]:
+              - /url: "#work"
+              - text: View work
+              - generic [ref=e29]: →
+            - link "work@ottomontoya.com" [ref=e30] [cursor=pointer]:
+              - /url: mailto:work@ottomontoya.com
+        - list "Verified evidence" [ref=e32]:
+          - listitem [ref=e33]:
+            - generic [ref=e34]: 696 → 12
+            - generic [ref=e35]: Access paths consolidated
+            - generic [ref=e36]: for one Tableau deployment · ~1,500 users
+          - listitem [ref=e37]:
+            - generic [ref=e38]: "6"
+            - generic [ref=e39]: Industries served
+            - generic [ref=e40]: cybersecurity · automotive · non-profit · energy · SaaS · manufacturing
+          - listitem [ref=e41]:
+            - generic [ref=e42]: ~70%
+            - generic [ref=e43]: Admin workload reduced
+            - generic [ref=e44]: manual reviews consolidated into one monitoring dashboard
+          - listitem [ref=e45]:
+            - generic [ref=e46]: 3+
+            - generic [ref=e47]: Years end-to-end BI
+            - generic [ref=e48]: from KPI to delivery
+    - region [ref=e52]:
+      - generic [ref=e53]:
+        - generic [ref=e54]: About
+        - heading [level=2] [ref=e57]:
+          - text: I turn messy data
+          - emphasis [ref=e58]: into reliable insights.
+        - generic [ref=e59]:
+          - generic [ref=e60]:
+            - paragraph [ref=e61]: I work client-side at STX Next — multiple clients at a time, each with its own systems, vocabulary, and definition of a good number. Requirements arrive in working sessions and daily syncs, not as a written spec.
+            - paragraph [ref=e62]: "The starting point is usually someone else's artifact: a sketch, a design team's mockup, an existing Salesforce report used only as a KPI reference. So the first real task is deciding what the numbers should mean before anything gets modeled."
+            - paragraph [ref=e63]: What I hand over reflects that. The dashboard is the middle of the job, not the end of it.
+          - generic [ref=e64]:
+            - generic [ref=e65]:
+              - heading "On record" [level=3] [ref=e66]
+              - list [ref=e67]:
+                - listitem [ref=e68]:
+                  - generic [ref=e69]: 100%
+                  - generic [ref=e70]: of identified PII-exposed data sources retired
+                  - generic [ref=e71]: Tableau access governance · ~1,500 users
+                - listitem [ref=e72]:
+                  - generic [ref=e73]: 3 wks – ~12 mos
+                  - generic [ref=e74]: Engagement range, kickoff to handover
+                  - generic [ref=e75]: multiple clients · shortest to longest
+            - generic [ref=e76]:
+              - heading "What I hand over" [level=3] [ref=e77]
+              - list [ref=e78]:
+                - listitem [ref=e79]:
+                  - generic [ref=e80]: "01"
+                  - generic [ref=e81]: A written KPI definition, agreed in working sessions before anything gets built, so the metric reads the same to everyone.
+                - listitem [ref=e82]:
+                  - generic [ref=e83]: "02"
+                  - generic [ref=e84]: A specification the data engineering team can build against — the model, the grain, and the fields the report needs.
+                - listitem [ref=e85]:
+                  - generic [ref=e86]: "03"
+                  - generic [ref=e87]: A validation pass against the source systems, every metric reconciled before the dashboard reaches production.
+                - listitem [ref=e88]:
+                  - generic [ref=e89]: "04"
+                  - generic [ref=e90]: How-to guides, a live demo, and training — so the work keeps running after the engagement ends.
+    - region [ref=e94]:
+      - generic [ref=e95]:
+        - generic [ref=e96]: Selected work
+        - generic [ref=e99]:
+          - heading [level=2] [ref=e100]:
+            - text: 6 projects,
+            - emphasis [ref=e101]: 6 industries.
+          - paragraph [ref=e102]: From access governance to legacy migrations — each one ended with a dashboard people actually used.
+        - list [ref=e103]:
+          - listitem [ref=e104] [cursor=pointer]:
+            - button "Open project details for Governed Data Access at Scale" [ref=e105]
+            - generic [ref=e106]: "01"
+            - generic [ref=e107]:
+              - heading "Governed Data Access at Scale" [level=3] [ref=e108]
+              - generic [ref=e109]: Global Cybersecurity Platform · Data Analyst & BI Specialist
+              - paragraph [ref=e110]: Redesigned Tableau row-level security for a 1,500-user environment, consolidating 696 ad-hoc access paths into 12 maintainable access groups and retiring every identified PII-exposed data source.
+              - generic [ref=e111]:
+                - generic [ref=e112]: Tableau
+                - generic [ref=e113]: Snowflake
+                - generic [ref=e114]: dbt
+            - generic [ref=e116]:
+              - generic [ref=e117]: 696 → 12
+              - generic [ref=e118]: Access paths → groups
+            - generic [ref=e123]: →
+          - listitem [ref=e124] [cursor=pointer]:
+            - button "Open project details for Market Research Dashboards for a Global Automotive Manufacturer" [ref=e125]
+            - generic [ref=e126]: "02"
+            - generic [ref=e127]:
+              - heading "Market Research Dashboards for a Global Automotive Manufacturer" [level=3] [ref=e128]
+              - generic [ref=e129]: Leading German Automotive Manufacturer · BI Developer
+              - paragraph [ref=e130]: Built the Tableau visualization layer of a custom market research analytics platform, delivering ~15 dashboards from sketch-based designs that surface customer insights by market segment.
+              - generic [ref=e131]: Tableau
+            - generic [ref=e134]:
+              - generic [ref=e135]: ~15
+              - generic [ref=e136]: Dashboards delivered
+            - generic [ref=e153]: →
+          - listitem [ref=e154] [cursor=pointer]:
+            - button "Open project details for BI Layer for an Open Source Foundation's Salesforce Migration" [ref=e155]
+            - generic [ref=e156]: "03"
+            - generic [ref=e157]:
+              - heading "BI Layer for an Open Source Foundation's Salesforce Migration" [level=3] [ref=e158]
+              - generic [ref=e159]: Major Open Source Software Foundation · BI Consultant
+              - paragraph [ref=e160]: Designed and built three QuickSight dashboards on a Snowflake-backed data layer covering CRM, web analytics, and GitHub community activity, all redesigned from scratch as part of the client's move off Salesforce reporting.
+              - generic [ref=e161]:
+                - generic [ref=e162]: Amazon QuickSight
+                - generic [ref=e163]: Snowflake
+            - generic [ref=e165]:
+              - generic [ref=e166]: 3 → 1
+              - generic [ref=e167]: Sources unified
+            - generic [ref=e178]: →
+          - listitem [ref=e179] [cursor=pointer]:
+            - button "Open project details for Revenue Reporting & Workflow Apps for an Energy Company" [ref=e180]
+            - generic [ref=e181]: "04"
+            - generic [ref=e182]:
+              - heading "Revenue Reporting & Workflow Apps for an Energy Company" [level=3] [ref=e183]
+              - generic [ref=e184]: Energy & Digital Assets · BI & Workflow Applications Developer
+              - paragraph [ref=e185]: Delivered two connected tracks — scheduled revenue reporting and interactive workflow apps — to automate manual processes and improve data quality.
+              - generic [ref=e186]:
+                - generic [ref=e187]: Amazon QuickSight
+                - generic [ref=e188]: Retool
+                - generic [ref=e189]: AWS
+            - generic [ref=e191]:
+              - generic [ref=e192]: "2"
+              - generic [ref=e193]: Delivery tracks
+            - generic [ref=e197]: →
+          - listitem [ref=e198] [cursor=pointer]:
+            - button "Open project details for Rationalized BI for an Email Client Product Team" [ref=e199]
+            - generic [ref=e200]: "05"
+            - generic [ref=e201]:
+              - heading "Rationalized BI for an Email Client Product Team" [level=3] [ref=e202]
+              - generic [ref=e203]: Software Product — Email Client · BI Consultant
+              - paragraph [ref=e204]: Standardized a fragmented Salesforce reporting landscape by unifying five separate time grains in one flexible QuickSight dashboard set.
+              - generic [ref=e205]:
+                - generic [ref=e206]: Amazon QuickSight
+                - generic [ref=e207]: Neon
+                - generic [ref=e208]: Salesforce
+            - generic [ref=e210]:
+              - generic [ref=e211]: 5 → 1
+              - generic [ref=e212]: Time grains unified
+            - generic [ref=e229]: →
+          - listitem [ref=e230] [cursor=pointer]:
+            - button "Open project details for Real-Time Manufacturing Analytics for a Global Heavy Industry Manufacturer" [ref=e231]
+            - generic [ref=e232]: "06"
+            - generic [ref=e233]:
+              - heading "Real-Time Manufacturing Analytics for a Global Heavy Industry Manufacturer" [level=3] [ref=e234]
+              - generic [ref=e235]: Global Heavy Industry Manufacturer · BI Developer
+              - paragraph [ref=e236]: Implemented a four-view real-time manufacturing analytics suite natively in AWS QuickSight from production design mockups, covering furnace process monitoring and a 2,000+ asset rotating equipment fleet.
+              - generic [ref=e237]: Amazon QuickSight
+            - generic [ref=e240]:
+              - generic [ref=e241]: 2,000+
+              - generic [ref=e242]: Assets monitored
+            - generic [ref=e245]: →
+    - region [ref=e249]:
+      - generic [ref=e250]:
+        - generic [ref=e251]: Skills
+        - generic [ref=e254]:
+          - heading [level=2] [ref=e255]:
+            - text: From business question
+            - emphasis [ref=e256]: to trusted decision.
+          - generic [ref=e257]:
+            - generic [ref=e258]: End-to-end ownership
+            - paragraph [ref=e259]: I connect the conversation, the model, and the interface—not just the final chart.
+        - list "End-to-end BI capabilities" [ref=e260]:
+          - listitem [ref=e261]:
+            - generic [ref=e262]: "01"
+            - generic [ref=e263]:
+              - generic [ref=e264]: Discover
+              - heading "Find the decision behind the request." [level=3] [ref=e265]
+            - generic [ref=e266]:
+              - paragraph [ref=e267]: I turn ambiguous asks into a shared understanding of the business question, the audience, and the workflow the answer needs to support.
+              - list "Discover capabilities" [ref=e268]:
+                - listitem [ref=e269]: Requirements discovery
+                - listitem [ref=e270]: Stakeholder working sessions
+                - listitem [ref=e271]: Source-system analysis
+          - listitem [ref=e272]:
+            - generic [ref=e273]: "02"
+            - generic [ref=e274]:
+              - generic [ref=e275]: Define
+              - heading "Make the metric unambiguous." [level=3] [ref=e276]
+            - generic [ref=e277]:
+              - paragraph [ref=e278]: I shape KPIs with business and technical teams, document their logic, and define what a trustworthy result must look like before implementation starts.
+              - list "Define capabilities" [ref=e279]:
+                - listitem [ref=e280]: KPI definition
+                - listitem [ref=e281]: Metric logic
+                - listitem [ref=e282]: Acceptance criteria
+          - listitem [ref=e283]:
+            - generic [ref=e284]: "03"
+            - generic [ref=e285]:
+              - generic [ref=e286]: Model & govern
+              - heading "Build a trustworthy data foundation." [level=3] [ref=e287]
+            - generic [ref=e288]:
+              - paragraph [ref=e289]: I translate reporting needs into models and specifications, validate outputs against source systems, and design access rules that remain secure at scale.
+              - list "Model & govern capabilities" [ref=e290]:
+                - listitem [ref=e291]: Data modeling
+                - listitem [ref=e292]: Governance & RLS
+                - listitem [ref=e293]: Data quality & validation
+          - listitem [ref=e294]:
+            - generic [ref=e295]: "04"
+            - generic [ref=e296]:
+              - generic [ref=e297]: Design & build
+              - heading "Turn complexity into a useful interface." [level=3] [ref=e298]
+            - generic [ref=e299]:
+              - paragraph [ref=e300]: I structure information, choose the right visual form, and implement production dashboards within the real constraints of Tableau, QuickSight, and Power BI.
+              - list "Design & build capabilities" [ref=e301]:
+                - listitem [ref=e302]: Dashboard UX
+                - listitem [ref=e303]: Information hierarchy
+                - listitem [ref=e304]: Native BI implementation
+          - listitem [ref=e305]:
+            - generic [ref=e306]: "05"
+            - generic [ref=e307]:
+              - generic [ref=e308]: Enable
+              - heading "Make the work stick." [level=3] [ref=e309]
+            - generic [ref=e310]:
+              - paragraph [ref=e311]: I carry delivery through documentation, live demos, training, and iteration so teams understand the result and can confidently use it in their workflow.
+              - list "Enable capabilities" [ref=e312]:
+                - listitem [ref=e313]: Documentation
+                - listitem [ref=e314]: Walkthroughs & training
+                - listitem [ref=e315]: Adoption support
+        - region [ref=e316]:
+          - generic [ref=e317]:
+            - heading "Technical toolkit" [level=3] [ref=e318]
+            - paragraph [ref=e319]: Platforms and tools I use to carry that work from source to delivery.
+          - generic [ref=e320]:
+            - generic [ref=e321]:
+              - heading "BI platforms" [level=3] [ref=e323]
+              - list [ref=e324]:
+                - listitem [ref=e325]: Tableau
+                - listitem [ref=e326]: Tableau Online
+                - listitem [ref=e327]: Amazon QuickSight
+                - listitem [ref=e328]: Power BI
+                - listitem [ref=e329]: Retool
+            - generic [ref=e330]:
+              - heading "Analytics engineering" [level=3] [ref=e332]
+              - list [ref=e333]:
+                - listitem [ref=e334]: SQL
+                - listitem [ref=e335]: dbt
+                - listitem [ref=e336]: Python
+                - listitem [ref=e337]: Pandas
+                - listitem [ref=e338]: Jupyter
+                - listitem [ref=e339]: ETL pipelines
+            - generic [ref=e340]:
+              - heading "Data platforms" [level=3] [ref=e342]
+              - list [ref=e343]:
+                - listitem [ref=e344]: Snowflake
+                - listitem [ref=e345]: Amazon Athena
+                - listitem [ref=e346]: Amazon S3
+                - listitem [ref=e347]: Neon
+                - listitem [ref=e348]: Azure ETL
+            - generic [ref=e349]:
+              - heading "Delivery & integration" [level=3] [ref=e351]
+              - list [ref=e352]:
+                - listitem [ref=e353]: Excel-based BI
+                - listitem [ref=e354]: Dashboard embedding
+                - listitem [ref=e355]: Tableau Extensions
+                - listitem [ref=e356]: Laravel / PHP
+    - region [ref=e360]:
+      - generic [ref=e361]:
+        - generic [ref=e362]: Experience
+        - heading [level=2] [ref=e365]:
+          - text: A path through
+          - emphasis [ref=e366]: data, dashboards & teams.
+        - list [ref=e367]:
+          - listitem [ref=e368]:
+            - generic [ref=e369]: Present
+            - generic [ref=e370]:
+              - heading "Data Analyst" [level=3] [ref=e371]
+              - generic [ref=e372]: STX Next
+              - generic [ref=e373]: Leading dashboard and governance work end-to-end across multiple client industries.
+          - listitem [ref=e374]:
+            - generic [ref=e375]: 2024 — 2025
+            - generic [ref=e376]:
+              - heading "Jr. Data Analyst" [level=3] [ref=e377]
+              - generic [ref=e378]: STX Next
+              - generic [ref=e379]: Shipped client BI work in Tableau and QuickSight; supported migrations and data modeling.
+          - listitem [ref=e380]:
+            - generic [ref=e381]: 2023 — 2024
+            - generic [ref=e382]:
+              - heading "Jr. Data Analyst" [level=3] [ref=e383]
+              - generic [ref=e384]: Inquire Business Consulting
+              - generic [ref=e385]: Reporting and analytics for cross-industry clients; early dashboard design work.
+          - listitem [ref=e386]:
+            - generic [ref=e387]: "2023"
+            - generic [ref=e388]:
+              - heading "Software Engineer Intern" [level=3] [ref=e389]
+              - generic [ref=e390]: Inquire Business Consulting
+              - generic [ref=e391]: Internship across data + product systems; foundation in engineering practices.
+        - region [ref=e392]:
+          - generic [ref=e393]:
+            - heading "Education & certifications" [level=3] [ref=e394]
+            - paragraph [ref=e395]: Formal foundations that support the work.
+          - list [ref=e396]:
+            - listitem [ref=e397]:
+              - heading "Data Science and Machine Learning" [level=4] [ref=e398]
+              - generic [ref=e399]: MIT Schwarzman College of Computing
+              - generic [ref=e400]: Advanced modeling, experimentation, and decision-making with data.
+            - listitem [ref=e401]:
+              - heading "Python Data Structures" [level=4] [ref=e402]
+              - generic [ref=e403]: Universidad Austral
+              - generic [ref=e404]: Foundations of Python data structures for analytics workflows.
+            - listitem [ref=e405]:
+              - heading "Bachelor's in Informatics Engineering & Digital Business" [level=4] [ref=e406]
+              - generic [ref=e407]: Universidad Anáhuac Mayab
+              - generic [ref=e408]: Core computing, systems, and digital business foundations.
+        - region [ref=e409]:
+          - generic [ref=e410]:
+            - generic [ref=e411]: Start a conversation
+            - heading [level=3] [ref=e414]:
+              - text: Let's turn the next
+              - emphasis [ref=e415]: complex question
+              - text: into a clear decision.
+            - paragraph [ref=e416]: Looking for someone who can own the BI work from business question through adoption? Tell me about the role, the team, or the reporting problem.
+          - generic [ref=e417]:
+            - link "Start with an email work@ottomontoya.com" [ref=e418] [cursor=pointer]:
+              - /url: mailto:work@ottomontoya.com
+              - generic [ref=e419]: Start with an email
+              - generic [ref=e420]: work@ottomontoya.com
+              - generic [ref=e421]: →
+            - list [ref=e422]:
+              - listitem [ref=e423]:
+                - generic [ref=e424]: LinkedIn
+                - link "Connect with Otto" [ref=e425] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/in/ottomontoya/
+                  - text: Connect with Otto
+                  - generic [ref=e426]: ↗
+              - listitem [ref=e427]:
+                - generic [ref=e428]: Based in
+                - generic [ref=e429]: Mérida, México
+  - contentinfo [ref=e430]:
+    - generic [ref=e432]:
+      - generic [ref=e433]: © 2026 Otto Montoya
+      - generic [ref=e434]: Made with care · Mérida, MX

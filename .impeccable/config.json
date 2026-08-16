@@ -1,0 +1,26 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "design-system-color",
+        "value": "#ffffff",
+        "files": [
+          "portfolio.css"
+        ],
+        "createdAt": "2026-08-16T01:51:53.056Z",
+        "reason": "Claude judged: white used only as a color-mix() blend input for the documented Glass float / Shadow Vocabulary tokens (glass-bg/border/highlight, nav-indicator), not a standalone design color"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#000000",
+        "files": [
+          "portfolio.css"
+        ],
+        "createdAt": "2026-08-16T01:51:53.090Z",
+        "reason": "Claude judged: black used only as a color-mix() blend input for the documented scrim/lightbox/shadow tokens, not a standalone design color"
+      }
+    ]
+  }
+}

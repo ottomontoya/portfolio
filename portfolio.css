@@ -447,8 +447,25 @@ body::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 8px; }
 .hero-evidence       { animation-delay: .26s; }
 
 /* ── About ── */
-.about-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 80px; }
+/* 1.2fr rather than 1.4fr: the evidence column now carries six blocks against the
+   argument column's three paragraphs, so the wider track was going to the lighter
+   content. This keeps the left lead while lifting the handover measure off 40ch. */
+.about-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(360px, 1fr);
+  column-gap: clamp(56px, 5vw, 80px);
+  row-gap: 48px;
+}
+/* The headline sits inside the argument column, so the evidence column starts on
+   the same line and fills the band that used to sit empty beside it.
+   `display: flex` puts the label's box at the column top, level with the facing
+   `.side-h`; as an inline-flex it rode 6px down on its parent's line box. */
+.about-lead .eyebrow { display: flex; width: fit-content; margin-bottom: 32px; }
+/* Reversed from the global 28/48 heading interval: more room above the headline
+   than below, so it reads down into its own prose instead of up into the eyebrow. */
+.about-lead .h2 { margin-bottom: 24px; }
 .about-body p { font-size: 18px; line-height: 1.55; margin: 0 0 18px; max-width: 54ch; opacity: .88; text-wrap: pretty; }
+.about-body p:last-child { margin-bottom: 0; }
 /* The right column is two labelled blocks — the ledger, then the handover list —
    separated at the sub-block interval so each keeps its own hairline. */
 .about-side { display: grid; align-content: start; gap: 48px; }
@@ -473,8 +490,11 @@ body::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 8px; }
   font-size: clamp(28px, 2.6vw, 40px); line-height: 1; letter-spacing: -.02em;
   font-variant-numeric: tabular-nums; white-space: nowrap;
 }
-.ledger-item-lead .ledger-fig { font-size: clamp(40px, 3.8vw, 56px); }
-.ledger-name { font-size: 14px; font-weight: 500; line-height: 1.35; margin-top: 12px; max-width: 30ch; }
+/* 32px floor, not 40px: once the ledger sits directly under the headline on mobile,
+   a 40px figure met a 40px `.h2` and the room read as having two headlines.
+   Desktop is unchanged — 3.8vw still resolves to ~55px at 1440. */
+.ledger-item-lead .ledger-fig { font-size: clamp(32px, 3.8vw, 56px); }
+.ledger-name { font-size: 14px; font-weight: 500; line-height: 1.35; margin-top: 12px; max-width: 30ch; text-wrap: pretty; }
 .ledger-note {
   font-size: 11px; opacity: var(--label-opacity);
   margin-top: 6px; letter-spacing: .02em; line-height: 1.45;
@@ -483,9 +503,32 @@ body::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 8px; }
 .how { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 18px; }
 .how li { display: grid; grid-template-columns: 32px 1fr; gap: 12px; font-size: 15px; line-height: 1.5; }
 /* Opacity sits on the text, not the row, so the mono index never compounds it. */
-.how-t { opacity: .92; }
+.how-t { opacity: .92; text-wrap: pretty; }
 .how-n { font-size: 11px; opacity: var(--label-opacity); }
-@media (max-width: 860px) { .about-grid { grid-template-columns: 1fr; gap: 48px; } }
+/* Content-driven, not device-driven: measured across the band, the evidence column
+   holds 44ch at the shell cap but falls to 35ch by 1040 and 29ch by 900, where every
+   handover item breaks to three ragged lines. One column starts at 1080 instead of
+   860. The shared max-width then caps the stacked blocks — the handover list ran to
+   73ch at 860 once the longer copy landed — and keeps both blocks on one left edge. */
+@media (max-width: 1079px) {
+  .about-grid { grid-template-columns: minmax(0, 1fr); row-gap: 0; }
+  /* The two wrappers dissolve so their children become direct grid items and the
+     ledger can rise to sit under the headline. Stacked in source order the first
+     figure landed ~950px into the room — below an 844px fold — so on the device
+     recruiters actually arrive on, the whole evidence payload was invisible.
+     Spacing moves to margins because one row-gap cannot serve four different joins
+     once `order` reflows them. */
+  .about-lead,
+  .about-side { display: contents; }
+  .about-lead .eyebrow { order: 1; }
+  .about-lead .h2 { order: 2; }
+  .about-side .side-block:first-child { order: 3; margin-bottom: 48px; }
+  .about-body { order: 4; margin-bottom: 48px; }
+  .about-side .side-block:last-child { order: 5; }
+  .about-lead .h2,
+  .about-body,
+  .about-side .side-block { max-width: 660px; }
+}
 
 /* ── Projects ── */
 .work-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 48px; margin-bottom: 32px; }

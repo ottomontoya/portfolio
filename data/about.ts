@@ -46,9 +46,9 @@ export const ABOUT_LEDGER: LedgerEntry[] = [
     note: "Tableau access governance · ~1,500 users",
   },
   {
-    value: "3 wks – ~12 mos",
-    label: "Engagement range, kickoff to handover",
-    note: "multiple clients · shortest to longest",
+    value: "~15",
+    label: "Dashboards built from sketch-based designs",
+    note: "global automotive manufacturer · design intent into native Tableau",
   },
 ];
 

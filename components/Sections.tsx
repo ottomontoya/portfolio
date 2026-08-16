@@ -64,11 +64,16 @@ export function AboutSection() {
   return (
     <section id="about" className="room room-about" aria-labelledby="about-title">
       <div className="shell">
-        <Eyebrow dot>About</Eyebrow>
-        <h2 className="h2" id="about-title">{headlineStart}<em>{ABOUT_EMPHASIS}</em>{headlineEnd}</h2>
         <div className="about-grid">
-          <div className="about-body">
-            {ABOUT_BODY.map((p, i) => <p key={i}>{p}</p>)}
+          {/* The argument column: label, headline, prose. Keeping the headline inside
+              the column — rather than spanning the shell — lets the evidence column
+              start at the same line and occupy the band beside it. */}
+          <div className="about-lead">
+            <Eyebrow dot>About</Eyebrow>
+            <h2 className="h2" id="about-title">{headlineStart}<em>{ABOUT_EMPHASIS}</em>{headlineEnd}</h2>
+            <div className="about-body">
+              {ABOUT_BODY.map((p, i) => <p key={i}>{p}</p>)}
+            </div>
           </div>
           <div className="about-side">
             <div className="side-block">

@@ -49,4 +49,8 @@ You can ask me to run these one at a time, all at once, or in any order you pref
 
 Re-run /impeccable critique after fixes to see your score improve.
 
-Two notes worth carrying forward, both saved to the plan memory: the static detector found 2 findings where live-DOM injection found 17 — the CLI can't see a client-rendered React app, so runtime injection is the only meaningful detector path for this codebase. And Playwright MCP won't run on this machine (it wants Google Chrome), so browser work goes through the project's own playwright dependency instead.
+One note worth carrying forward, saved to the plan memory: the static detector found 2 findings where live-DOM injection found 17 — the CLI can't see a client-rendered React app, so runtime injection is the only meaningful detector path for this codebase.
+
+## Browser previews
+
+- Never use Playwright, or any browser-automation/preview tool other than the t3-code preview (`mcp__t3-code__preview_*`), to view or interact with this app in a browser.
