@@ -28,6 +28,10 @@
 - Prefer accessible semantic HTML and keyboard-operable interactions.
 - Do not alter generated `dist/` files unless the requested task specifically includes a production build artifact.
 
+## Collaboration
+
+- Any agent may create subagents for task delegation, regardless of its reasoning effort or model.
+
 ## Impeccable Critique 2026/07/25
 
 ### Action Summary
