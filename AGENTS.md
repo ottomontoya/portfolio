@@ -30,7 +30,65 @@
 
 ## Collaboration
 
-- Any agent may create subagents for task delegation, regardless of its reasoning effort or model.
+This repository runs two multi-agent workflows side by side, one per harness. They
+share every invariant above and differ only in mechanism:
+
+- **Codex** uses the Sol → Terra → Luna workflow, configured in `.codex/`.
+- **Claude Code** uses the orchestrator → manager → worker workflow, configured in
+  `.claude/`.
+
+When the stack, commands, or invariants in this file change, update both.
+
+### Multi-agent workflow (Codex)
+
+This repository uses an adaptive Sol → Terra → Luna workflow:
+
+- The primary agent is the Sol orchestrator. It owns requirements, acceptance criteria, dependency ordering, product and design decisions, conflict resolution, the final diff review, and the user-facing synthesis.
+- Do not delegate small, sequential tasks that Sol can complete directly.
+- Sol may delegate independent, bounded, read-heavy work directly to `luna_explorer` agents.
+- Sol should use one `portfolio_manager` Terra agent when work is broad, ambiguous, or crosses multiple systems. Terra decomposes and reviews that branch before returning a distilled result to Sol.
+- A Terra manager may create at most two Luna tasks concurrently. Luna agents must not create further subagents.
+- Prefer parallel discovery, triage, comparison, and verification. Keep related implementation sequential.
+- Before parallel writes, assign explicit, non-overlapping file ownership. Never let multiple agents edit the same file concurrently.
+- Keep React, CSS, shared state, generated content, and other behaviorally coupled changes under one writer unless Terra has proven the workstreams independent.
+- Every Luna task must specify one outcome, scope, constraints, required evidence, stopping condition, and return schema.
+- Terra validates Luna output and may redirect one failed attempt. Sol resolves anything still conflicting, incomplete, risky, or outside the approved scope.
+- Sol runs or confirms the final `npm run build` and reviews the complete diff before handoff.
+
+Project-scoped role definitions live in `.codex/agents/`. The configured concurrency cap allows the primary Sol thread, one Terra manager, and two Luna workers to run at once.
+
+### Multi-agent workflow (Claude Code)
+
+The same hierarchy, expressed with Claude Code subagents. Role definitions live in
+`.claude/agents/`; the routing policy and task contract live in the `/orchestrate`
+skill at `.claude/skills/orchestrate/SKILL.md`.
+
+| Role | Agent | Model | Codex counterpart |
+|---|---|---|---|
+| Orchestrator | main session | Opus | Sol |
+| Manager and critic | `portfolio-manager` | Sonnet, high effort | Terra |
+| Explorer | `scout` | Sonnet, low effort | `luna_explorer` |
+| Mechanical extractor | `inventory` | Haiku | — |
+| Implementation worker | `builder` | Sonnet | `luna_worker` |
+| Verifier | `verifier` | Sonnet | `luna_verifier` |
+
+- The main Opus session is the orchestrator. It owns requirements, acceptance criteria,
+  dependency ordering, product and design decisions, conflict resolution, the final
+  diff review, and the user-facing synthesis.
+- Delegation is opt-in. Invoke `/orchestrate` to run the routing policy; otherwise the
+  main session handles the task directly. Do not delegate small, sequential work.
+- Only `portfolio-manager` may delegate. Every other agent's `tools:` allowlist omits
+  `Agent`, so the no-grandchildren rule is enforced by the harness.
+- Read-only roles are enforced the same way: `portfolio-manager`, `scout`, `inventory`,
+  and `verifier` have no `Edit` or `Write` tool. This replaces Codex `sandbox_mode`.
+- At most two subagents run concurrently. Nothing enforces this cap — the orchestrator
+  and the manager hold it.
+- Before parallel writes, assign explicit non-overlapping file ownership. Where two
+  writers are unavoidable, launch them with `isolation: "worktree"` and merge the
+  results in the main session.
+- `inventory` (Haiku) is for mechanical, schema-shaped extraction only — enumerations
+  and call-site lists. Never give it a judgment call.
+- The orchestrator reviews the complete diff and confirms `npm run build` before handoff.
 
 ## Impeccable Critique 2026/07/25
 

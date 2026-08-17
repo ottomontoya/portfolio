@@ -1,4 +1,12 @@
 # Codex settings scoped to this repository.
-# Keep model selection personal/global; this project only defines safe execution defaults.
+# Sol owns orchestration; project-scoped Terra and Luna roles live in .codex/agents/.
+model = "gpt-5.6-sol"
 sandbox_mode = "workspace-write"
 model_reasoning_effort = "medium"
+
+[agents]
+enabled = true
+# Three subagent threads plus the primary Sol thread fill the four available slots.
+max_concurrent_threads_per_session = 3
+default_subagent_model = "gpt-5.6-luna"
+default_subagent_reasoning_effort = "medium"
