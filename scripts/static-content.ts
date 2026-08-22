@@ -6,6 +6,7 @@ import { SEO } from "../data/seo.ts";
 import {
   INDUSTRIES,
   INDUSTRY_COUNT,
+  FEATURED_PROJECTS,
   PROJECT_COUNT,
   PROJECTS,
   getProjectMetric,
@@ -172,6 +173,12 @@ ${project.description}
 
 **Evidence:** ${renderEvidence(project.evidence)}
 
+**Source-supported decision path:**
+- **Constraint:** ${project.decisionRecord.constraint}
+- **Chosen response:** ${project.decisionRecord.decision}
+- **How it was checked:** ${project.decisionRecord.validation}
+- **Removed from the reconstruction:** ${project.decisionRecord.boundary}
+
 **Responsibilities:**
 ${project.responsibilities.map(item => `- ${item}`).join("\n")}
 
@@ -229,6 +236,13 @@ ${SKILL_GROUPS.map(group => `**${group.label}:** ${group.items.join(", ")}`).joi
 
 ## ${PROJECT_COUNT} Projects Across ${INDUSTRY_COUNT} Industries
 
+### Featured evidence
+
+${FEATURED_PROJECTS.map(project => {
+  const metric = getProjectMetric(project.evidence);
+  return `- **${project.featured!.proof}:** ${project.title} — ${metric.value} ${metric.label}`;
+}).join("\n")}
+
 ${PROJECTS.map(renderProjectMarkdown).join("\n\n---\n\n")}
 
 ---
@@ -279,6 +293,15 @@ function renderProjectHtml(project: (typeof PROJECTS)[number]): string {
           <p>${escapeHtml(project.summary)}</p>
 ${renderParagraphs(project.description)}
           <p>Evidence: ${escapeHtml(renderEvidence(project.evidence))}</p>
+          <section aria-label="Decision path">
+            <h4>Decision path</h4>
+            <dl>
+              <dt>Constraint</dt><dd>${escapeHtml(project.decisionRecord.constraint)}</dd>
+              <dt>Chosen response</dt><dd>${escapeHtml(project.decisionRecord.decision)}</dd>
+              <dt>How it was checked</dt><dd>${escapeHtml(project.decisionRecord.validation)}</dd>
+              <dt>Removed from the reconstruction</dt><dd>${escapeHtml(project.decisionRecord.boundary)}</dd>
+            </dl>
+          </section>
           <h4>Responsibilities</h4>
           <ul>
 ${project.responsibilities.map(item => `            <li>${escapeHtml(item)}</li>`).join("\n")}
@@ -326,6 +349,13 @@ ${SKILL_GROUPS.map(group => `          <li>${escapeHtml(group.label)}: ${escapeH
         </ul>
 
         <h2>${PROJECT_COUNT} Projects Across ${INDUSTRY_COUNT} Industries</h2>
+        <h3>Featured evidence</h3>
+        <ul>
+${FEATURED_PROJECTS.map(project => {
+  const metric = getProjectMetric(project.evidence);
+  return `          <li>${escapeHtml(project.featured!.proof)}: ${escapeHtml(project.title)} — ${escapeHtml(metric.value)} ${escapeHtml(metric.label)}</li>`;
+}).join("\n")}
+        </ul>
 ${PROJECTS.map(renderProjectHtml).join("\n\n")}
 
         <h2>Experience</h2>

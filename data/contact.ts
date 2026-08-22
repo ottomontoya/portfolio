@@ -10,4 +10,7 @@ export const CONTACT = {
   contactHeading: "Let's turn the next complex question into a clear decision.",
   contactEmphasis: "complex question",
   contactBody: "Looking for someone who can own the BI work from business question through adoption? Tell me about the role, the team, or the reporting problem.",
+  copyEmailLabel: "Copy email address",
+  copyEmailSuccess: "Email copied",
+  copyEmailError: "Copy unavailable — select the address or open your email app",
 } as const;

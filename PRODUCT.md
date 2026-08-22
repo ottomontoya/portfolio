@@ -32,7 +32,7 @@ The hybrid is the differentiator. Analysts who own the full chain rarely make th
 
 ## Capabilities and Constraints
 
-**Site is:** a single-page React + Vite + TypeScript site with Framer Motion, five sections (Hero, About, Work, Skills, Experience) with a contact block, a light/dark toggle, and a project detail overlay opened from the Work grid. Six projects (`p1`–`p6`) carry summary, client, industry, role, tools, scope, timeline, typed evidence shared by the headline metric and chart, description, responsibilities, impact, optional images, and optional case-study link.
+**Site is:** a single-page React + Vite + TypeScript site with five sections (Hero, About, Work, Skills, Experience), a contact block, a light/dark toggle, and a project detail overlay opened from the Work grid or featured-evidence index. Six projects (`p1`–`p6`) carry summary, client, industry, role, tools, scope, timeline, typed evidence shared by the headline metric and chart, a source-supported decision path with an explicit disclosure boundary, description, responsibilities, impact, optional images, and optional case-study link.
 
 **Content lives in `data/`** (`projects.ts`, `about.ts`, `skills.ts`, `education.ts`) — copy is data, not markup.
 
@@ -40,7 +40,7 @@ The hybrid is the differentiator. Analysts who own the full chain rarely make th
 - **Client anonymity.** Clients are described generically ("Global Cybersecurity Platform", "Leading German Automotive Manufacturer", "Major Open Source Software Foundation"). No real client names, no logos, ever. Only the two published STX Next case-study URLs may be linked.
 - **Crawler and AI parity.** `public/llms.txt` and the `<noscript>` block in `index.html` mirror on-page content for AI systems and non-JS crawlers. Any content change must be reflected in both.
 
-**Currently true, not locked:** contact runs through `work@ottomontoya.com` and LinkedIn only — there is no CV/résumé download and no contact form. English only. Whether to add a downloadable CV is undecided.
+**Currently true, not locked:** contact runs through `work@ottomontoya.com`, a copy-email fallback, and LinkedIn — there is no CV/résumé download, contact form, or analytics collection. English only. Whether to add a downloadable CV is undecided.
 
 ## Brand Commitments
 
@@ -54,14 +54,14 @@ Real, verified figures from delivered work, already published on the site:
 - 696 → 12 access paths consolidated across ~1,500 users (Tableau RLS redesign), 100% of identified PII-exposed data sources retired, ~70% reduction in admin workload.
 - ~15 dashboards built from sketch-based designs for a global automotive manufacturer.
 - Three QuickSight dashboards unifying CRM, web analytics, and GitHub community activity for an open-source foundation's Salesforce migration.
-- Two connected delivery tracks for an energy company: scheduled revenue reporting in QuickSight and workflow applications in Retool.
-- Five reporting time grains (daily, weekly, monthly, quarterly, yearly) unified in one flexible QuickSight dashboard set.
-- Four-view real-time manufacturing analytics suite covering a 2,000+ asset rotating equipment fleet.
+- Two connected delivery tracks for an energy company: scheduled revenue reporting in QuickSight and four workflow applications in Retool.
+- Approximately 20–25 fragmented Salesforce reports across five time grains (daily, weekly, monthly, quarterly, yearly) rationalized into one flexible QuickSight dashboard set.
+- A four-view manufacturing analytics prototype recreated from a supplied mockup with dummy data in STX Next's internal QuickSight environment, including a representative 2,000+ asset scenario. This was not built in the client's environment, used no real client data or resources, involved no direct client contact, and has no deployment or adoption claim.
 - 6 industries served (cybersecurity, automotive, non-profit, energy, SaaS, manufacturing); 3+ years end-to-end BI.
 - Two public case studies: `stxnext.com/case-study/market-research-platform`, `stxnext.com/case-study/salesforce-optimization`.
 - Education: MIT Schwarzman College of Computing (Data Science and Machine Learning), Universidad Austral (Python Data Structures), Universidad Anáhuac Mayab (BSc Informatics Engineering & Digital Business).
 
-**Screenshots of client dashboards do not exist and cannot be created** — client anonymity forbids it. The only project imagery in the repo is four abstract WebP images under `public/assets/projects/p6/`. Work-section visuals are generated charts, not real dashboard captures. Do not fabricate dashboard screenshots, client logos, testimonials, or metrics that are not listed above.
+**Screenshots of client production dashboards do not exist and cannot be created** — client anonymity forbids it. The four WebP images under `public/assets/projects/p6/` are cleared screenshots of Otto's internal QuickSight prototype built with dummy data; they are not client-environment or production captures. Work-section visuals are generated evidence marks, not dashboards. Do not fabricate dashboard screenshots, client logos, testimonials, deployment claims, adoption claims, or metrics that are not listed above.
 
 ## Product Principles
 
