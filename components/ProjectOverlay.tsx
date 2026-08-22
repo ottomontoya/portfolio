@@ -15,6 +15,7 @@ export function ProjectOverlay({
 }) {
   const [lightbox, setLightbox] = useState<ProjectImage | null>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
   const lightboxRef = useRef<HTMLDivElement>(null);
   const lightboxCloseRef = useRef<HTMLButtonElement>(null);
@@ -56,7 +57,7 @@ export function ProjectOverlay({
   useEffect(() => {
     if (!project) return;
     const focusFrame = window.requestAnimationFrame(() => {
-      dialogRef.current?.scrollTo({ top: 0 });
+      cardRef.current?.scrollTo({ top: 0 });
       closeRef.current?.focus();
     });
     return () => window.cancelAnimationFrame(focusFrame);
@@ -124,13 +125,14 @@ export function ProjectOverlay({
     <div className="overlay" onMouseDown={e => { if (e.target === e.currentTarget) onClose(); }}>
       <div
         ref={dialogRef}
-        className="overlay-card"
+        className="overlay-dialog"
         role="dialog"
         aria-modal="true"
         aria-labelledby={`project-title-${project.id}`}
         tabIndex={-1}
       >
         <button ref={closeRef} className="overlay-x" onClick={onClose} aria-label="Close project details">×</button>
+        <div ref={cardRef} className="overlay-card">
         {project.images && project.images.length > 0 && (
           <div className="overlay-images" role="group" aria-label={`${project.title} image previews`}>
             {project.images.map((image, i) => (
@@ -195,6 +197,29 @@ export function ProjectOverlay({
             <div className="overlay-body">
               {project.description.split("\n\n").map((p, i) => <p key={i}>{p}</p>)}
             </div>
+            <section className="decision-record" aria-labelledby={`decision-record-${project.id}`}>
+              <div className="decision-record-head">
+                <h3 className="overlay-section-label" id={`decision-record-${project.id}`}>Decision path</h3>
+              </div>
+              <ol className="decision-record-steps">
+                <li>
+                  <h4 className="mono">Constraint</h4>
+                  <p>{project.decisionRecord.constraint}</p>
+                </li>
+                <li>
+                  <h4 className="mono">Chosen response</h4>
+                  <p>{project.decisionRecord.decision}</p>
+                </li>
+                <li>
+                  <h4 className="mono">How it was checked</h4>
+                  <p>{project.decisionRecord.validation}</p>
+                </li>
+              </ol>
+              <p className="decision-record-boundary">
+                <span className="mono">Removed</span>
+                {project.decisionRecord.boundary}
+              </p>
+            </section>
             <h3 className="overlay-section-label">Responsibilities</h3>
             <ul className="overlay-resp">
               {project.responsibilities.map((r, i) => <li key={i}>{r}</li>)}
@@ -267,6 +292,7 @@ export function ProjectOverlay({
             <span aria-hidden="true">→</span>
           </button>
         </nav>
+        </div>
       </div>
     </div>
   );

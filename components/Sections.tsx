@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { INDUSTRY_COUNT, PROJECT_COUNT, PROJECTS, getProjectMetric } from "../data/projects";
+import { FEATURED_PROJECTS, INDUSTRY_COUNT, PROJECT_COUNT, PROJECTS, getProjectMetric } from "../data/projects";
 import { EDUCATION, EXPERIENCE } from "../data/education";
 import { CAPABILITY_STAGES, SKILL_GROUPS } from "../data/skills";
 import { STATS, ABOUT_BODY, ABOUT_EMPHASIS, ABOUT_HEADLINE, ABOUT_LEDGER, HANDOVER } from "../data/about";
 import { CONTACT } from "../data/contact";
-import { Eyebrow, Pill } from "./ui";
+import { CopyEmailButton, Eyebrow, Pill } from "./ui";
 import { ProjectChart } from "./Charts";
 
 function useWideEvidenceMarks() {
@@ -115,8 +115,35 @@ export function WorkSection({ onOpen }: { onOpen: (id: string) => void }) {
         <Eyebrow dot>Selected work</Eyebrow>
         <div className="work-head">
           <h2 className="h2 h2-work" id="work-title">{PROJECT_COUNT} projects, <em>{INDUSTRY_COUNT} industries.</em></h2>
-          <p className="lead lead-work">From access governance to legacy migrations — each one ended with a dashboard people actually used.</p>
+          <p className="lead lead-work">From access governance to legacy migrations — each one shows the constraint, the decision, and the delivered result.</p>
         </div>
+        <section className="featured-proof" aria-labelledby="featured-proof-title">
+          <h3 className="featured-proof-label mono" id="featured-proof-title">Featured evidence</h3>
+          <ol className="featured-proof-list">
+            {FEATURED_PROJECTS.map((project) => {
+              const metric = getProjectMetric(project.evidence);
+              return (
+                <li key={project.id}>
+                  <button
+                    type="button"
+                    className="featured-proof-trigger"
+                    onClick={() => onOpen(project.id)}
+                    aria-haspopup="dialog"
+                    aria-label={`Open featured project: ${project.title}`}
+                  >
+                    <span className="featured-proof-meta mono">{project.n} · {project.featured.proof}</span>
+                    <span className="featured-proof-title">{project.title}</span>
+                    <span className="featured-proof-metric">
+                      <span>{metric.value}</span>
+                      <span className="mono">{metric.label}</span>
+                    </span>
+                    <span className="featured-proof-action">View project <span aria-hidden="true">→</span></span>
+                  </button>
+                </li>
+              );
+            })}
+          </ol>
+        </section>
         <ul className="projects">
           {PROJECTS.map((p) => {
             const metric = getProjectMetric(p.evidence);
@@ -263,6 +290,15 @@ export function ExperienceSection() {
               <span className="contact-email-arrow" aria-hidden="true">→</span>
             </a>
             <ul className="contact-r">
+              <li className="contact-copy-row">
+                <span className="mono">Email</span>
+                <CopyEmailButton
+                  email={CONTACT.email}
+                  label={CONTACT.copyEmailLabel}
+                  successMessage={CONTACT.copyEmailSuccess}
+                  errorMessage={CONTACT.copyEmailError}
+                />
+              </li>
               <li>
                 <span className="mono">LinkedIn</span>
                 <a href={CONTACT.linkedInUrl} target="_blank" rel="noopener noreferrer">
