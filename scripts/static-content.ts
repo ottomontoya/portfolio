@@ -2,6 +2,7 @@ import { ABOUT_BODY, ABOUT_HEADLINE, ABOUT_LEDGER, HANDOVER, STATS } from "../da
 import { CONTACT } from "../data/contact.ts";
 import { EDUCATION, EXPERIENCE } from "../data/education.ts";
 import { CAPABILITY_STAGES, SKILL_GROUPS } from "../data/skills.ts";
+import { SEO } from "../data/seo.ts";
 import {
   INDUSTRIES,
   INDUSTRY_COUNT,
@@ -12,6 +13,118 @@ import {
 } from "../data/projects.ts";
 
 const industryList = `${INDUSTRIES.slice(0, -1).join(", ")}, and ${INDUSTRIES.at(-1)}`;
+
+function escapeHtml(value: string): string {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;");
+}
+
+function renderStructuredData(): string {
+  const personId = `${SEO.canonicalUrl}#person`;
+  const data = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "ProfilePage",
+        "@id": `${SEO.canonicalUrl}#profile`,
+        url: SEO.canonicalUrl,
+        name: SEO.title,
+        description: SEO.description,
+        inLanguage: "en",
+        mainEntity: { "@id": personId },
+        hasPart: PROJECTS.map((project, index) => ({
+          "@type": "CreativeWork",
+          position: index + 1,
+          name: project.title,
+          description: project.summary,
+          about: project.industry,
+          keywords: project.tools,
+        })),
+      },
+      {
+        "@type": "Person",
+        "@id": personId,
+        name: CONTACT.name,
+        url: SEO.canonicalUrl,
+        jobTitle: CONTACT.role,
+        description: CONTACT.tagline,
+        email: `mailto:${CONTACT.email}`,
+        sameAs: [CONTACT.linkedInUrl],
+        homeLocation: {
+          "@type": "Place",
+          name: CONTACT.location,
+        },
+        knowsAbout: [
+          ...CAPABILITY_STAGES.flatMap(stage => stage.capabilities),
+          ...SKILL_GROUPS.flatMap(group => group.items),
+        ],
+      },
+    ],
+  };
+
+  return JSON.stringify(data, null, 2).replaceAll("<", "\\u003c");
+}
+
+export function renderSeoHead(): string {
+  const [firstName, ...lastNameParts] = CONTACT.name.split(" ");
+  const lastName = lastNameParts.join(" ");
+
+  return `    <!-- SEO and structured identity generated from data/*.ts. Do not edit directly. -->
+    <title>${escapeHtml(SEO.title)}</title>
+    <meta name="description" content="${escapeHtml(SEO.description)}" />
+    <meta name="author" content="${escapeHtml(CONTACT.name)}" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <link rel="canonical" href="${escapeHtml(SEO.canonicalUrl)}" />
+    <link rel="alternate" type="text/markdown" href="/llms.txt" title="${escapeHtml(CONTACT.name)} portfolio in Markdown" />
+    <link rel="describedby" type="text/markdown" href="/llms.txt" />
+
+    <!-- Open Graph (WhatsApp, LinkedIn, Slack, iMessage, Discord) -->
+    <meta property="og:type" content="profile" />
+    <meta property="og:locale" content="${escapeHtml(SEO.locale)}" />
+    <meta property="og:site_name" content="${escapeHtml(CONTACT.name)}" />
+    <meta property="og:title" content="${escapeHtml(SEO.title)}" />
+    <meta property="og:description" content="${escapeHtml(SEO.description)}" />
+    <meta property="og:url" content="${escapeHtml(SEO.canonicalUrl)}" />
+    <meta property="og:image" content="${escapeHtml(SEO.imageUrl)}" />
+    <meta property="og:image:width" content="${SEO.imageWidth}" />
+    <meta property="og:image:height" content="${SEO.imageHeight}" />
+    <meta property="og:image:alt" content="${escapeHtml(SEO.imageAlt)}" />
+    <meta property="profile:first_name" content="${escapeHtml(firstName)}" />
+    <meta property="profile:last_name" content="${escapeHtml(lastName)}" />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="${escapeHtml(SEO.title)}" />
+    <meta name="twitter:description" content="${escapeHtml(SEO.description)}" />
+    <meta name="twitter:image" content="${escapeHtml(SEO.imageUrl)}" />
+    <meta name="twitter:image:alt" content="${escapeHtml(SEO.imageAlt)}" />
+
+    <script type="application/ld+json">
+${renderStructuredData()}
+    </script>
+    <!-- /SEO and structured identity -->`;
+}
+
+export function renderRobots(): string {
+  return `User-agent: *
+Allow: /
+
+Sitemap: ${SEO.canonicalUrl}sitemap.xml
+`;
+}
+
+export function renderSitemap(): string {
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>${escapeHtml(SEO.canonicalUrl)}</loc>
+  </url>
+</urlset>
+`;
+}
 
 function renderEvidence(evidence: ProjectEvidence): string {
   const metric = getProjectMetric(evidence);
@@ -142,14 +255,6 @@ ${CONTACT.contactBody}
 **LinkedIn:** ${CONTACT.linkedInUrl}
 **Based in:** ${CONTACT.location}
 `;
-}
-
-function escapeHtml(value: string): string {
-  return value
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;");
 }
 
 function renderParagraphs(value: string): string {
