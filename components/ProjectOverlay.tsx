@@ -13,7 +13,18 @@ export function ProjectOverlay({
   onClose: () => void;
   onNavigate: (id: string) => void;
 }) {
-  const [lightbox, setLightbox] = useState<ProjectImage | null>(null);
+  const projectId = project?.id ?? null;
+  const [imageState, setImageState] = useState<{
+    projectId: string | null;
+    image: ProjectImage | null;
+  }>({ projectId, image: null });
+  // Reset during render so a history/project change cannot commit an old image
+  // or focus trap under the new dialog identity, even for a single frame.
+  if (imageState.projectId !== projectId) {
+    setImageState({ projectId, image: null });
+  }
+  const lightbox = imageState.projectId === projectId ? imageState.image : null;
+  const setLightbox = (image: ProjectImage | null) => setImageState({ projectId, image });
   const dialogRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
@@ -55,6 +66,7 @@ export function ProjectOverlay({
   }, [isOpen]);
 
   useEffect(() => {
+    imageOpenerRef.current = null;
     if (!project) return;
     const focusFrame = window.requestAnimationFrame(() => {
       cardRef.current?.scrollTo({ top: 0 });

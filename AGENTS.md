@@ -115,4 +115,4 @@ One note worth carrying forward, saved to the plan memory: the static detector f
 
 ## Browser previews
 
-- Never use Playwright, or any browser-automation/preview tool other than the t3-code preview (`mcp__t3-code__preview_*`), to view or interact with this app in a browser.
+- Use available browser preview or automation tools, including Playwright, to view and verify this app. No specific preview provider is required.

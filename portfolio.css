@@ -27,11 +27,12 @@
   --label-opacity: .74;
   --rule: color-mix(in srgb, currentColor 15%, transparent);
   --wash: color-mix(in srgb, currentColor 7%, transparent);
-  --glass-bg: color-mix(in srgb, #ffffff 72%, transparent);
+  /* Bound the backdrop contribution so divider crossings preserve contrast. */
+  --glass-bg: color-mix(in srgb, #f7f1de 96%, transparent);
   --glass-border: color-mix(in srgb, #ffffff 44%, transparent);
   --glass-highlight: color-mix(in srgb, #ffffff 58%, transparent);
   --glass-shadow: color-mix(in srgb, var(--ink) 18%, transparent);
-  --glass-dark-room-bg: color-mix(in srgb, #000000 18%, transparent);
+  --glass-dark-room-bg: color-mix(in srgb, #1a1a18 94%, transparent);
   --glass-dark-room-border: color-mix(in srgb, #ffffff 22%, transparent);
   --glass-dark-room-highlight: color-mix(in srgb, #ffffff 25%, transparent);
   --glass-dark-room-indicator: color-mix(in srgb, #ffffff 90%, transparent);
@@ -39,7 +40,7 @@
   --glass-dark-room-shadow: color-mix(in srgb, #000000 32%, transparent);
   --glass-dark-room-text: #f7f1de;
   --glass-dark-room-indicator-text: #1a1a18;
-  --glass-light-room-bg: color-mix(in srgb, #000000 6%, transparent);
+  --glass-light-room-bg: color-mix(in srgb, #f7f1de 96%, transparent);
   --glass-light-room-border: color-mix(in srgb, #000000 15%, transparent);
   --glass-light-room-highlight: color-mix(in srgb, #ffffff 60%, transparent);
   --glass-light-room-indicator: color-mix(in srgb, #1a1a18 88%, transparent);
@@ -82,7 +83,7 @@
   --overlay-wall: var(--beige);
   --on-overlay-wall: #f1ead8;
   --overlay-step: #6b675e;
-  --glass-bg: color-mix(in srgb, #ffffff 10%, transparent);
+  --glass-bg: var(--glass-dark-room-bg);
   --glass-border: color-mix(in srgb, #ffffff 22%, transparent);
   --glass-highlight: color-mix(in srgb, #ffffff 25%, transparent);
   --glass-shadow: color-mix(in srgb, #000000 32%, transparent);
@@ -105,6 +106,7 @@ body {
   text-rendering: optimizeLegibility;
 }
 #root { min-height: 100vh; overflow-x: hidden; }
+#root:empty { min-height: 0; }
 ::selection { background: var(--accent-text); color: var(--on-accent); }
 .skip-link {
   position: fixed; top: 12px; left: 12px; z-index: 500;
@@ -133,7 +135,8 @@ body::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 8px; }
   align-items: center; width: 100%; max-width: 1320px;
   padding: 6px 8px; border-radius: 999px;
   background: var(--glass-bg);
-  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px);
+  backdrop-filter: blur(28px);
   border: 1px solid var(--glass-border);
   box-shadow: 0 10px 40px var(--glass-shadow), inset 0 1px 0 var(--glass-highlight);
   color: var(--ink);
@@ -154,7 +157,7 @@ body::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 8px; }
   background: none; border: 0;
   font-family: var(--font-body); font-size: 13px; letter-spacing: .005em;
   padding: 8px 14px; border-radius: 999px; cursor: pointer; color: inherit;
-  opacity: var(--label-opacity); transition: opacity .2s, color .2s, background-color .2s;
+  opacity: var(--label-opacity); transition: opacity .2s;
   position: relative;
   text-decoration: none;
 }
@@ -188,7 +191,9 @@ body::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 8px; }
 .mnav-pill {
   pointer-events: auto; display: flex; align-items: center; gap: 2px;
   padding: 6px; border-radius: 999px; position: relative;
-  background: var(--glass-bg); backdrop-filter: blur(28px) saturate(180%);
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: blur(28px);
+  backdrop-filter: blur(28px);
   border: 1px solid var(--glass-border);
   box-shadow: 0 10px 30px var(--glass-shadow), inset 0 1px 0 var(--glass-highlight);
   color: var(--ink);
@@ -208,7 +213,7 @@ body::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 8px; }
   flex: 0 0 auto;
   display: inline-flex; align-items: center; justify-content: center;
   text-decoration: none;
-  transition: opacity .2s, color .2s, background-color .2s;
+  transition: opacity .2s;
 }
 .mnav-link.active {
   background: var(--nav-indicator);
@@ -222,7 +227,8 @@ body::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 8px; }
   border: 1px solid var(--glass-border); border-radius: 999px;
   background: var(--glass-bg); color: var(--ink);
   box-shadow: 0 10px 30px var(--glass-shadow), inset 0 1px 0 var(--glass-highlight);
-  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px);
+  backdrop-filter: blur(28px);
   cursor: pointer; opacity: .9;
   transition: border-color .35s ease, box-shadow .35s ease, opacity .2s;
 }
@@ -1043,12 +1049,7 @@ body::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 8px; }
 .contact-email-cta:focus-visible {
   padding-right: 18px;
   padding-left: 18px;
-  color: var(--accent-on-dark);
-}
-[data-theme="dark"] .contact-email-cta:hover,
-[data-theme="dark"] .contact-email-cta:focus-visible,
-[data-theme="dark"] .contact-r a:hover {
-  color: var(--wall-skills);
+  color: var(--accent-on-exp);
 }
 .contact-email-label {
   grid-column: 1;
@@ -1058,6 +1059,8 @@ body::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 8px; }
   text-transform: uppercase;
   opacity: var(--label-opacity);
 }
+.contact-email-cta:hover .contact-email-label,
+.contact-email-cta:focus-visible .contact-email-label { opacity: 1; }
 .contact-email-address {
   grid-column: 1;
   grid-row: 2;
@@ -1107,7 +1110,8 @@ body::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 8px; }
   align-items: center;
   transition: color .18s ease, opacity .18s ease;
 }
-.contact-r a:hover { color: var(--accent-on-dark); opacity: 1; }
+.contact-r a:hover,
+.contact-r a:focus-visible { color: var(--accent-on-exp); opacity: 1; }
 .copy-email {
   min-width: 0;
   display: flex;
@@ -1130,19 +1134,18 @@ body::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 8px; }
   transition: color .18s ease, opacity .18s ease;
 }
 .copy-email-button:hover,
-.copy-email-button:focus-visible { color: var(--accent-on-dark); opacity: 1; }
+.copy-email-button:focus-visible { color: var(--accent-on-exp); opacity: 1; }
 .copy-email-button:active { opacity: 1; }
 .copy-email-status {
-  max-width: 38ch;
-  color: var(--accent-on-dark);
+  min-width: 0;
+  max-width: min(38ch, 100%);
+  color: var(--accent-on-exp);
   font-size: 11px;
   line-height: 1.35;
-  white-space: nowrap;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 .copy-email.is-error .copy-email-status { color: inherit; opacity: .78; }
-[data-theme="dark"] .copy-email-button:hover,
-[data-theme="dark"] .copy-email-button:focus-visible,
-[data-theme="dark"] .copy-email-status { color: var(--wall-skills); }
 @media (max-width: 760px) {
   .contact-block {
     padding: 80px 0 40px;
@@ -1441,6 +1444,7 @@ body::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 8px; }
   .nav-wrap,
   .nav-pill,
   .nav-link,
+  .mnav-link,
   .mnav-pill,
   .mnav-theme,
   .skip-link,
@@ -1459,15 +1463,6 @@ body::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 8px; }
     transition: none;
   }
   .cta:hover { transform: none; }
-  .skip-link {
-    transform: none;
-    opacity: 0;
-    visibility: hidden;
-  }
-  .skip-link:focus {
-    opacity: 1;
-    visibility: visible;
-  }
   .contact-email-cta:hover,
   .contact-email-cta:focus-visible {
     padding-right: 0;
