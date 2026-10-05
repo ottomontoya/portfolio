@@ -1,7 +1,7 @@
 ---
 name: verifier
 description: Independent verifier for builds, generated-content parity, focused regression checks, and design-policy compliance. Reports failures, never repairs them. Cannot delegate.
-tools: Read, Glob, Grep, Bash, mcp__t3-code__preview_open, mcp__t3-code__preview_navigate, mcp__t3-code__preview_snapshot, mcp__t3-code__preview_evaluate, mcp__t3-code__preview_resize, mcp__t3-code__preview_set_appearance, mcp__t3-code__preview_scroll, mcp__t3-code__preview_click, mcp__t3-code__preview_wait_for, mcp__t3-code__preview_status
+tools: Read, Glob, Grep, Bash
 model: sonnet
 effort: medium
 maxTurns: 20
@@ -37,8 +37,8 @@ Check the assigned criteria plus the relevant repository invariants:
 
 This is a client-rendered React app — static inspection cannot see computed styles or
 applied classes. Anything about rendered appearance, contrast, or interaction must be
-checked against the running app. Use **only** the t3-code preview tools
-(`mcp__t3-code__preview_*`). Never use Playwright or any other browser automation.
+checked against the running app. Use available browser automation, including
+Playwright through Bash, following the shared browser guidance in AGENTS.md.
 
 Check both light and dark themes when a change touches color, and check narrow
 viewports when it touches layout.

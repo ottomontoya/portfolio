@@ -32,6 +32,5 @@ orchestrator and the manager hold the cap themselves.
 
 ## Browser preview policy
 
-Do not use Playwright, or any browser-automation tool other than the t3-code preview
-tools (`mcp__t3-code__preview_*`), to view or interact with this app. This applies to
-subagents as well; `verifier` is the only roster agent granted preview tools.
+Follow the shared browser guidance in `AGENTS.md`. Browser checks may use available
+automation, including Playwright through Bash, within each agent's assigned scope.

@@ -7,7 +7,7 @@ colors:
   bone-paper: "#f1ead8"
   charcoal-ink: "#1a1a18"
   warm-paper: "#f7f1de"
-  field-green-dark: "#3d6b3f"
+  field-green-dark: "#35603a"
   oxblood-dark: "#a8344a"
   accent-on-dark: "#ca6276"
   bone-paper-dark: "#1a1a18"
@@ -113,7 +113,7 @@ components:
     rounded: "{rounded.pill}"
     padding: "6px 11px"
   nav-pill:
-    backgroundColor: "color-mix(in srgb, #ffffff 72%, transparent)"
+    backgroundColor: "color-mix(in srgb, #f7f1de 96%, transparent)"
     textColor: "{colors.charcoal-ink}"
     rounded: "{rounded.pill}"
     padding: "6px 8px"
@@ -171,7 +171,7 @@ A heritage pigment palette — earth, wine, bone, and soot — carried at full s
 - **Oxblood** (#6b1f2a): The only accent hue in the system. It serves as the Skills wall and as the light-mode accent. The Skills wall lifts to #a8344a in dark mode; accent text on dark surfaces uses the brighter, contrast-safe `--accent-on-dark` (#ca6276).
 
 ### Secondary
-- **Field Green** (#2d4a2b): The About room's wall. A deep, low-chroma forest that reads as ink rather than nature. Used as a full-bleed surface only — never as a text color, never as an accent on light backgrounds. Lifts to #3d6b3f in dark mode.
+- **Field Green** (#2d4a2b): The About room's wall. A deep, low-chroma forest that reads as ink rather than nature. Used as a full-bleed surface only — never as a text color, never as an accent on light backgrounds. Dark mode uses #35603a.
 
 ### Neutral
 - **Bone Paper** (#f1ead8): The default page surface and the text color on every dark room. Warm, slightly yellowed cream — the paper the whole study is printed on.
@@ -201,7 +201,7 @@ A heritage pigment palette — earth, wine, bone, and soot — carried at full s
 - **Title** (400, clamp(22px, 2.2vw, 30px), 1.1): Project titles, role names in the timeline, education entries, overlay headings.
 - **Lead** (400, clamp(17px, 1.6vw, 21px), 1.5, 85% opacity): The paragraph directly under a headline. Capped at 54ch, `text-wrap: pretty`.
 - **Body** (400, 15px, 1.55, 82–92% opacity): List items, notes, responsibilities. About paragraphs run larger at 18px/1.55; overlay prose at 15px/1.65. Measures cap between 46ch and 60ch depending on context.
-- **Label** (400, 11px, 0.14em, uppercase, 74% minimum opacity): Eyebrows, section labels, side headings. About and Skills labels rise to 88% in dark mode to maintain AA on their colored walls. A tighter 0.06–0.12em variant appears on contact keys and overlay labels.
+- **Label** (400, 11px, 0.14em, uppercase, 74% minimum opacity): Eyebrows, section labels, side headings. About and Skills labels use 92% opacity on their colored walls to maintain AA in dark mode. A tighter 0.06–0.12em variant appears on contact keys and overlay labels.
 
 ### Named Rules
 
@@ -210,6 +210,8 @@ A heritage pigment palette — earth, wine, bone, and soot — carried at full s
 **The Mono Label Rule.** JetBrains Mono is metadata only: eyebrows, client/role meta lines, tool names, timeline dates, scope/timeline/stack keys, the footer. It never sets a sentence anyone has to read for content.
 
 **The No-Bold-Prose Rule.** Emphasis in sentences comes from size, italic, color, and case. Prose does not exceed weight 500; 600 is reserved for compact navigation branding and project indices.
+
+**Intentional Type Exceptions.** The documented ramp governs the recurring roles; these measured exceptions are deliberate endpoints or compact utility roles: `.featured-proof-title` uses 24px → 30px; `.skills-promise p` uses 26px → 34px and a fixed 26px narrow override; `.capability-heading h3` uses 26px → 36px; `.contact-title` uses 52px → 88px and 44px → 62px on mobile; `.contact-email-address` uses 24px → 38px; `.contact-r li` uses 16px; `.decision-record-steps h4` and `.decision-record-boundary .mono` use 10px; and `.ov-mv` uses 42px → 52px. The featured and project evidence labels also retain a runtime 10.5px mono size. These values record existing roles and are not additions to the recurring ramp.
 
 ## Layout
 
@@ -245,11 +247,11 @@ The implemented system is flat by circumstance, not by doctrine. Content surface
 
 ## Shapes
 
-Pill-first geometry. Everything small and interactive is a full 999px pill: nav container, nav links, the sliding active indicator, CTAs, tag pills, the overlay close button. Nothing in this system is a rounded rectangle at a small size — it is either a pill or a hairline.
+Pill-first geometry. Everything small and interactive is a full 999px pill: nav container, nav links, active-link wash, CTAs, tag pills, and the overlay close button. Nothing else in this system is a rounded rectangle at a small size — it is either a pill or a hairline.
 
 Floating panels take large soft radii instead: 20px on the overlay card, 16px on its side panel, 10px on project images, 8px on the lightbox image. The radius scales with the surface, so a big panel never looks like an inflated button.
 
-Rooms have no radius at all — they are full-bleed color to every edge. Borders are hairlines only: `1px solid var(--rule)`, where `--rule` mixes `currentColor` at 15% with transparency, used as separators between rows rather than as outlines around objects. There is no 2px border anywhere, and no dashed or dotted stroke.
+Rooms have no radius at all — they are full-bleed color to every edge. Borders are hairlines only: `1px solid var(--rule)`, where `--rule` mixes `currentColor` at 15% with transparency, used as separators between rows rather than as outlines around objects. The project-row trigger is the intentional 2px edge-radius exception; the row divider itself remains a 1px hairline, and there are no dashed or dotted strokes.
 
 Between rooms, the color transition runs through a full-width SVG edge in one of four shapes (diagonal, curve, wave, sine) at 100–140px tall. **These are provisional** — the current expression of the room transition, not a commitment. A future pass may replace or drop them.
 
@@ -280,10 +282,10 @@ Character: **tactile and confident.** Components should feel like objects with a
 - **Internal Padding:** 48px on the card (32px × 24px under 760px), 24px on the side panel, with 24px gaps between panel sections.
 
 ### Navigation
-- **Style:** A floating, contrast-bounded glass pill — 96% Warm Paper over light rooms and 94% Charcoal Ink over dark rooms, with `blur(28px) saturate(180%)`, a hairline border, ambient shadow, and inset top highlight. The high surface contribution preserves AA contrast even while a divider is passing beneath the pill. Desktop: fixed 18px from top, three-track grid (brand / six links including Contact / mode toggle), moving to 14px once scrolled past 24px. Mobile (≤760px): a horizontally scrollable six-link pill anchored 18px from the bottom, paired with a separate circular mode pill. The active destination scrolls into view automatically; no label is compressed or clipped.
-- **Typography:** DM Sans 13px desktop, 12px mobile, at 70–75% opacity, rising to 100% on hover.
-- **Active state:** A sliding indicator pill measured from the live DOM and animated over 300ms `cubic-bezier(.4,0,.2,1)`. Desktop keeps one full navigation-sized layer and clips it to the active link; mobile animates width and horizontal translation, then scrolls the active destination toward center. The indicator is an 18% wash of the nav foreground and every label stays on that same foreground, so the moving layer remains contrast-safe while crossing neighboring labels. The section-scheme foreground/background pair swaps without a color cross-fade; shadow and border may still ease between rooms.
-- **Section-aware schemes:** The default follows the theme surface; `nav-over-dark` (Field Green / Oxblood / Charcoal Ink rooms) uses Warm Paper text on bounded dark glass, a deeper shadow, and `logo-light.svg`. Experience remains Charcoal Ink in dark mode rather than inverting to a pale wall. Foreground and surface change as one instantaneous contrast pair; only border and shadow ease over 350ms.
+- **Style:** A floating, contrast-bounded glass pill — 96% Warm Paper (`#f7f1de`) over light rooms and 94% Charcoal Ink (`#1a1a18`) over dark rooms, with `-webkit-backdrop-filter` and `backdrop-filter: blur(28px)`, no saturation boost, a hairline border, ambient shadow, and inset top highlight. The high surface contribution preserves AA contrast even while a divider is passing beneath the pill. Desktop: fixed 18px from top, three-track grid (brand / six links including Contact / mode toggle), moving to 14px once scrolled past 24px. Mobile (≤760px): a horizontally scrollable six-link pill anchored 18px from the bottom, paired with a separate circular mode pill. The active destination scrolls into view automatically; no label is compressed or clipped.
+- **Typography:** DM Sans 13px desktop at 74% opacity and 12px mobile at 75%; desktop links rise to 100% on hover. At ≤420px, mobile links use 11px.
+- **Active state:** Each active link owns its own scheme token: `--nav-indicator` is an 88% Charcoal Ink wash with Bone Paper text in light default/over-light states, and a 90% white wash with Charcoal Ink text in dark default/over-dark states. There is no shared sliding indicator. Link state transitions change opacity only; the active background remains in place without a moving layer.
+- **Section-aware schemes:** The default follows the theme surface; `nav-over-dark` uses Warm Paper text on bounded dark glass over the light Field Green `#2d4a2b`, dark Field Green `#35603a`, Oxblood, or Charcoal Ink rooms, with a deeper shadow and `logo-light.svg`. Experience remains Charcoal Ink in dark mode rather than inverting to a pale wall. Foreground and surface change as one instantaneous contrast pair; only border and shadow ease over 350ms.
 
 ### Overlay Closing Rail
 Project detail ends with one hairline and three pill actions: previous project at the left edge, “Discuss a similar project →” in the primary center position, and next project at the right edge. Previous and next wrap across the six-project set and remain ghost controls so the contact action owns the hierarchy. On mobile, the contact action becomes full-width above two equal project-navigation controls.

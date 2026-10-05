@@ -1,0 +1,5 @@
+Read-only Terra leaf completed; Sol reviewed and accepted five code defects. No file lease was claimed because leaf has no writes.
+Root integrated source review, math and build evidence; six report findings including one documentation P3. Live preview gate G6 abandoned with handoff: permitted tool absent.
+Final independent build re-verification passed. Aggregate 7 met / 0 unmet / 1 abandoned (GATES:G6). No leases exist for this read-only leaf. Tracked diff empty; required browser handoff included in final report.
+Contract revision 2: user explicitly authorizes Playwright/computer use. Reopened G6 and report/preservation gates for live verification; prior abandonment retained in log.
+Authorized live follow-up complete: source findings F1-F5 reproduced, F6 documentation drift retained, F7 navigation contrast independently measured and reviewed. Native zoom screenshots captured with computer use after Playwright native-zoom screenshots proved blank; excluded blank captures from evidence. Final root build re-verification passed. Aggregate 8 met / 0 unmet / 0 abandoned; tracked application diff remains empty.

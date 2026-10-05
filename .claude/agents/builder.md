@@ -54,7 +54,8 @@ Do not conceal failures and do not fix unrelated findings you notice along the w
 report them instead. Stop when the requested result passes its stated checks, or
 when a blocker requires authority from the manager or the orchestrator.
 
-Never use Playwright or any browser automation other than the t3-code preview tools.
+Use available browser automation, including Playwright through Bash, when relevant
+to the assigned validation. Follow the shared browser guidance in AGENTS.md.
 
 ## Return
 
