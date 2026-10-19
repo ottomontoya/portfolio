@@ -1,6 +1,7 @@
 import { readFile, writeFile } from "node:fs/promises";
 import {
   renderLlms,
+  renderNotFound,
   renderNoscript,
   renderRobots,
   renderSeoHead,
@@ -26,6 +27,7 @@ if (!seoPattern.test(index)) {
 }
 
 await Promise.all([
+  writeFile(new URL("public/404.html", root), renderNotFound(), "utf8"),
   writeFile(llmsUrl, renderLlms(), "utf8"),
   writeFile(robotsUrl, renderRobots(), "utf8"),
   writeFile(sitemapUrl, renderSitemap(), "utf8"),

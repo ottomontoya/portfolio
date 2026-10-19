@@ -22,8 +22,7 @@ Follow AGENTS.md, PRODUCT.md, and DESIGN.md. In particular:
   screenshots, testimonials, or unverified metrics.
 - The only approved external case-study links are the two STX Next URLs already in
   the project. Do not add others.
-- Maintain the heritage palette, no gradients, and accessible contrast in **both**
-  themes.
+- Maintain the approved Celadon palette, no gradients, and accessible contrast across all surfaces and system color preferences.
 - Prefer accessible semantic HTML and keyboard-operable interactions.
 - Do not add dependencies, external links, claims, or scope without approval.
 

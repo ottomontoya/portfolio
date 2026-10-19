@@ -29,8 +29,7 @@ Check the assigned criteria plus the relevant repository invariants:
   `<noscript>` record
 - Client anonymity and verified metrics only
 - Semantic HTML and keyboard operability
-- DESIGN.md constraints: heritage palette, no gradients, accessible contrast in both
-  themes
+- DESIGN.md constraints: approved Celadon palette, no gradients, accessible contrast across all surfaces and system color preferences
 - Focused regressions in the area that changed
 
 ## Live checks

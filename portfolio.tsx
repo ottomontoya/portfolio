@@ -1,17 +1,26 @@
 import { useState, useEffect, useCallback } from "react";
 import "./portfolio.css";
 import { PROJECTS } from "./data/projects";
+import { NOT_FOUND } from "./data/about";
 import { Nav } from "./components/Nav";
-import { Divider } from "./components/Divider";
-import { HeroSection, AboutSection, WorkSection, SkillsSection, ExperienceSection, SiteFooter } from "./components/Sections";
+import {
+  HeroSection,
+  AboutSection,
+  WorkSection,
+  SkillsSection,
+  ExperienceSection,
+  SiteFooter,
+} from "./components/Sections";
 import { ProjectOverlay } from "./components/ProjectOverlay";
-import { applyTheme, getInitialTheme, getStoredTheme, persistTheme } from "./utils/theme";
+import { useSmoothScroll } from "./utils/useSmoothScroll";
+import { useScrollbarVisibility } from "./utils/useScrollbarVisibility";
+import { useTheme } from "./utils/useTheme";
 
 const PROJECT_HISTORY_KEY = "portfolioProject";
 
 function projectIdFromHash() {
   const id = window.location.hash.slice(1);
-  return PROJECTS.some(project => project.id === id) ? id : null;
+  return PROJECTS.some((project) => project.id === id) ? id : null;
 }
 
 function historyStateWithProject(value: boolean) {
@@ -21,20 +30,11 @@ function historyStateWithProject(value: boolean) {
 }
 
 export default function App() {
-  const [dark, setDark] = useState(getInitialTheme);
-  const [themeIsExplicit, setThemeIsExplicit] = useState(() => getStoredTheme() !== null);
+  const { theme, toggleTheme } = useTheme();
   const [openId, setOpenId] = useState<string | null>(projectIdFromHash);
-  const project = PROJECTS.find(p => p.id === openId) ?? null;
-
-  useEffect(() => { applyTheme(dark); }, [dark]);
-
-  useEffect(() => {
-    if (themeIsExplicit) return;
-    const media = window.matchMedia("(prefers-color-scheme: dark)");
-    const syncSystemTheme = (event: MediaQueryListEvent) => setDark(event.matches);
-    media.addEventListener("change", syncSystemTheme);
-    return () => media.removeEventListener("change", syncSystemTheme);
-  }, [themeIsExplicit]);
+  const project = PROJECTS.find((p) => p.id === openId) ?? null;
+  useSmoothScroll(Boolean(project));
+  useScrollbarVisibility(undefined, !project);
 
   useEffect(() => {
     const syncProjectFromUrl = () => setOpenId(projectIdFromHash());
@@ -53,7 +53,11 @@ export default function App() {
 
   const navigateProject = useCallback((id: string) => {
     const openedFromPage = Boolean(window.history.state?.[PROJECT_HISTORY_KEY]);
-    window.history.replaceState(historyStateWithProject(openedFromPage), "", `#${id}`);
+    window.history.replaceState(
+      historyStateWithProject(openedFromPage),
+      "",
+      `#${id}`,
+    );
     setOpenId(id);
   }, []);
 
@@ -71,31 +75,53 @@ export default function App() {
     setOpenId(null);
   }, []);
 
-  const toggleTheme = useCallback(() => {
-    const next = !dark;
-    applyTheme(next);
-    persistTheme(next);
-    setDark(next);
-    setThemeIsExplicit(true);
-  }, [dark]);
+  if (!["/", "/index.html"].includes(window.location.pathname)) {
+    return (
+      <main className="not-found">
+        <a href="/" className="not-found-name">
+          Otto Montoya
+        </a>
+        <div className="not-found-code" aria-hidden="true">
+          4<span>0</span>4
+        </div>
+        <h1>{NOT_FOUND.title}</h1>
+        <p>{NOT_FOUND.body}</p>
+        <a className="cta cta-primary" href="/">
+          {NOT_FOUND.action}
+          <span className="arr" aria-hidden="true">
+            ↗
+          </span>
+        </a>
+      </main>
+    );
+  }
 
   return (
     <>
-      <a className="skip-link" href="#main-content">Skip to main content</a>
-      <Nav dark={dark} onToggleDark={toggleTheme} />
-      <main id="main-content" tabIndex={-1}>
-        <HeroSection />
-        <Divider from="var(--beige)" to="var(--green)" variant="diagonal" />
-        <AboutSection />
-        <Divider from="var(--green)" to="var(--beige)" variant="curve" />
-        <WorkSection onOpen={openProject} />
-        <Divider from="var(--beige)" to="var(--burgundy)" variant="wave" />
-        <SkillsSection />
-        <Divider from="var(--burgundy)" to="var(--wall-exp)" variant="sine" />
-        <ExperienceSection />
-      </main>
-      <SiteFooter />
-      <ProjectOverlay project={project} onClose={closeProject} onNavigate={navigateProject} />
+      <div
+        className="site-content"
+        aria-hidden={Boolean(project)}
+        {...(project ? { inert: "" } : {})}
+      >
+        <a className="skip-link" href="#main-content">
+          Skip to main content
+        </a>
+        <Nav theme={theme} onToggleTheme={toggleTheme} />
+        <main id="main-content" tabIndex={-1}>
+          <HeroSection onOpen={openProject} />
+          <WorkSection onOpen={openProject} />
+          <AboutSection />
+          <SkillsSection />
+          <ExperienceSection />
+        </main>
+        <SiteFooter />
+      </div>
+      <ProjectOverlay
+        project={project}
+        theme={theme}
+        onClose={closeProject}
+        onNavigate={navigateProject}
+      />
     </>
   );
 }

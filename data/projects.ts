@@ -11,6 +11,10 @@ export type ProjectEvidence =
       label: string;
       mark: "bar" | "dot";
       qualifier?: "approximate" | "minimum";
+      illustration?: {
+        kind: "reports-and-apps";
+        caption: string;
+      };
     }
   | {
       kind: "convergence";
@@ -208,6 +212,10 @@ export const PROJECTS: Project[] = [
       units: ["Scheduled revenue reporting", "Retool workflow applications"],
       label: "Delivery tracks",
       mark: "bar",
+      illustration: {
+        kind: "reports-and-apps",
+        caption: "Abstract report stack and app motifs, not client screens or report counts.",
+      },
     },
     description: "The work had two connected delivery tracks: scheduled revenue reporting in Amazon QuickSight and four form-driven workflow applications in Retool to replace error-prone manual processes.\n\nIn QuickSight I designed and implemented scheduled revenue reports, working from high-level requirements and mockups co-created with a product designer and the client. In Retool I built highly interactive, data-entry-oriented applications with many dynamic fields, conditional logic, and validation rules to minimize user error and ensure data quality in complex operational workflows.\n\nRequirements were gathered and refined through daily syncs and working sessions with the client's team. These sessions also served as live demos and training — walking the client through functionality, capturing feedback, and ensuring the team could use the tools confidently in daily operations. I also produced how-to guides and documentation to support ongoing adoption.",
     responsibilities: [

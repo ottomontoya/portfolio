@@ -19,3 +19,5 @@ secrets.json
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+# Browser automation snapshots and runtime logs
+.playwright-mcp/

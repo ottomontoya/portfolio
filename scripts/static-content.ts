@@ -1,4 +1,4 @@
-import { ABOUT_BODY, ABOUT_HEADLINE, ABOUT_LEDGER, HANDOVER, STATS } from "../data/about.ts";
+import { HERO, SIGNAL, NOT_FOUND, WORK_INTRO, PROTOTYPE_PREVIEW, ABOUT_BODY, ABOUT_HEADLINE, ABOUT_EXAMPLES, STATS } from "../data/about.ts";
 import { CONTACT } from "../data/contact.ts";
 import { EDUCATION, EXPERIENCE } from "../data/education.ts";
 import { CAPABILITY_STAGES, SKILL_GROUPS } from "../data/skills.ts";
@@ -6,12 +6,13 @@ import { SEO } from "../data/seo.ts";
 import {
   INDUSTRIES,
   INDUSTRY_COUNT,
-  FEATURED_PROJECTS,
   PROJECT_COUNT,
   PROJECTS,
   getProjectMetric,
   type ProjectEvidence,
 } from "../data/projects.ts";
+
+const workProjects = ["p1", "p6", "p2", "p3", "p4", "p5"].map(id => PROJECTS.find(project => project.id === id)!);
 
 const industryList = `${INDUSTRIES.slice(0, -1).join(", ")}, and ${INDUSTRIES.at(-1)}`;
 
@@ -139,7 +140,8 @@ function renderEvidence(evidence: ProjectEvidence): string {
   }
 
   if (typeof evidence.units !== "number") {
-    return `${metric.value} — ${metric.label}: ${evidence.units.join(" and ")}.`;
+    const note = evidence.illustration ? ` ${evidence.illustration.caption}` : "";
+    return `${metric.value} — ${metric.label}: ${evidence.units.join(" and ")}.${note}`;
   }
 
   return `${metric.value} — ${metric.label}.`;
@@ -149,8 +151,8 @@ function renderStat(stat: (typeof STATS)[number]): string {
   return `${stat.value} ${stat.label} — ${stat.suffix}`;
 }
 
-function renderLedgerEntry(entry: (typeof ABOUT_LEDGER)[number]): string {
-  return `${entry.value} ${entry.label} — ${entry.note}`;
+function renderAboutExample(entry: (typeof ABOUT_EXAMPLES)[number]): string {
+  return `${entry.title} ${entry.description}`;
 }
 
 function renderProjectMarkdown(project: (typeof PROJECTS)[number]): string {
@@ -173,6 +175,8 @@ ${project.description}
 
 **Evidence:** ${renderEvidence(project.evidence)}
 
+**Result:** ${project.decisionRecord.result}
+
 **Source-supported decision path:**
 - **Constraint:** ${project.decisionRecord.constraint}
 - **Chosen response:** ${project.decisionRecord.decision}
@@ -194,6 +198,10 @@ export function renderLlms(): string {
 
 > ${CONTACT.tagline}
 
+${HERO.body}
+
+**${SIGNAL.eyebrow}:** ${STATS[0].value} ${STATS[0].label}. ${STATS[0].suffix}. ${SIGNAL.caption}
+
 ${CONTACT.name} is a ${CONTACT.role} based in ${CONTACT.location}, with a Bachelor's in Informatics Engineering and Digital Business. He specializes in Tableau and Amazon QuickSight and has delivered end-to-end BI work — from KPI definition and data modeling to dashboard design, governance, and adoption — across ${industryList}.
 
 **Portfolio:** ${CONTACT.portfolioUrl}
@@ -202,17 +210,27 @@ ${CONTACT.name} is a ${CONTACT.role} based in ${CONTACT.location}, with a Bachel
 
 ---
 
-## About
+## ${PROJECT_COUNT} Projects Across ${INDUSTRY_COUNT} Industries
+
+${WORK_INTRO}
+
+**${PROTOTYPE_PREVIEW.label}:** ${PROTOTYPE_PREVIEW.title}
+${PROTOTYPE_PREVIEW.credit}
+${PROTOTYPE_PREVIEW.annotation}
+${PROTOTYPE_PREVIEW.boundary}
+
+${workProjects.map(renderProjectMarkdown).join("\n\n---\n\n")}
+
+---
+
+## About Me
 
 ### ${ABOUT_HEADLINE}
 
 ${ABOUT_BODY.join("\n\n")}
 
-**On record:**
-${ABOUT_LEDGER.map(entry => `- ${renderLedgerEntry(entry)}`).join("\n")}
-
-**What I hand over:**
-${HANDOVER.map(item => `- ${item}`).join("\n")}
+**What that looks like:**
+${ABOUT_EXAMPLES.map(entry => `- ${renderAboutExample(entry)}`).join("\n")}
 
 **Career highlights:**
 ${STATS.map(stat => `- ${renderStat(stat)}`).join("\n")}
@@ -231,19 +249,6 @@ ${stage.description}
 **Technical toolkit:**
 
 ${SKILL_GROUPS.map(group => `**${group.label}:** ${group.items.join(", ")}`).join("\n\n")}
-
----
-
-## ${PROJECT_COUNT} Projects Across ${INDUSTRY_COUNT} Industries
-
-### Featured evidence
-
-${FEATURED_PROJECTS.map(project => {
-  const metric = getProjectMetric(project.evidence);
-  return `- **${project.featured!.proof}:** ${project.title} — ${metric.value} ${metric.label}`;
-}).join("\n")}
-
-${PROJECTS.map(renderProjectMarkdown).join("\n\n---\n\n")}
 
 ---
 
@@ -295,6 +300,7 @@ ${renderParagraphs(project.description)}
           <p>Evidence: ${escapeHtml(renderEvidence(project.evidence))}</p>
           <section aria-label="Decision path">
             <h4>Decision path</h4>
+            <p>${escapeHtml(project.decisionRecord.result)}</p>
             <dl>
               <dt>Constraint</dt><dd>${escapeHtml(project.decisionRecord.constraint)}</dd>
               <dt>Chosen response</dt><dd>${escapeHtml(project.decisionRecord.decision)}</dd>
@@ -317,18 +323,22 @@ export function renderNoscript(): string {
       <main>
         <h1>${escapeHtml(CONTACT.name)} — ${escapeHtml(CONTACT.role)}</h1>
         <p>${escapeHtml(CONTACT.tagline)}</p>
+        <p>${escapeHtml(HERO.body)}</p>
+        <p>${escapeHtml(SIGNAL.eyebrow)}: ${escapeHtml(renderStat(STATS[0]))}. ${escapeHtml(SIGNAL.caption)}</p>
 
+        <h2>${PROJECT_COUNT} Projects Across ${INDUSTRY_COUNT} Industries</h2>
+        <p>${escapeHtml(WORK_INTRO)}</p>
+        <p>${escapeHtml(PROTOTYPE_PREVIEW.label)}: ${escapeHtml(PROTOTYPE_PREVIEW.title)}</p>
+        <p>${escapeHtml(PROTOTYPE_PREVIEW.credit)} ${escapeHtml(PROTOTYPE_PREVIEW.annotation)} ${escapeHtml(PROTOTYPE_PREVIEW.boundary)}</p>
+${workProjects.map(renderProjectHtml).join("\n\n")}
+
+        <p>About Me</p>
         <h2>${escapeHtml(ABOUT_HEADLINE)}</h2>
 ${ABOUT_BODY.map(paragraph => `        <p>${escapeHtml(paragraph)}</p>`).join("\n")}
-        <h3>On record</h3>
+        <h3>What that looks like</h3>
         <ul>
-${ABOUT_LEDGER.map(entry => `          <li>${escapeHtml(renderLedgerEntry(entry))}</li>`).join("\n")}
+${ABOUT_EXAMPLES.map(entry => `          <li>${escapeHtml(renderAboutExample(entry))}</li>`).join("\n")}
         </ul>
-        <h3>What I hand over</h3>
-        <ul>
-${HANDOVER.map(item => `          <li>${escapeHtml(item)}</li>`).join("\n")}
-        </ul>
-
         <h2>Career highlights</h2>
         <ul>
 ${STATS.map(stat => `          <li>${escapeHtml(renderStat(stat))}</li>`).join("\n")}
@@ -348,15 +358,7 @@ ${stage.capabilities.map(capability => `            <li>${escapeHtml(capability)
 ${SKILL_GROUPS.map(group => `          <li>${escapeHtml(group.label)}: ${escapeHtml(group.items.join(", "))}</li>`).join("\n")}
         </ul>
 
-        <h2>${PROJECT_COUNT} Projects Across ${INDUSTRY_COUNT} Industries</h2>
-        <h3>Featured evidence</h3>
-        <ul>
-${FEATURED_PROJECTS.map(project => {
-  const metric = getProjectMetric(project.evidence);
-  return `          <li>${escapeHtml(project.featured!.proof)}: ${escapeHtml(project.title)} — ${escapeHtml(metric.value)} ${escapeHtml(metric.label)}</li>`;
-}).join("\n")}
-        </ul>
-${PROJECTS.map(renderProjectHtml).join("\n\n")}
+
 
         <h2>Experience</h2>
         <ul>
@@ -379,4 +381,11 @@ ${EDUCATION.map(item => `          <li>${escapeHtml(item.title)} — ${escapeHtm
         </ul>
       </main>
     </noscript>`;
+}
+
+export function renderNotFound(): string {
+  return `<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex"><title>Page not found | Otto Montoya</title><meta name="theme-color" content="#c5d5be"><link rel="stylesheet" href="/theme.css"><script src="/theme-init.js"></script>
+<style>@font-face{font-family:DM;src:url('/assets/type/dm-sans-400-normal.woff2')}*{box-sizing:border-box}body{margin:0;background:var(--field);color:var(--on-field);font-family:DM,Arial,sans-serif}main{max-width:1000px;margin:auto;padding:40px 24px 80px}a{color:inherit;text-underline-offset:5px}.code{font-size:clamp(140px,30vw,350px);line-height:1.2;letter-spacing:-.08em}h1{font-size:clamp(32px,5vw,55px);font-weight:400;letter-spacing:-.04em;max-width:18ch}p{font-size:17px;line-height:1.6}.return{display:inline-block;margin-top:24px;padding:15px 24px;border:1px solid;border-radius:999px;text-decoration:none}.return:hover{background:var(--on-field);color:var(--field)}:focus-visible{outline:2px solid;outline-offset:5px}</style></head>
+<body><main><a href="/">Otto Montoya</a><div class="code" aria-hidden="true">404</div><h1>${escapeHtml(NOT_FOUND.title)}</h1><p>${escapeHtml(NOT_FOUND.body)}</p><a class="return" href="/">${escapeHtml(NOT_FOUND.action)} ↗</a></main></body></html>`;
 }

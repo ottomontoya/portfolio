@@ -1,19 +1,30 @@
 import { useState, useEffect, useRef } from "react";
-import { PROJECTS, Project, ProjectImage, getProjectMetric } from "../data/projects";
+import {
+  PROJECTS,
+  Project,
+  ProjectImage,
+  getProjectMetric,
+} from "../data/projects";
 import { CONTACT } from "../data/contact";
-import { Pill } from "./ui";
-import { ProjectChart } from "./Charts";
+import { PROTOTYPE_PREVIEW } from "../data/about";
+import { EvidenceGraphic } from "./Evidence";
+import { useScrollbarVisibility } from "../utils/useScrollbarVisibility";
+import type { Theme } from "../utils/useTheme";
 
 export function ProjectOverlay({
   project,
+  theme,
   onClose,
   onNavigate,
 }: {
   project: Project | null;
+  theme: Theme;
   onClose: () => void;
   onNavigate: (id: string) => void;
 }) {
   const projectId = project?.id ?? null;
+  const [imageZoomed, setImageZoomed] = useState(false);
+  const [originalBrightness, setOriginalBrightness] = useState(false);
   const [imageState, setImageState] = useState<{
     projectId: string | null;
     image: ProjectImage | null;
@@ -24,17 +35,24 @@ export function ProjectOverlay({
     setImageState({ projectId, image: null });
   }
   const lightbox = imageState.projectId === projectId ? imageState.image : null;
-  const setLightbox = (image: ProjectImage | null) => setImageState({ projectId, image });
+  const setLightbox = (image: ProjectImage | null) => {
+    setImageZoomed(false);
+    setOriginalBrightness(false);
+    setImageState({ projectId, image });
+  };
   const dialogRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
   const lightboxRef = useRef<HTMLDivElement>(null);
+  const lightboxViewportRef = useRef<HTMLDivElement>(null);
   const lightboxCloseRef = useRef<HTMLButtonElement>(null);
   const openerRef = useRef<HTMLElement | null>(null);
   const openedFromPageRef = useRef(false);
   const imageOpenerRef = useRef<HTMLButtonElement | null>(null);
   const lastProjectIdRef = useRef<string | null>(project?.id ?? null);
   const isOpen = Boolean(project);
+  useScrollbarVisibility(cardRef, isOpen);
+  useScrollbarVisibility(lightboxViewportRef, Boolean(lightbox), imageZoomed);
 
   useEffect(() => {
     if (project) lastProjectIdRef.current = project.id;
@@ -44,11 +62,12 @@ export function ProjectOverlay({
     if (!isOpen) return;
     openedFromPageRef.current = Boolean(window.history.state?.portfolioProject);
     const activeElement = document.activeElement;
-    openerRef.current = activeElement instanceof HTMLElement
-      && activeElement !== document.body
-      && activeElement !== document.documentElement
-      ? activeElement
-      : null;
+    openerRef.current =
+      activeElement instanceof HTMLElement &&
+      activeElement !== document.body &&
+      activeElement !== document.documentElement
+        ? activeElement
+        : null;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
@@ -57,13 +76,27 @@ export function ProjectOverlay({
       const opener = openerRef.current;
       window.requestAnimationFrame(() => {
         const projectTrigger = lastProjectIdRef.current
-          ? document.getElementById(`project-trigger-${lastProjectIdRef.current}`)
+          ? document.getElementById(
+              `project-trigger-${lastProjectIdRef.current}`,
+            )
           : null;
-        const focusTarget = openedFromPageRef.current && opener?.isConnected ? opener : projectTrigger;
-        focusTarget?.focus();
+        const focusTarget =
+          openedFromPageRef.current && opener?.isConnected
+            ? opener
+            : projectTrigger;
+        focusTarget?.focus({ preventScroll: openedFromPageRef.current });
       });
     };
   }, [isOpen]);
+
+  useEffect(() => {
+    if (!project) return;
+    const previousTitle = document.title;
+    document.title = `${project.title} | Otto Montoya`;
+    return () => {
+      document.title = previousTitle;
+    };
+  }, [project]);
 
   useEffect(() => {
     imageOpenerRef.current = null;
@@ -92,9 +125,14 @@ export function ProjectOverlay({
       if (e.key === "Tab") {
         const scope = lightboxRef.current ?? dialogRef.current;
         if (!scope) return;
-        const focusable = Array.from(scope.querySelectorAll<HTMLElement>(
-          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
-        )).filter(element => !element.hasAttribute("hidden"));
+        const focusable = Array.from(
+          scope.querySelectorAll<HTMLElement>(
+            'a[href], button:not([disabled]), summary, [tabindex]:not([tabindex="-1"])',
+          ),
+        ).filter(
+          (element) =>
+            element.getClientRects().length > 0 && !element.closest("[inert]"),
+        );
         if (focusable.length === 0) {
           e.preventDefault();
           scope.focus();
@@ -102,10 +140,18 @@ export function ProjectOverlay({
         }
         const first = focusable[0];
         const last = focusable[focusable.length - 1];
-        if (e.shiftKey && (document.activeElement === first || !scope.contains(document.activeElement))) {
+        if (
+          e.shiftKey &&
+          (document.activeElement === first ||
+            !scope.contains(document.activeElement))
+        ) {
           e.preventDefault();
           last.focus();
-        } else if (!e.shiftKey && (document.activeElement === last || !scope.contains(document.activeElement))) {
+        } else if (
+          !e.shiftKey &&
+          (document.activeElement === last ||
+            !scope.contains(document.activeElement))
+        ) {
           e.preventDefault();
           first.focus();
         }
@@ -117,7 +163,9 @@ export function ProjectOverlay({
 
   useEffect(() => {
     if (!lightbox) return;
-    const focusFrame = window.requestAnimationFrame(() => lightboxCloseRef.current?.focus());
+    const focusFrame = window.requestAnimationFrame(() =>
+      lightboxCloseRef.current?.focus(),
+    );
     return () => window.cancelAnimationFrame(focusFrame);
   }, [lightbox]);
 
@@ -128,184 +176,318 @@ export function ProjectOverlay({
 
   if (!project) return null;
   const metric = getProjectMetric(project.evidence);
-  const projectIndex = PROJECTS.findIndex(item => item.id === project.id);
-  const previousProject = PROJECTS[(projectIndex - 1 + PROJECTS.length) % PROJECTS.length];
+  const projectIndex = PROJECTS.findIndex((item) => item.id === project.id);
+  const previousProject =
+    PROJECTS[(projectIndex - 1 + PROJECTS.length) % PROJECTS.length];
   const nextProject = PROJECTS[(projectIndex + 1) % PROJECTS.length];
   const contactHref = `mailto:${CONTACT.email}?subject=${encodeURIComponent(`Project inquiry — ${project.title}`)}`;
 
   return (
-    <div className="overlay" onMouseDown={e => { if (e.target === e.currentTarget) onClose(); }}>
+    <div
+      className="case-page"
+      ref={dialogRef}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby={`project-title-${project.id}`}
+      tabIndex={-1}
+    >
       <div
-        ref={dialogRef}
-        className="overlay-dialog"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby={`project-title-${project.id}`}
-        tabIndex={-1}
+        className="case-bar"
+        aria-hidden={Boolean(lightbox)}
+        {...(lightbox ? { inert: "" } : {})}
       >
-        <button ref={closeRef} className="overlay-x" onClick={onClose} aria-label="Close project details">×</button>
-        <div ref={cardRef} className="overlay-card">
-        {project.images && project.images.length > 0 && (
-          <div className="overlay-images" role="group" aria-label={`${project.title} image previews`}>
-            {project.images.map((image, i) => (
+        <button
+          ref={closeRef}
+          className="case-back"
+          onClick={onClose}
+          aria-label="Back to work, close project details"
+        >
+          <span aria-hidden="true">←</span> Back to work
+        </button>
+        <span className="case-bar-label">
+          Otto Montoya <span>/ Selected work {project.n}</span>
+        </span>
+        <button
+          className="case-bar-next"
+          onClick={() => onNavigate(nextProject.id)}
+          aria-label={`Next project: ${nextProject.title}`}
+        >
+          Next <span className="action-arrow" aria-hidden="true">↗</span>
+        </button>
+      </div>
+      <div
+        ref={cardRef}
+        className="case-scroll"
+        aria-hidden={Boolean(lightbox)}
+        {...(lightbox ? { inert: "" } : {})}
+      >
+        <article className="case-article">
+          <header className="case-header shell">
+            <div className="case-index mono">
+              {project.n} / {project.industry} / {project.client}
+            </div>
+            <h1 className="case-title" id={`project-title-${project.id}`}>
+              {project.title}
+            </h1>
+            <div className="case-header-bottom">
+              <p className="case-result">{project.decisionRecord.result}</p>
+              <dl className="case-facts">
+                <div>
+                  <dt>Role</dt>
+                  <dd>{project.role}</dd>
+                </div>
+                <div>
+                  <dt>Scope</dt>
+                  <dd>{project.scope}</dd>
+                </div>
+                <div>
+                  <dt>Timeline</dt>
+                  <dd>{project.timeline}</dd>
+                </div>
+                <div>
+                  <dt>Tools</dt>
+                  <dd>{project.tools.join(" · ")}</dd>
+                </div>
+              </dl>
+            </div>
+          </header>
+          {project.images?.[0] && (
+            <figure className="case-cover shell">
               <button
-                key={image.src}
                 type="button"
                 className="overlay-image-trigger"
-                aria-label={`Enlarge image ${i + 1} of ${project.images!.length} for ${project.title}`}
-                onClick={event => {
+                aria-label={`Enlarge image 1 of ${project.images.length} for ${project.title}`}
+                onClick={(event) => {
                   imageOpenerRef.current = event.currentTarget;
-                  setLightbox(image);
+                  setLightbox(project.images![0]);
                 }}
               >
                 <img
-                  src={image.src}
-                  srcSet={image.srcSet}
-                  sizes="(max-width: 760px) calc(100vw - 48px), (max-width: 1280px) 50vw, 600px"
-                  alt={image.alt}
-                  className="overlay-img"
-                  width={image.width}
-                  height={image.height}
-                  loading="lazy"
-                  decoding="async"
+                  src={project.images[0].src}
+                  srcSet={project.images[0].srcSet}
+                  sizes="(max-width: 760px) calc(100vw - 40px), (max-width: 1500px) 90vw, 1380px"
+                  width={project.images[0].width}
+                  height={project.images[0].height}
+                  alt={project.images[0].alt}
                 />
+                <span className="image-enlarge">
+                  Inspect image <span className="action-arrow" aria-hidden="true">↗</span>
+                </span>
               </button>
-            ))}
+              <figcaption>
+                <p>{PROTOTYPE_PREVIEW.credit}</p>
+                <span>{PROTOTYPE_PREVIEW.boundary}</span>
+              </figcaption>
+            </figure>
+          )}
+          <div className="case-reading shell">
+            <aside
+              className="case-evidence-panel"
+              aria-label="Project evidence"
+            >
+              <div className="case-index mono">The evidence</div>
+              <EvidenceGraphic evidence={project.evidence} showIllustrationCaption />
+              <p className="case-metric">
+                <span>{metric.value}</span>
+                {metric.label}
+              </p>
+              <p className="case-disclosure">
+                {project.decisionRecord.boundary}
+              </p>
+              {project.caseStudy && (
+                <a
+                  href={project.caseStudy}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-link"
+                >
+                  Published case study <span className="action-arrow" aria-hidden="true">↗</span>
+                </a>
+              )}
+            </aside>
+            <div className="case-narrative">
+              {[
+                {
+                  title: "The constraint",
+                  body: project.decisionRecord.constraint,
+                },
+                {
+                  title: "The decision",
+                  body: project.decisionRecord.decision,
+                },
+                {
+                  title: "How it was checked",
+                  body: project.decisionRecord.validation,
+                },
+              ].map((chapter, index) => (
+                <section className="case-chapter" key={chapter.title}>
+                  <span className="chapter-number" aria-hidden="true">
+                    0{index + 1}
+                  </span>
+                  <div>
+                    <h2>{chapter.title}</h2>
+                    <p>{chapter.body}</p>
+                  </div>
+                </section>
+              ))}
+            </div>
           </div>
-        )}
-        {lightbox && (
-          <div
-            ref={lightboxRef}
-            className="lightbox"
-            role="dialog"
-            aria-modal="true"
-            aria-label={`Enlarged project image for ${project.title}`}
-            tabIndex={-1}
-            onMouseDown={e => { if (e.target === e.currentTarget) closeLightbox(); }}
+          {project.images && (
+            <section
+              className="case-gallery shell"
+              aria-labelledby="case-gallery-title"
+            >
+              <div className="case-gallery-head">
+                <h2 id="case-gallery-title">Inside the prototype.</h2>
+                <p>{project.decisionRecord.boundary}</p>
+              </div>
+              {project.images.slice(1).map((image, i) => (
+                <figure key={image.src}>
+                  <button
+                    type="button"
+                    className="overlay-image-trigger"
+                    aria-label={`Enlarge image ${i + 2} of ${project.images!.length} for ${project.title}`}
+                    onClick={(event) => {
+                      imageOpenerRef.current = event.currentTarget;
+                      setLightbox(image);
+                    }}
+                  >
+                    <img
+                      src={image.src}
+                      srcSet={image.srcSet}
+                      sizes="(max-width: 760px) calc(100vw - 40px), (max-width: 1500px) 85vw, 1200px"
+                      alt={image.alt}
+                      width={image.width}
+                      height={image.height}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    <span className="image-enlarge">
+                      Inspect image <span className="action-arrow" aria-hidden="true">↗</span>
+                    </span>
+                  </button>
+                  <figcaption>
+                    <span className="mono">0{i + 2} / 04</span>
+                    <p>{image.alt}</p>
+                  </figcaption>
+                </figure>
+              ))}
+            </section>
+          )}
+          <section
+            className="case-depth-section shell"
+            aria-label="Full project context"
           >
-            <button ref={lightboxCloseRef} className="lightbox-x" onClick={closeLightbox}>
-              <span aria-hidden="true">×</span>
-              <span>Close image</span>
-            </button>
+            <details className="case-depth" key={project.id}>
+              <summary>
+                <span>Full context & responsibilities</span>
+                <span aria-hidden="true">+</span>
+              </summary>
+              <div className="case-depth-grid">
+                <div className="case-prose">
+                  {project.description.split("\n\n").map((p, i) => (
+                    <p key={i}>{p}</p>
+                  ))}
+                </div>
+                <div>
+                  <h2>Responsibilities</h2>
+                  <ul>
+                    {project.responsibilities.map((r) => (
+                      <li key={r}>{r}</li>
+                    ))}
+                  </ul>
+                  <h2>Impact</h2>
+                  <p>{project.impact}</p>
+                </div>
+              </div>
+            </details>
+          </section>
+          <footer className="case-footer shell">
+            <a href={contactHref} className="case-contact">
+              Discuss a similar project <span className="action-arrow" aria-hidden="true">↗</span>
+            </a>
+            <nav className="case-pagination" aria-label="Project navigation">
+              <button
+                onClick={() => onNavigate(previousProject.id)}
+                aria-label={`Previous project ${previousProject.n}: ${previousProject.title}`}
+              >
+                <span className="mono"><span className="action-arrow action-arrow-left" aria-hidden="true">←</span> Previous / {previousProject.n}</span>
+                <span>{previousProject.title}</span>
+              </button>
+              <button
+                onClick={() => onNavigate(nextProject.id)}
+                aria-label={`Next project ${nextProject.n}: ${nextProject.title}`}
+              >
+                <span className="mono">Next / {nextProject.n} <span className="action-arrow action-arrow-right" aria-hidden="true">→</span></span>
+                <span>{nextProject.title}</span>
+              </button>
+            </nav>
+          </footer>
+        </article>
+      </div>
+      {lightbox && (
+        <div
+          ref={lightboxRef}
+          className="lightbox"
+          data-dimmed-media={theme === "dark" ? "" : undefined}
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Enlarged project image for ${project.title}`}
+          tabIndex={-1}
+          onMouseDown={(e) => {
+            if (e.target === e.currentTarget) closeLightbox();
+          }}
+        >
+          <button
+            ref={lightboxCloseRef}
+            className="lightbox-x"
+            onClick={closeLightbox}
+          >
+            <span aria-hidden="true">×</span> Close image
+          </button>
+          <button
+            className="lightbox-zoom"
+            onClick={() => setImageZoomed((value) => !value)}
+            aria-pressed={imageZoomed}
+          >
+            {imageZoomed ? "Fit image" : "Zoom image"}
+          </button>
+          <div
+            ref={lightboxViewportRef}
+            className={`lightbox-viewport${imageZoomed ? " is-zoomed" : ""}`}
+            tabIndex={imageZoomed ? 0 : -1}
+            role="region"
+            aria-label="Dashboard image. When zoomed, scroll to inspect details."
+          >
             <img
               src={lightbox.src}
               srcSet={lightbox.srcSet}
-              sizes="(max-width: 760px) calc(100vw - 32px), calc(100vw - 96px)"
+              sizes={
+                imageZoomed
+                  ? "(min-width: 1280px) 150vw, 1920px"
+                  : "(max-width: 760px) calc(100vw - 32px), calc(100vw - 96px)"
+              }
               alt={lightbox.alt}
               width={lightbox.width}
               height={lightbox.height}
               className="lightbox-img"
+              data-original-brightness={originalBrightness ? "" : undefined}
               decoding="async"
             />
           </div>
-        )}
-        <div className="overlay-grid">
-          <div className="overlay-header">
-            <div className="mono overlay-eb">{project.n} · {project.client}</div>
-            <h2 className="overlay-title" id={`project-title-${project.id}`}>{project.title}</h2>
-            <div className="mono overlay-role">{project.role}</div>
-          </div>
-          <div className="overlay-story">
-            <div className="overlay-body">
-              {project.description.split("\n\n").map((p, i) => <p key={i}>{p}</p>)}
-            </div>
-            <section className="decision-record" aria-labelledby={`decision-record-${project.id}`}>
-              <div className="decision-record-head">
-                <h3 className="overlay-section-label" id={`decision-record-${project.id}`}>Decision path</h3>
-              </div>
-              <ol className="decision-record-steps">
-                <li>
-                  <h4 className="mono">Constraint</h4>
-                  <p>{project.decisionRecord.constraint}</p>
-                </li>
-                <li>
-                  <h4 className="mono">Chosen response</h4>
-                  <p>{project.decisionRecord.decision}</p>
-                </li>
-                <li>
-                  <h4 className="mono">How it was checked</h4>
-                  <p>{project.decisionRecord.validation}</p>
-                </li>
-              </ol>
-              <p className="decision-record-boundary">
-                <span className="mono">Removed</span>
-                {project.decisionRecord.boundary}
-              </p>
-            </section>
-            <h3 className="overlay-section-label">Responsibilities</h3>
-            <ul className="overlay-resp">
-              {project.responsibilities.map((r, i) => <li key={i}>{r}</li>)}
-            </ul>
-          </div>
-          <div className="overlay-side">
-            <div className="overlay-metric">
-              <div className="proj-mv ov-mv">{metric.value}</div>
-              <div className="proj-ml mono">{metric.label}</div>
-            </div>
-            <div className="overlay-chart">
-              <ProjectChart evidence={project.evidence} color="var(--accent-on-panel)" />
-            </div>
-            <div className="overlay-pieces">
-              <div className="overlay-piece">
-                <div className="mono">scope</div>
-                <div>{project.scope}</div>
-              </div>
-              <div className="overlay-piece">
-                <div className="mono">timeline</div>
-                <div>{project.timeline}</div>
-              </div>
-              <div className="overlay-piece">
-                <div className="mono">stack</div>
-                <div>{project.tools[0]}</div>
-              </div>
-            </div>
-            <div className="overlay-side-section">
-              <h3 className="overlay-section-label">Impact</h3>
-              <div className="overlay-impact">{project.impact}</div>
-            </div>
-            {project.tools.length > 1 && (
-              <div className="overlay-side-section">
-                <h3 className="overlay-section-label">Tools</h3>
-                <div className="overlay-tools">
-                  {project.tools.map(t => <Pill key={t}>{t}</Pill>)}
-                </div>
-              </div>
-            )}
-            {project.caseStudy && (
-              <a href={project.caseStudy} target="_blank" rel="noopener noreferrer" className="cta cta-ghost overlay-case-study">
-                View case study <span className="arr">→</span>
-              </a>
-            )}
-          </div>
+          {theme === "dark" && (
+            <button
+              type="button"
+              className="lightbox-brightness"
+              aria-pressed={originalBrightness}
+              onClick={() => setOriginalBrightness((value) => !value)}
+              title={originalBrightness ? "Use dimmed brightness" : "Show original brightness"}
+            >
+              Original brightness
+            </button>
+          )}
         </div>
-        <nav className="overlay-actions" aria-label="Project navigation and contact">
-          <button
-            type="button"
-            className="overlay-project-link overlay-project-previous"
-            onClick={() => onNavigate(previousProject.id)}
-            aria-label={`Previous project: ${previousProject.title}`}
-            title={previousProject.title}
-          >
-            <span className="overlay-project-number mono">← {previousProject.n}</span>
-            <span className="overlay-project-title">{previousProject.title}</span>
-          </button>
-          <a href={contactHref} className="cta cta-primary overlay-contact">
-            Discuss a similar project <span className="arr">→</span>
-          </a>
-          <button
-            type="button"
-            className="overlay-project-link overlay-project-next"
-            onClick={() => onNavigate(nextProject.id)}
-            aria-label={`Next project: ${nextProject.title}`}
-            title={nextProject.title}
-          >
-            <span className="overlay-project-number mono">{nextProject.n}</span>
-            <span className="overlay-project-title">{nextProject.title}</span>
-            <span aria-hidden="true">→</span>
-          </button>
-        </nav>
-        </div>
-      </div>
+      )}
     </div>
   );
 }
