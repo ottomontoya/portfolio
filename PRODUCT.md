@@ -32,7 +32,7 @@ The hybrid is the differentiator. Analysts who own the full chain rarely make th
 
 ## Capabilities and Constraints
 
-**Site is:** a single-page React + Vite + TypeScript site with five sections (Hero, About, Work, Skills, Experience), a contact block, a light/dark toggle, and a project detail overlay opened from the Work grid or featured-evidence index. Six projects (`p1`–`p6`) carry summary, client, industry, role, tools, scope, timeline, typed evidence shared by the headline metric and chart, a source-supported decision path with an explicit disclosure boundary, description, responsibilities, impact, optional images, and optional case-study link.
+**Site is:** a single-page React + Vite + TypeScript site with five sections (Hero, Work, About, Skills, Experience), a contact block, a single light palette, and hash-linked full-screen case studies opened from the evidence-led hero, governance feature, prototype preview, or project studies. The "Signal to structure" identity makes existing evidence the primary visual language; case studies pair that evidence with constraint, decision, and verification chapters. Six projects (`p1`–`p6`) carry summary, client, industry, role, tools, scope, timeline, typed evidence shared by the headline metric and chart, a source-supported decision path with an explicit disclosure boundary, description, responsibilities, impact, optional images, and optional case-study link.
 
 **Content lives in `data/`** (`projects.ts`, `about.ts`, `skills.ts`, `education.ts`) — copy is data, not markup.
 
@@ -44,8 +44,8 @@ The hybrid is the differentiator. Analysts who own the full chain rarely make th
 
 ## Brand Commitments
 
-- Name and domain: Otto Montoya, ottomontoya.com. Tagline in use: "Clear insights from complex data. End-to-end across the BI stack."
-- Existing assets in `public/assets/`: `logo.svg` / `logo-light.svg`, full favicon set, `og-image.png` (1200×630). Theme color `#2d4a32`.
+- Name and domain: Otto Montoya, ottomontoya.com. Tagline in use: "Business intelligence, built end to end."
+- Existing assets in `public/assets/`: `logo.svg` / `logo-light.svg`, full favicon set, `og-image.png` (1200×630). Approved palette: Celadon + ink. Theme color `#c5d5be`.
 - Voice in the incumbent copy: first person, specific, plain-spoken, quantified. No hype adjectives, no "passionate about data." Claims are stated with their qualifiers intact (`~15`, `~70%`, `2,000+`).
 
 ## Evidence on Hand
@@ -67,10 +67,10 @@ Real, verified figures from delivered work, already published on the site:
 
 1. **Evidence over adjectives.** Every claim on this site is attached to a number, a scope, or a named tool. If a statement can't be backed, it doesn't ship.
 2. **Show the whole chain, not the last step.** The work is discovery → KPI → model → governance → dashboard → documentation → adoption. Surfacing only the dashboard undersells the position.
-3. **Skimmable in a minute, deep on demand.** A recruiter must get scale and range from the first viewport; the project overlay is where the reasoning lives for anyone who wants it.
+3. **Skimmable in a minute, deep on demand.** A recruiter must get scale and range from the first viewport; the full-screen case study is where the reasoning lives for anyone who wants it.
 4. **Anonymity is not vagueness.** Clients stay unnamed, but the problem, scale, and outcome stay concrete.
 5. **Craft is the argument.** For someone claiming dashboard design ability, the portfolio itself is the primary work sample — sloppy execution refutes the positioning.
 
 ## Accessibility & Inclusion
 
-No product-specific standard was established. Baseline: content must remain readable without JavaScript (the `<noscript>` record is a committed part of the site), and the light/dark toggle must keep contrast intact in both themes.
+No product-specific standard was established. Baseline: content must remain readable without JavaScript (the `<noscript>` record is a committed part of the site), and the single light palette must keep contrast intact across all section surfaces.

@@ -1,334 +1,176 @@
 ---
-name: Otto Montoya — Portfolio
-description: A quiet study in heritage ink colors, serif italics, and hairline structure — five full-bleed color rooms carrying an analyst's work.
+name: Otto Montoya — Signal to structure
+description: An evidence-led BI portfolio. Celadon surfaces, deep green accents, decisive sans-serif type, and data made visible.
 colors:
-  field-green: "#2d4a2b"
-  oxblood: "#6b1f2a"
-  bone-paper: "#f1ead8"
-  charcoal-ink: "#1a1a18"
-  warm-paper: "#f7f1de"
-  field-green-dark: "#35603a"
-  oxblood-dark: "#a8344a"
-  accent-on-dark: "#ca6276"
-  bone-paper-dark: "#1a1a18"
-  charcoal-ink-dark: "#f1ead8"
-  warm-paper-dark: "#353431"
-  overlay-step: "#e2d6bd"
-  overlay-step-dark: "#6b675e"
-typography:
-  # The UI ramp: the small, non-fluid steps the interface actually reuses. The
-  # named roles below carry the fluid display sizes; these are the fixed ones.
-  scale:
-    micro: "11px"
-    micro-wide: "11.5px"
-    meta: "12px"
-    nav: "13px"
-    control: "14px"
-    body: "15px"
-    prose: "18px"
-    prose-lg: "20px"
-  display:
-    fontFamily: "Instrument Serif, Georgia, serif"
-    fontSize: "clamp(52px, 7.4vw, 104px)"
-    fontWeight: 400
-    lineHeight: 0.95
-    letterSpacing: "-0.02em"
-  headline:
-    fontFamily: "Instrument Serif, Georgia, serif"
-    fontSize: "clamp(40px, 5.5vw, 76px)"
-    fontWeight: 400
-    lineHeight: 1.02
-    letterSpacing: "-0.015em"
-  title:
-    fontFamily: "Instrument Serif, Georgia, serif"
-    fontSize: "clamp(22px, 2.2vw, 30px)"
-    fontWeight: 400
-    lineHeight: 1.1
-    letterSpacing: "-0.01em"
-  lead:
-    fontFamily: "DM Sans, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "clamp(17px, 1.6vw, 21px)"
-    fontWeight: 400
-    lineHeight: 1.5
-    letterSpacing: "normal"
-  body:
-    fontFamily: "DM Sans, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "15px"
-    fontWeight: 400
-    lineHeight: 1.55
-    letterSpacing: "normal"
-  figure:
-    fontFamily: "Instrument Serif, Georgia, serif"
-    fontSize: "clamp(32px, 3.8vw, 56px)"
-    fontWeight: 400
-    lineHeight: 1
-    letterSpacing: "-0.02em"
-  figure-sm:
-    fontFamily: "Instrument Serif, Georgia, serif"
-    fontSize: "clamp(28px, 2.6vw, 40px)"
-    fontWeight: 400
-    lineHeight: 1
-    letterSpacing: "-0.02em"
-  label:
-    fontFamily: "JetBrains Mono, ui-monospace, SFMono-Regular, monospace"
-    fontSize: "11px"
-    fontWeight: 400
-    lineHeight: 1.2
-    letterSpacing: "0.14em"
-rounded:
-  pill: "999px"
-  card: "20px"
-  panel: "16px"
-  image: "10px"
-  sm: "8px"
-spacing:
-  xs: "8px"
-  sm: "12px"
-  md: "18px"
-  lg: "24px"
-  xl: "32px"
-  2xl: "48px"
-  3xl: "80px"
-  room-top: "140px"
-  room-bottom: "120px"
-components:
-  cta-primary:
-    backgroundColor: "{colors.oxblood}"
-    textColor: "{colors.warm-paper}"
-    rounded: "{rounded.pill}"
-    padding: "14px 22px"
-  cta-primary-hover:
-    backgroundColor: "{colors.charcoal-ink}"
-  cta-ghost:
-    backgroundColor: "transparent"
-    textColor: "currentColor"
-    rounded: "{rounded.pill}"
-    padding: "14px 22px"
-  cta-ghost-hover:
-    backgroundColor: "rgba(0,0,0,.04)"
-  tag-pill:
-    backgroundColor: "color-mix(in srgb, currentColor 7%, transparent)"
-    textColor: "currentColor"
-    typography: "{typography.label}"
-    rounded: "{rounded.pill}"
-    padding: "6px 11px"
-  nav-pill:
-    backgroundColor: "color-mix(in srgb, #f7f1de 96%, transparent)"
-    textColor: "{colors.charcoal-ink}"
-    rounded: "{rounded.pill}"
-    padding: "6px 8px"
-  nav-link-active:
-    backgroundColor: "color-mix(in srgb, #1a1a18 88%, transparent)"
-    textColor: "{colors.bone-paper}"
-    rounded: "{rounded.pill}"
-    padding: "8px 14px"
-  project-row:
-    backgroundColor: "transparent"
-    textColor: "currentColor"
-    padding: "32px 0"
-  project-row-hover:
-    backgroundColor: "{colors.warm-paper}"
-    padding: "32px 24px"
-  overlay-card:
-    backgroundColor: "{colors.bone-paper}"
-    textColor: "{colors.charcoal-ink}"
-    rounded: "{rounded.card}"
-    padding: "48px"
-  overlay-side:
-    backgroundColor: "{colors.overlay-step}"
-    textColor: "{colors.charcoal-ink}"
-    rounded: "{rounded.panel}"
-    padding: "24px"
+  celadon: "#c5d5be"
+  paper: "#f2f4ee"
+  ink: "#26302a"
+  green-accent: "#365d4b"
+  quiet-green: "#dfe7d9"
+  deep-green: "#203d30"
+  night-green: "#1d2922"
+  accent-on-night: "#bcd9a8"
 ---
 
-# Design System: Otto Montoya — Portfolio
+# Signal to structure
 
-## Overview
+Approved direction: **Signal to structure** for the identity and **Inside the decision** for case reading. This replaces the earlier “Work on the desk” and repeated serif-room compositions. Content, anonymity, truthful evidence, responsive behavior, and accessible contrast remain commitments.
 
-**Creative North Star: "The Analyst's Study"**
+## Brief
 
-A quiet, book-lined room. Forest green and oxblood on cream paper, serif italics carrying the warmth, hairline rules doing the structural work — and glass as the only modern intrusion, floating above everything in the form of a nav pill. The system reads as considered rather than fashionable: nothing here is trend-dated, and nothing announces that it was made by a template.
+Otto is a Data Analyst / BI specialist. Hiring managers and technical recruiters are the primary audience; prospective clients are secondary. Establish ownership, scale, and native dashboard implementation craft quickly, then make the reasoning inspectable. This is an existing React 18 / TypeScript / Vite application; keeping its framework and hash navigation preserves established content and browser behavior.
 
-The spatial idea is rooms. Five full-bleed sections each own a single wall color — Bone Paper for the hero, Field Green for About, Bone Paper again for Work, Oxblood for Skills, Charcoal Ink for Experience — and you know which section you are in by the color surrounding you, not by a heading. Sections carry no cards, no panels, no boxed containers. Content sits directly on the wall, separated by 1px rules at low alpha. The result is dense with information but never busy, because the only structural devices are color, type, and line.
+## Concept card
 
-Type does the expressive work. Instrument Serif at display sizes with a single italic phrase per headline; DM Sans for everything readable; JetBrains Mono, uppercase and wide-tracked, for every piece of metadata. The italic uses Oxblood on light rooms and adapts to the foreground/accent pairing on colored or dark rooms. Data appears as small, un-labelled SVG evidence marks and unit strips in the accent color — plotted marks that read as texture on the page rather than as charts to be analyzed. This is a portfolio for a BI analyst that deliberately refuses to look like BI software.
+- **Idea:** Give every project a recognizable visual form derived from its actual evidence.
+- **Metaphor:** Data organized into a useful system.
+- **Signature:** An exact 696-mark field settles into order alongside 12 group outlines. This illustrates the two known counts, not client topology, user-to-group assignments, or intermediate measurements.
+- **Emotion:** Precise, capable, visually curious.
+- **Motion verb:** Organize. Primary arrows move along their direction; images and controls lift slightly; the evidence resolves through one GSAP timeline.
+- **Screenshot:** A pale Celadon opening with dark ink and an oversized sans-serif proposition beside 696 marks and 12 outlines.
 
-**Key Characteristics:**
-- Five full-bleed color rooms; section identity lives in the background color
-- Heritage palette: forest green, oxblood, bone, charcoal — no blue, no gradient
-- Instrument Serif display with exactly one semantically colored italic phrase per headline
-- Uppercase mono metadata at 11px / 0.14em tracking as the connective tissue
-- Hairline rules (1px, `currentColor` at 15% alpha) instead of cards, borders, or boxes
-- Pill geometry (999px) on everything interactive; large soft radii only on floating layers
-- A glass nav pill that re-schemes itself depending on the room beneath it
-- Evidence marks as page texture, not as dashboards
+Three territories were considered: data as a visual material (Signal to structure), a strict typographic project index (The working index), and the working process as narrative (Inside the decision). The first is the strongest identity anchor. The third supplies the subordinate reading pattern inside cases; the site does not switch between multiple competing identities.
 
-## Colors
+## Color and type
 
-A heritage pigment palette — earth, wine, bone, and soot — carried at full saturation across entire viewports rather than dabbed on as accents.
+**Celadon + ink** is the selected palette, approved after the palette exploration on 2026-10-18. No gradients, ornamental glow, or fabricated interface chrome.
 
-### Primary
-- **Oxblood** (#6b1f2a): The only accent hue in the system. It serves as the Skills wall and as the light-mode accent. The Skills wall lifts to #a8344a in dark mode; accent text on dark surfaces uses the brighter, contrast-safe `--accent-on-dark` (#ca6276).
+| Role | Color |
+| --- | --- |
+| Opening, header and evidence surface | Celadon `#c5d5be` |
+| Text and monogram on Celadon | Ink `#26302a` |
+| Work and case surface | Paper `#f2f4ee` |
+| Work and case text | Ink `#26302a` |
+| Accent on work | Green Accent `#365d4b` |
+| About surface | Quiet Green `#dfe7d9` |
+| Process surface | Deep Green `#203d30` |
+| Process text | Paper `#f2f4ee` |
+| Career and image viewer | Night Green `#1d2922` / Paper `#f2f4ee` |
+| Contact finale | Opening field / opening foreground, following the active theme |
+| Accent on night | Pale Green `#bcd9a8` |
 
-### Secondary
-- **Field Green** (#2d4a2b): The About room's wall. A deep, low-chroma forest that reads as ink rather than nature. Used as a full-bleed surface only — never as a text color, never as an accent on light backgrounds. Dark mode uses #35603a.
+Colors are semantic CSS tokens in `public/theme.css`, shared by the app and static 404. The solid header uses the opening surface and foreground pair in each theme, so it stays readable across chapter boundaries. The image viewer follows the night pair; hover controls invert that pair. Favicons and the social preview retain the approved Celadon identity. The header monogram and browser theme color follow the active theme.
 
-### Neutral
-- **Bone Paper** (#f1ead8): The default page surface and the text color on every dark room. Warm, slightly yellowed cream — the paper the whole study is printed on.
-- **Warm Paper** (#f7f1de): One step warmer and lighter than Bone Paper. It is the interactive wash behind a hovered or focused project row and the warm foreground used on deep walls.
-- **Charcoal Ink** (#1a1a18): Body text on light rooms, and the Experience room's wall in both themes. Near-black with a green-brown bias; never pure #000.
-- **Overlay Step** (#e2d6bd): A quiet parchment inset inside the project overlay. It stays subordinate to the Bone Paper story surface while giving the summary a clear boundary; in dark mode it becomes #6b675e for the same tonal separation.
+### Dark mode: Signal after hours
 
-### Named Rules
+Requested on 2026-10-18. Keep the existing evidence-led composition, typography, motion, and light palette. The same 696 marks and 12 outlines become pale Celadon on Night Green, extending the established identity into a quiet evening reading surface. No gradients, glow, image inversion, or extra decorative animation.
 
-**The One Room Rule.** Every section owns exactly one background color, edge to edge. Content sits directly on that color — no cards, no inner panels, no competing surface. If a new section needs a different color, it becomes a new room with its own wall, not a box inside an existing one.
+| Dark role | Color |
+| --- | --- |
+| Opening, header and evidence surface | Night Green `#1d2922` |
+| Opening text and evidence | Celadon `#c5d5be` |
+| Work and case surface | Deep Ground `#18221c` |
+| Reading text | Paper `#f2f4ee` |
+| Accent and evidence on work | Pale Green `#bcd9a8` |
+| About surface | Ink `#26302a` |
+| Process, career and image viewer | Existing Deep Green and Night Green pairs |
+| Contact finale | Night Green / Celadon, matching the opening |
 
-**The One Voice Rule.** Oxblood is the system's single accent and appears on well under 10% of any viewport: one italic phrase, the numbers, the chart marks, one button. A second accent hue does not exist in this system. Introducing one dissolves the palette.
+Every page load follows the system color preference, including live changes until the visitor switches themes manually. A 44px sun/moon button in the header overrides the theme for the current visit only. Reloading or opening another page returns to the system setting. Previously saved `portfolio-theme` values are ignored, and the toggle no longer writes a persistent preference. The head bootstrap applies the system setting before the first paint. CSS provides the system fallback without JavaScript. Case readers inherit the active palette. Dashboard screenshots use a brightness-only display adjustment of 68% in dark mode, shared by the homepage preview, case gallery, image viewer, and no-JavaScript reading edition. This softens large white surfaces without inversion, hue rotation, or source-asset edits. Hover and focus do not brighten images. The dark image viewer offers an explicit “Original brightness” toggle, with the comfortable dimmed presentation restored whenever an image opens. Light mode presents the original brightness. Theme changes are immediate to keep all surface/foreground pairs in sync; only the control's hover response moves, and reduced motion disables it.
 
-**The Wall Pair Rule.** Every room owns an explicit wall/foreground pair (`--wall-*` and `--on-wall-*`) in each theme. Dark mode changes those pairs through `[data-theme="dark"]`; it never infers text color by globally swapping paper and ink. Components inherit from the rendered wall, while accent, overlay, and navigation colors use their own semantic tokens.
+- **DM Sans:** primary display, body, and navigation. Hero 64–112px on desktop; phone 44–67px. Large headings use tighter tracking, roughly −0.045 to −0.065em. Reading copy is generally 16–20px; compact project summaries 15px and process descriptions 14px.
+- **DM Sans Medium 500:** approved Option A for evidence values, diagram labels, chapter and process numbers, and secondary phrases. Accents are upright; weight, scale, and the established accent colors provide emphasis. Primary headings, body copy, and navigation keep their existing weights. Named diagram labels scale with their container to remain inside their shapes on phones and in case readers.
+- **DM Mono Regular 400:** brief metadata only, 10–12px. Tool names and most captions use DM Sans rather than repeating uppercase mono throughout the page.
+- Two local WOFF2 files are loaded: the existing variable DM Sans file (including true weight 500) and DM Mono Regular. Only DM Sans preloads. Font licenses remain alongside the assets.
 
-## Typography
+## Composition
 
-**Display Font:** Instrument Serif (with Georgia, serif)
-**Body Font:** DM Sans (with ui-sans-serif, system-ui)
-**Label/Mono Font:** JetBrains Mono (with ui-monospace, SFMono-Regular)
+A fluid gutter runs from 22px on phones to 80px on large screens, within a 1380px content maximum. The page changes density deliberately:
 
-**Character:** A high-contrast literary serif at large sizes against a neutral, low-personality grotesque — the pairing of a printed book with a working document. The mono is the third voice: it never carries meaning on its own, only labels the meaning next to it. Hierarchy comes primarily from size, case, tracking, and italic rather than weight escalation; 600 is reserved for compact navigation branding and project indices.
+```
+Opening       proposition            | exact count illustration
+              actions                | governance case entry
+              three supporting career facts
+Work          six-project heading    | short introduction
+              compact governance reasoning
+              real prototype image, full width
+              four staggered evidence studies
+About         large personal statement | prose and two compact working examples
+Skills        five connected stages, with complete descriptions
+              toolkit grouped by discipline
+Experience    introduction           | compact chronological path
+              three education entries
+Contact       two-line question      | dotted directional email action
+              email and copy         | short invitation
+              identity, location and utility links
+```
 
-### Hierarchy
-- **Display** (400, clamp(56px, 9vw, 128px), 0.95, -0.02em): Hero headline only. Capped at 14ch with `text-wrap: balance` so it always breaks into a deliberate shape.
-- **Headline** (400, clamp(40px, 5.5vw, 76px), 1.02, -0.015em): One per room, capped at 18ch. Sets the room's argument.
-- **Title** (400, clamp(22px, 2.2vw, 30px), 1.1): Project titles, role names in the timeline, education entries, overlay headings.
-- **Lead** (400, clamp(17px, 1.6vw, 21px), 1.5, 85% opacity): The paragraph directly under a headline. Capped at 54ch, `text-wrap: pretty`.
-- **Body** (400, 15px, 1.55, 82–92% opacity): List items, notes, responsibilities. About paragraphs run larger at 18px/1.55; overlay prose at 15px/1.65. Measures cap between 46ch and 60ch depending on context.
-- **Label** (400, 11px, 0.14em, uppercase, 74% minimum opacity): Eyebrows, section labels, side headings. About and Skills labels use 92% opacity on their colored walls to maintain AA in dark mode. A tighter 0.06–0.12em variant appears on contact keys and overlay labels.
+Primary actions use pills; the closing email uses a circular control. Project studies are open compositions on the room surface, not rounded cards. Lines separate information, and geometric evidence marks do not imitate client documents or dashboard chrome. Figures without cleared screenshots use only existing evidence quantities and names.
 
-### Named Rules
+The mobile layout is composed separately: the headline leads, both governance endpoints follow, and all career metrics remain present. Project studies stack; the process becomes a vertical sequence of named phases; experience and contact use a natural reading order. The prototype preview may crop on the homepage, but all complete screenshots are available inside its case and image viewer.
 
-**The Italic Emphasis Rule.** Every display and headline carries exactly one italic phrase, and that phrase is the sentence's point ("Clear insights from *complex* data.", "A path through *data, dashboards & teams.*"). The italic is set in Oxblood on light rooms; on Field Green and Oxblood rooms it uses the room foreground, and on dark surfaces it uses `--accent-on-dark`. One italic per headline — never two, never zero.
+## Contact finale: The next question
 
-**The Mono Label Rule.** JetBrains Mono is metadata only: eyebrows, client/role meta lines, tool names, timeline dates, scope/timeline/stack keys, the footer. It never sets a sentence anyone has to read for content.
+The footer is a separate landmark after career history. It returns to the opening field: Celadon and Ink in light mode, Night Green and Celadon in dark mode. The short question links the portfolio's completed BI work to the visitor's actual next problem. Its two-line silhouette is the primary composition; the email is explicit and selectable, and LinkedIn, location and the return link form a quiet final row.
 
-**The No-Bold-Prose Rule.** Emphasis in sentences comes from size, italic, color, and case. Prose does not exceed weight 500; 600 is reserved for compact navigation branding and project indices.
+Three footer territories were considered (originality / fit / feasibility / portability; lower portability is better):
 
-**Intentional Type Exceptions.** The documented ramp governs the recurring roles; these measured exceptions are deliberate endpoints or compact utility roles: `.featured-proof-title` uses 24px → 30px; `.skills-promise p` uses 26px → 34px and a fixed 26px narrow override; `.capability-heading h3` uses 26px → 36px; `.contact-title` uses 52px → 88px and 44px → 62px on mobile; `.contact-email-address` uses 24px → 38px; `.contact-r li` uses 16px; `.decision-record-steps h4` and `.decision-record-boundary .mono` use 10px; and `.ov-mv` uses 42px → 52px. The featured and project evidence labels also retain a runtime 10.5px mono size. These values record existing roles and are not additions to the recurring ramp.
+| Territory | Anchor and signature | Emotion and screenshot | Scores |
+| --- | --- | --- | --- |
+| The next question | BI begins with a business question; the existing evidence-dot language becomes a directional email arrow | Open, precise; a two-line question opposite a dotted arrow | 4 / 5 / 5 / 2 |
+| Personal sign-off | Otto's name and monogram; an oversized signature closes the page | Personal; name filling the footer | 3 / 4 / 5 / 4 |
+| Decision handoff | End-to-end BI ownership; a compact question-to-decision sequence ends at contact | Methodical; a process strip beside the email | 3 / 5 / 4 / 3 |
 
-## Layout
+The next question is selected because it extends the subject-specific evidence language without another process diagram or a repeated full-size identity.
 
-A single centered column with generous vertical rooms. The content shell caps at 1240px with 32px side padding (20px under 760px); the nav pill runs wider at 1320px so it reads as a floating object rather than a header aligned to the text.
+- **Idea:** The work ends with a new question from the visitor.
+- **Metaphor:** A question becomes a direction.
+- **Signature:** The email control echoes the hero's dots. On hover or keyboard focus the dotted arrow resolves into a continuous arrow and the disc inverts. These decorative marks represent no measurement.
+- **Emotion:** Approachable and decisive.
+- **Motion verb:** Organize, using the existing easing family; the arrow moves along its direction.
+- **Screenshot:** Two oversized lines on the opening field, a circular dotted arrow, and an immediately readable email.
 
-**Vertical rhythm:** each room is padded 140px top / 120px bottom on desktop, 120px / 100px on mobile — asymmetric, so the eye lands slightly below center after a scroll jump. Major blocks inside a room separate by 80px; sub-blocks by 48px; list rows by 32px vertical padding with a hairline top border. Adjacent ruled blocks collapse the outer gap so two hairlines never frame empty space: the next block owns its interior breathing room. In Experience, the timeline's closing rule meets the contact block directly, and the contact content begins 80px inside that shared boundary.
+The footer is deliberately still at rest. It has no entrance animation or hidden copy. Reduced motion removes transitions; the control retains immediate inversion, a visible focus outline and press feedback. On phones the email control moves above the full-width heading and the supporting paragraph follows the email. The footer introduces no assets, type families or dependencies. The final restraint pass removes repeated table labels and the generic “Made with care” sign-off.
 
-**Grids by room:** hero stats run 4 columns (2 on mobile); About splits `minmax(0, 1.2fr) minmax(360px, 1fr)` with a `clamp(56px, 5vw, 80px)` gutter, stacking at 1080px — the argument column carries the eyebrow, headline, and prose so the evidence column starts on the same line rather than below an empty band; Skills runs 4 columns (2 at 760px) with soft-skill and education lists in 2 columns (1 at 760px). Work begins with a three-column featured-evidence index separated by hairlines, stacking into three full-width rows at 860px; the canonical project row remains a four-track grid — `64px 1.4fr 1fr 32px` — collapsing to `48px 1fr` at 860px, where the metric moves below the title block, the decorative evidence mark drops, and a text affordance replaces the standalone arrow. The timeline is `200px 1fr`, stacking at 760px. The overlay is an asymmetric named-area grid — `minmax(0, 1.45fr) minmax(280px, .9fr)` — with the header, story, and ruled decision record on the left and a summary rail on the right that sticks 24px from the overlay scrollport while the narrative continues. At 820px it becomes a one-column `header → summary → story` sequence and the summary returns to normal document flow.
+## Case reading and navigation
 
-**Breakpoints:** 1080px (About collapses to one column and its blocks reorder so the evidence ledger follows the headline), 860px (structural: the remaining multi-column room grids collapse and project evidence reflows), 820px (the overlay summary rail enters the reading flow), 760px (device: desktop nav swaps for the bottom mobile pill and padding tightens), 420px (mobile-nav type and padding compact), and 340px (the mobile-nav cluster tightens its viewport inset). There is no broad tablet treatment; each structural breakpoint is set where its own content actually fails, which is why About leaves two columns 220px earlier than every other room — its evidence column falls under 36ch by 1040px.
+Cases occupy the full viewport with their own scrolling surface and persistent return rail. They retain modal semantics because the underlying home position is preserved. The visible sequence is title → result and metadata → evidence beside constraint/decision/verification → full imagery where available → expandable context/responsibilities/impact → contact and previous/next.
 
-### Named Rules
+`#p1`–`#p6` are durable URLs. Opening from home pushes one entry; previous/next replaces that entry; browser back or close restores the page. Direct project URLs open immediately and close by removing only the project hash. The document title follows the active case.
 
-**The Evidence Never Drops.** Verified evidence is primary information, regardless of viewport or zoom. A breakpoint may reflow a metric's value and label, but it must never hide, abbreviate, or demote them. Only the decorative representation of that evidence may drop when space is constrained.
+The background is inert while a case is open. Focus moves into the case and stays there. Escape closes an image before its case. Closing returns focus to the original opener without moving the saved page, or to the corresponding project trigger for a direct link. All existing trigger IDs remain available. Image viewing supports fit/zoom, responsive sources, a keyboard-focusable scroll region when zoomed, and focus return to the image button. Zoom enlarges beyond the viewport even on wide desktops. A single scroll-padding reservation keeps section anchors clear of the header.
 
-**The Drop-Don't-Squeeze Rule.** Secondary visual elements are removed at narrow widths rather than compressed. The project row's decorative SVG and standalone arrow `display: none` below 860px; the metric value and label remain, and the arrow's interaction cue becomes the explicit “View project →” affordance. The desktop nav is not miniaturized, it is replaced. Nothing in this system survives a breakpoint at an illegible size.
+## Evidence and content rules
 
-## Elevation & Depth
+**The Evidence Never Drops.** Exact values, labels, and qualifiers remain readable at narrow widths and at browser zoom. Only a redundant graphic may be omitted, never the evidence it represents.
 
-The implemented system is flat by circumstance, not by doctrine. Content surfaces carry no shadows at all — depth is entirely a matter of color blocks and 1px rules at 15% alpha. The nav pill and lightbox are the only surfaces with ambient shadow; the overlay itself separates through a 65% black scrim with 10px blur, while its card remains shadowless.
+**The Reconstruction Is Explicit.** The governance artwork says “Count illustration, not an access map.” Other evidence graphics derive from typed quantities, named sources, or delivery tracks. They do not imply a real schema, formal artifact, or unknown measurement. Approximate and minimum figures retain their `~` or `+` labels.
 
-**Flatness is an open question, not an invariant.** A deliberate shadow vocabulary for cards and containers may be introduced by future work; if it is, it should be defined as a proper scale here rather than added ad hoc per component, and it should stay subordinate to the color-room structure — depth supporting the rooms, not replacing them.
+**Anonymity is structural.** Keep generic client descriptions. No client names, logos, testimonials, fictitious screenshots, or invented outcomes. Only the two existing STX Next case-study links are approved.
 
-### Shadow Vocabulary
-- **Glass float — default** (`0 10px 40px color-mix(in srgb, var(--ink) 18%, transparent), inset 0 1px 0 color-mix(in srgb, #ffffff 58%, transparent)`): The nav pill over the default room scheme. Mobile uses the same ambient color with a shorter 30px spread.
-- **Glass float — over dark** (`0 10px 40px color-mix(in srgb, #000000 32%, transparent), inset 0 1px 0 color-mix(in srgb, #ffffff 25%, transparent)`): Deepened ambient and a restrained highlight, so the pill still separates from Field Green, Oxblood, and Charcoal Ink walls.
-- **Glass float — over light** (`0 10px 40px color-mix(in srgb, #000000 10%, transparent), inset 0 1px 0 color-mix(in srgb, #ffffff 60%, transparent)`): Lightened ambient with a strong white top edge, used when the pill sits over a pale surface in dark mode.
-- **Lightbox lift** (`0 32px 80px color-mix(in srgb, #000000 50%, transparent)`): The single deep shadow in the system, on the zoomed image only.
+**The prototype stays a prototype.** All p6 screenshots are the internal QuickSight implementation of a supplied mockup using dummy data. Retain attribution and the explicit no-production/no-adoption boundary, including beside image sequences.
 
-### Named Rules
+**Copy stays in data.** Preserve project descriptions, decision records, responsibilities, impact, tools, experience, education, and contact. `npm run generate:static` mirrors substantive copy into `public/llms.txt` and the `<noscript>` block. The build runs this generation automatically.
 
-**The Glass-Is-For-Floating Rule.** `backdrop-filter` signals *this element is not part of the page* — nav, overlay scrim, lightbox. Ambient shadow is reserved for the nav and zoomed image. An element that scrolls with the content does not get either treatment.
+## Motion and interaction
 
-## Shapes
+The count illustration uses one scoped GSAP timeline, cleaned up on unmount and rebuilt through `matchMedia` when motion preference changes. A roughly two-second ordered-dither wave passes through the 696 existing SVG dots: fixed 4×4 Bayer thresholds stagger a stepped halftone bloom, then each mark settles into the original crisp grid. At 1.1 seconds, the 12 dotted group outlines begin resolving left to right into solid frames, completing the sequence at about 2.2 seconds. Their six-unit dash period stays fixed while the gaps close in place. Only scale, opacity, and stroke dashes animate; every mark stays present, while the numbers and captions remain steady. There are no connectors or implied assignments between paths and groups. Playback pauses offscreen or in a hidden tab and finishes once, with an explicit Replay control. Reduced motion removes the animation and replay button; the static composition remains complete. No canvas, WebGL, additional marks, or new dependency is needed.
 
-Pill-first geometry. Everything small and interactive is a full 999px pill: nav container, nav links, active-link wash, CTAs, tag pills, and the overlay close button. Nothing else in this system is a rounded rectangle at a small size — it is either a pill or a hairline.
+After the entrance finishes, a fine mouse/trackpad pointer activates a localized hover response in the hero illustration. Dots within 72 SVG units of the cursor enlarge in ordered-dither steps up to 2×, easing back into place as the pointer moves away. Each hovered group expands to 1.03×, resolves a dotted border to solid, and fades in a 12%-opacity fill using the existing ink foreground over 320ms. The scale and fill return to the original empty outline over 250ms on exit. A single on-demand frame loop stops when the response settles. Replay, scrolling, resize, offscreen/hidden state, and motion-preference changes reset hover geometry and fill. Touch and reduced-motion users receive the complete static hover state. The artwork remains decorative, with no new controls, tab stops, or implied group assignments.
 
-Floating panels take large soft radii instead: 20px on the overlay card, 16px on its side panel, 10px on project images, 8px on the lightbox image. The radius scales with the surface, so a big panel never looks like an inflated button.
+### Project studies 02–05
 
-Rooms have no radius at all — they are full-bleed color to every edge. Borders are hairlines only: `1px solid var(--rule)`, where `--rule` mixes `currentColor` at 15% with transparency, used as separators between rows rather than as outlines around objects. The project-row trigger is the intentional 2px edge-radius exception; the row divider itself remains a 1px hairline, and there are no dashed or dotted strokes.
+The motion extension keeps React, the existing GSAP dependency, and every approved illustration. Three approaches were considered: organize each project's actual marks, apply one shared hover ripple, or keep the figures looping. Project-specific organization best explains the existing evidence while leaving a calm reading state.
 
-Between rooms, the color transition runs through a full-width SVG edge in one of four shapes (diagonal, curve, wave, sine) at 100–140px tall. **These are provisional** — the current expression of the room transition, not a commitment. A future pass may replace or drop them.
+- **02 / Dashboard delivery:** the 15 outlined tiles register into their grid in reading order, then their existing baseline strokes extend. The approximate qualifier stays in the fixed metric; the artwork never pretends to show client dashboards.
+- **03 / Source consolidation:** three source-line endpoints travel toward the shared outcome in sequence, followed by a small directional movement of the arrow. Endpoint dots stay fully opaque throughout their travel so the underlying line never shows through them.
+- **04 / Report stack + four modules:** the selected second preview replaces the paired circles with an abstract report stack beside four application modules. The modules contain four distinct geometric motifs: a stepped path, a branch, converging paths, and validation rows. These are illustrative shapes, not a reconstruction of any app's fields, UI, or business rules. Report sheets slide into registration while the four modules assemble with a small stagger; each terminal mark settles at full size from its left edge. Connector paths stop at node boundaries, keeping the outlined squares and circles clear inside. The sequence finishes in about two seconds. Labels and the two-track metric remain stationary. Paper fills match the surrounding work or case surface in both themes. The project reader retains the caption about client screens and report counts; the main-page illustration omits it. The caption remains in the generated detailed project content.
+- **05 / Time-grain consolidation:** five endpoints start at staggered times and arrive together, followed by the same outcome-arrow response. Timing is illustrative, not a measurement of reporting frequency or data latency.
 
-### Named Rules
+Each figure has a scoped GSAP timeline lasting less than three seconds. It plays when at least 30% of the figure enters the viewport, resumes if interrupted, and replays on a later entry after completing. Mouse entry into the study and keyboard focus entering its existing controls can replay a completed sequence, without interrupting one in progress or adding tab stops. Touch gets the entry sequence without depending on hover. Timelines pause offscreen, in hidden tabs, and underneath an open case reader. Navigation and live motion-preference changes revert their styles and remove observers and listeners. Only transforms and opacity animate; labels, counts, layout, and colors stay fixed. The case readers share these behaviors.
 
-**The Pill-or-Line Rule.** At small scale this system offers two shapes: a 999px pill or a 1px rule. If a new element is neither, it probably wants to be one of them.
+The page is intentionally still after each short sequence. This is a reading-oriented professional portfolio, and endless decorative movement would compete with its evidence. No loader or WebGL is needed. Pointer, focus, and press feedback belong to the same restrained motion language. Under reduced motion, transitions and evidence animation stop without hiding content.
 
-## Components
+The approved pointer treatment is a solid dot inspired by Bitemark Studio: 10px at rest, 20px over links, buttons, and disclosure controls, and 15px while pressing an action. It follows the mouse immediately; only its size eases over 160ms. A white fill with difference blending inverts the rendered colors beneath it. The decorative layer sits outside the application's inert content and above case and image readers, adds no tab stop, and never intercepts input. The native cursor is hidden only while the replacement is positioned and visible. Touch, keyboard navigation, reduced motion, forced colors, form controls, native drag targets, scrollbars, and text selection retain native behavior. Leaving the window or switching preferences clears the dot; the next eligible mouse movement restores it. Without JavaScript the native cursor remains. No perpetual animation loop or additional dependency is needed.
 
-Character: **tactile and confident.** Components should feel like objects with a physical response — real padding, a clear reaction to hover and press — rather than flat targets that only change opacity. The current build is on the restrained end of that (14px type, 14–22px padding, 1px translateY on hover); new work should push toward more definite feedback, not less, while staying inside the pill-and-hairline vocabulary.
+Page scrolling follows mkdir.directory: Lenis with 0.1 wheel interpolation and 1.2-second cubic ease-in-out anchor transitions. Native document coordinates, sticky positioning, anchor clearance, URL history, and keyboard focus remain intact. Touch gestures stay native. The scroll controller is removed while a case reader is open, leaving case and image scrolling native and the background locked. Reduced motion disables Lenis entirely, including when the preference changes during a visit; native scrolling and the CSS/no-JavaScript fallback remain available.
 
-### Buttons
-- **Shape:** Full pill (999px), 1px transparent border reserved so ghost and primary share a footprint.
-- **Primary:** Oxblood fill, Bone Paper text, 14px/500, 14px × 22px padding, usually with a trailing mono arrow `→`.
-- **Primary on the Experience wall:** The contact CTA reverses the rendered wall pair (`--on-wall-exp` fill / `--wall-exp` text) in both themes. It is an explicit contextual variant: the conversion control must separate strongly from its closing wall, not rely on Oxblood against Charcoal Ink.
-- **Ghost:** Transparent fill, inherited text color, `currentColor` border at 85% opacity — so it re-colors itself per room automatically.
-- **Hover / Focus:** Both lift `translateY(-1px)` over 150ms. Primary swaps to the Hero room's semantic foreground/background pair; ghost fills with the semantic 7% `currentColor` wash. The global focus-visible treatment is a 2px `currentColor` outline with 4px offset.
+OverlayScrollbars removes the browser's reserved scrollbar gutter while preserving the native document and element scroll containers. Handles sit over the page with fully transparent tracks, using Green Accent on the page and Paper in the always-dark image viewer. A fine contrasting outline keeps the handle visible over different section colors. Handles auto-hide after one idle second and support dragging and track clicks. Without JavaScript, a themed native scrollbar remains available; forced-colors mode uses system scrollbars, and reduced motion removes the fade.
 
-### Chips
-- **Style:** Mono 11px at 0.04em, 6px × 11px, full pill, with both fill and border derived from `currentColor`: a 7% wash and a 15% rule. The same semantic treatment automatically follows each room's foreground.
-- **State:** Static — these are read-only labels for tools and expertise areas, with no selected or interactive variant.
+## Genericness and restraint
 
-### Cards / Containers
-- **Corner Style:** 20px on the overlay card, 16px on the side panel.
-- **Background:** The overlay card uses the theme's Bone Paper surface; the sidebar uses the dedicated Overlay Step token (#e2d6bd light, #6b675e dark). The tonal step, plus a 15% `currentColor` hairline, separates it from the card without competing with the project narrative.
-- **Shadow Strategy:** None on the card itself; the scrim behind it (65% black + 10px blur) provides the separation. See Elevation & Depth.
-- **Border:** The card has none. The sidebar and internal sections use the semantic 1px `var(--rule)` hairline at 15% of the current foreground.
-- **Internal Padding:** 48px on the card (32px × 24px under 760px), 24px on the side panel, with 24px gaps between panel sections.
+The site-specific anchor is the governance transformation. Source consolidation and actual internal prototype screenshots sustain the idea beyond the hero. The repeated italic-heading treatment and floating glass pill were removed to make room for a stronger hierarchy. The existing palette, factual copy, and client boundaries prevent the redesign from becoming a generic creative-agency gallery.
 
-### Navigation
-- **Style:** A floating, contrast-bounded glass pill — 96% Warm Paper (`#f7f1de`) over light rooms and 94% Charcoal Ink (`#1a1a18`) over dark rooms, with `-webkit-backdrop-filter` and `backdrop-filter: blur(28px)`, no saturation boost, a hairline border, ambient shadow, and inset top highlight. The high surface contribution preserves AA contrast even while a divider is passing beneath the pill. Desktop: fixed 18px from top, three-track grid (brand / six links including Contact / mode toggle), moving to 14px once scrolled past 24px. Mobile (≤760px): a horizontally scrollable six-link pill anchored 18px from the bottom, paired with a separate circular mode pill. The active destination scrolls into view automatically; no label is compressed or clipped.
-- **Typography:** DM Sans 13px desktop at 74% opacity and 12px mobile at 75%; desktop links rise to 100% on hover. At ≤420px, mobile links use 11px.
-- **Active state:** Each active link owns its own scheme token: `--nav-indicator` is an 88% Charcoal Ink wash with Bone Paper text in light default/over-light states, and a 90% white wash with Charcoal Ink text in dark default/over-dark states. There is no shared sliding indicator. Link state transitions change opacity only; the active background remains in place without a moving layer.
-- **Section-aware schemes:** The default follows the theme surface; `nav-over-dark` uses Warm Paper text on bounded dark glass over the light Field Green `#2d4a2b`, dark Field Green `#35603a`, Oxblood, or Charcoal Ink rooms, with a deeper shadow and `logo-light.svg`. Experience remains Charcoal Ink in dark mode rather than inverting to a pale wall. Foreground and surface change as one instantaneous contrast pair; only border and shadow ease over 350ms.
+## Verification
 
-### Overlay Closing Rail
-Project detail ends with one hairline and three pill actions: previous project at the left edge, “Discuss a similar project →” in the primary center position, and next project at the right edge. Previous and next wrap across the six-project set and remain ghost controls so the contact action owns the hierarchy. On mobile, the contact action becomes full-width above two equal project-navigation controls.
-
-The open project is durable URL state (`#p1`–`#p6`). Opening from the Work room creates one history entry; previous/next replace that entry while updating the shareable hash; browser back and close restore the underlying page. A direct project URL opens immediately and closes by removing only the project hash.
-
-### Signature: The Featured Evidence Index
-The Work room opens with three employer-first proof paths: governance and scale, end-to-end delivery, and design implementation. Each path is a real button separated by hairlines, not a card, and exposes the existing project metric before opening the same accessible overlay as the canonical list. It is a skim layer only: the six-project order and previous/next sequence remain unchanged.
-
-### Signature: The Sanitized Decision Path
-Every overlay isolates the reasoning that the summary rail does not already carry: Constraint, Chosen response, and How it was checked, followed by an explicit “Removed” disclosure boundary. All four labels share the same left edge with no decorative gutter. Context remains in the narrative and outcomes remain in the summary rail, preventing the artifact from repeating the same evidence. The disclosure row carries the reconstruction boundary without a competing status badge. It is a source-supported decision path, never a facsimile of a client document, and it may not imply a formal validation artifact, production deployment, or adoption outcome that the project data does not support.
-
-**The Reconstruction Is Explicit Rule.** A reconstructed artifact states what it is and what was removed. Anonymity is carried in the content model, not simulated with black redaction bars, blurred logos, or fake dashboard chrome.
-
-### Signature: The Project Row
-The Work room's entire interface. A four-track grid — index number, title block, data block, arrow — separated by hairline rules with no card around it. An invisible full-row button provides keyboard focus and dialog semantics. The number is Oxblood mono; the title is Instrument Serif; a mono meta line carries client and role; the summary caps at 46ch; tool pills sit at the bottom. The right column pairs a large serif metric value with its mono label above a `currentColor` evidence graphic. On hover or `:focus-within`, the entire row gains 24px of horizontal padding and a Warm Paper background — the row physically widens into the page — while the arrow shifts 4px right and turns Oxblood. `:active` keeps the Warm Paper response and gives the arrow a shorter pressed translation. Below 860px the metric reflows beneath the title block, the SVG drops, and “View project →” supplies a persistent interaction cue.
-
-### Signature: The Stat Block
-Four of them under the hero. The serif value runs in two tiers — a lead figure (`figure`, up to 56px) and a standard one (`figure-sm`, up to 40px) — in Oxblood, over a 14px/500 label and an 11px mono suffix at the shared label opacity (74% by default). The lead tier's floor drops to 32px in the About ledger, where the figure sits directly beneath a 40px headline on mobile and must not tie with it. No borders on desktop — the grid gutter is the only separation; below 760px each block picks up a hairline bottom rule. This is the pattern for presenting any number in this system: big serif figure, plain label, quiet mono qualifier.
-
-### Signature: Evidence Marks
-Inline SVG built in `components/Charts.tsx` — endpoint deltas, equal unit bars or dots, and convergence paths, all drawn in `currentColor` or Oxblood with no axes, gridlines, legend, or labels. Every graphic consumes the same typed evidence object as its headline metric: known endpoints plot without invented intermediates, one mark represents each known unit when the cardinality is small, a bounded repeating geometry carries the same texture for high-cardinality evidence, and one path represents each named source. The adjacent metric value and label always carry the exact verified evidence. These marks render as page texture that suggests data work; they are not dashboards and must not acquire dashboard chrome.
-
-## Do's and Don'ts
-
-### Do:
-- **Do** give every new full-bleed section a single wall color and let content sit directly on it (The One Room Rule).
-- **Do** put exactly one italic phrase in every headline, make it the phrase that carries the meaning, and color it through the room's semantic pairing.
-- **Do** use semantic wall, foreground, accent, overlay, and navigation tokens rather than assuming that any primitive color has the same role in both themes (The Wall Pair Rule).
-- **Do** use uppercase JetBrains Mono at 11px / 0.14em for any label, key, or piece of metadata.
-- **Do** separate rows with 1px hairlines derived from `currentColor` at 15% alpha.
-- **Do** make interactive elements pills (999px) and give them a real hover response — a lift, a fill change, or a padding shift like the project row.
-- **Do** preserve every verified metric's value and label across responsive and zoom-driven breakpoints (The Evidence Never Drops).
-- **Do** drop secondary elements at narrow widths rather than shrinking them (The Drop-Don't-Squeeze Rule).
-- **Do** keep measures capped: 14ch display, 18ch headline, 54ch lead, 46–60ch body.
-
-### Don't:
-- **Don't** hardcode #f1ead8 or #1a1a18 where a semantic wall/foreground token exists — the explicit theme pairs may assign those values to opposite roles.
-- **Don't** introduce a second accent color. Oxblood is the only one, and its rarity is what makes it work.
-- **Don't** wrap room content in cards, panels, or bordered boxes. Structure comes from color and hairlines.
-- **Don't** let the evidence marks become dashboard charts — no axes, gridlines, legends, tooltips, or value labels. This site presents BI work; it must never imitate Tableau or QuickSight chrome.
-- **Don't** classify a metric value or its label as expendable breakpoint decoration; only its redundant visual mark may drop.
-- **Don't** ship the default AI-portfolio look: purple-blue gradients, glassmorphic feature cards, floating 3D blobs, emoji-waving hero copy. The heritage palette and serif are the entire defense against it.
-- **Don't** use gradients as fills. The only gradient-adjacent surfaces in this system are the translucent glass layers.
-- **Don't** escalate font weight past 500 for emphasis — use size, italic, color, or case.
-- **Don't** apply `backdrop-filter` or ambient shadow to anything that scrolls with the page (The Glass-Is-For-Floating Rule).
+Run `npm run build`, generated-content parity, and `git diff --check`. Review production screenshots at desktop and phone widths, in both themes, including system preference changes, ignored legacy saved preferences, visit-only overrides, reloads, and keyboard operation of the theme toggle. Exercise all six direct hashes, project history, close/focus restoration, keyboard traversal, image fit/zoom and return, reduced motion, no-JavaScript reading, email copying, and anchor clearance. Verify 320px through large desktop widths and 200% zoom. A styled missing-page view and generated public/404.html provide a recovery link; live hosting status codes must be checked after deployment. Local verification is not deployment.

@@ -1,8 +1,14 @@
 {
   "schemaVersion": 2,
   "generatedAt": "2026-08-16T02:53:47.633Z",
-  "title": "Design System: Otto Montoya — Portfolio",
+  "title": "Historical Design System: Otto Montoya — Portfolio (superseded)",
   "extensions": {
+    "lifecycle": {
+      "status": "superseded",
+      "currentSpecification": "../DESIGN.md",
+      "currentStylesheet": "../portfolio.css",
+      "note": "This August 2026 snapshot predates Signal to structure and the approved Celadon + ink palette. Its colors, typography, components, and theme rules are historical only. Use DESIGN.md and portfolio.css for current implementation."
+    },
     "colorMeta": {
       "field-green": {
         "role": "secondary",

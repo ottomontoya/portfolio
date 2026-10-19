@@ -1,54 +1,118 @@
-import { useEffect, useState } from "react";
-import { FEATURED_PROJECTS, INDUSTRY_COUNT, PROJECT_COUNT, PROJECTS, getProjectMetric } from "../data/projects";
+import {
+  INDUSTRY_COUNT,
+  PROJECT_COUNT,
+  PROJECTS,
+  getProjectMetric,
+} from "../data/projects";
 import { EDUCATION, EXPERIENCE } from "../data/education";
 import { CAPABILITY_STAGES, SKILL_GROUPS } from "../data/skills";
-import { STATS, ABOUT_BODY, ABOUT_EMPHASIS, ABOUT_HEADLINE, ABOUT_LEDGER, HANDOVER } from "../data/about";
+import {
+  HERO,
+  SIGNAL,
+  WORK_INTRO,
+  PROTOTYPE_PREVIEW,
+  STATS,
+  ABOUT_BODY,
+  ABOUT_EMPHASIS,
+  ABOUT_HEADLINE,
+  ABOUT_EXAMPLES,
+} from "../data/about";
 import { CONTACT } from "../data/contact";
-import { CopyEmailButton, Eyebrow, Pill } from "./ui";
-import { ProjectChart } from "./Charts";
+import { CopyEmailButton, Eyebrow } from "./ui";
+import { AccessField, EvidenceGraphic } from "./Evidence";
 
-function useWideEvidenceMarks() {
-  const [show, setShow] = useState(() => window.matchMedia("(min-width: 861px)").matches);
-
-  useEffect(() => {
-    const media = window.matchMedia("(min-width: 861px)");
-    const sync = () => setShow(media.matches);
-    sync();
-    media.addEventListener("change", sync);
-    return () => media.removeEventListener("change", sync);
-  }, []);
-
-  return show;
-}
-
-export function HeroSection() {
+export function HeroSection({ onOpen }: { onOpen: (id: string) => void }) {
+  const governance = PROJECTS.find((project) => project.id === "p1")!;
   return (
     <section id="home" className="room room-hero" aria-labelledby="home-title">
       <div className="shell hero-shell">
-        <div className="hero-mark">
-          <Eyebrow dot>Data Analyst · BI Specialist</Eyebrow>
+        <div className="hero-topline">
+          <span>Data Analyst / BI</span>
+          <span>{CONTACT.location}</span>
         </div>
-
-        <div className="hero-cover">
-          <h1 className="h1" id="home-title">
-            Clear insights from <em>complex</em> data.
-          </h1>
-          <p className="lead">
-            I work end-to-end across the BI stack — from understanding the question, to defining KPIs, to shipping dashboards teams actually use.
-          </p>
-          <div className="cta-row">
-            <a className="cta cta-primary" href="#work">View work <span className="arr">→</span></a>
-            <a className="cta cta-ghost" href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
+        <div className="hero-composition">
+          <div className="hero-cover">
+            <h1 className="h1" id="home-title">
+              <span>{HERO.lineOne}</span>
+              <span>{HERO.lineTwo}</span>
+            </h1>
+            <p className="lead">{HERO.body}</p>
+            <div className="cta-row">
+              <a className="cta cta-primary" href="#work">
+                View work{" "}
+                <span className="arr action-arrow" aria-hidden="true">
+                  ↗
+                </span>
+              </a>
+              <a className="hero-email" href={`mailto:${CONTACT.email}`}>
+                {CONTACT.email}
+              </a>
+            </div>
+          </div>
+          <div className="hero-signal">
+            <div className="signal-label mono">{SIGNAL.eyebrow}</div>
+            {governance.evidence.kind === "delta" && (
+              <AccessField evidence={governance.evidence} animate showCaption={false} />
+            )}
+            <div className="signal-context">
+              <p>{SIGNAL.caption}</p>
+            </div>
+            <button
+              className="signal-case-link"
+              id="hero-project-trigger-p1"
+              onClick={() => onOpen("p1")}
+              aria-haspopup="dialog"
+            >
+              {SIGNAL.action}
+              <span className="action-arrow" aria-hidden="true">↗</span>
+            </button>
           </div>
         </div>
-
-        <div className="hero-evidence">
-          <ul className="evidence-band" aria-label="Verified evidence">
-            {STATS.map((stat, index) => (
-              <li className={`evidence-cell${index === 0 ? " evidence-cell-lead" : ""}`} key={stat.label}>
-                <div className="evidence-fig">{stat.value}</div>
+        <ul className="evidence-band" aria-label="Career highlights">
+          {STATS.slice(1).map((stat) => (
+            <li className="evidence-cell" key={stat.label}>
+              <div className="evidence-fig">{stat.value}</div>
+              <div>
                 <div className="evidence-name">{stat.label}</div>
-                <div className="evidence-note mono">{stat.suffix}</div>
+                <div className="evidence-note">{stat.suffix}</div>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}
+
+export function AboutSection() {
+  const [headlineStart, headlineEnd] = ABOUT_HEADLINE.split(ABOUT_EMPHASIS);
+  return (
+    <section
+      id="about"
+      className="room room-about"
+      aria-labelledby="about-title"
+    >
+      <div className="shell about-grid">
+        <div className="about-heading">
+          <Eyebrow>About Me</Eyebrow>
+          <h2 className="h2" id="about-title">
+            {headlineStart}
+            <em>{ABOUT_EMPHASIS}</em>
+            {headlineEnd}
+          </h2>
+        </div>
+        <div className="about-story">
+          <div className="about-body">
+            {ABOUT_BODY.map((p, i) => (
+              <p key={i}>{p}</p>
+            ))}
+          </div>
+          <h3 className="side-h">What that looks like</h3>
+          <ul className="about-examples">
+            {ABOUT_EXAMPLES.map((entry) => (
+              <li key={entry.title}>
+                <h4>{entry.title}</h4>
+                <p>{entry.description}</p>
               </li>
             ))}
           </ul>
@@ -58,129 +122,124 @@ export function HeroSection() {
   );
 }
 
-export function AboutSection() {
-  const [headlineStart, headlineEnd] = ABOUT_HEADLINE.split(ABOUT_EMPHASIS);
-
-  return (
-    <section id="about" className="room room-about" aria-labelledby="about-title">
-      <div className="shell">
-        <div className="about-grid">
-          {/* The argument column: label, headline, prose. Keeping the headline inside
-              the column — rather than spanning the shell — lets the evidence column
-              start at the same line and occupy the band beside it. */}
-          <div className="about-lead">
-            <Eyebrow dot>About</Eyebrow>
-            <h2 className="h2" id="about-title">{headlineStart}<em>{ABOUT_EMPHASIS}</em>{headlineEnd}</h2>
-            <div className="about-body">
-              {ABOUT_BODY.map((p, i) => <p key={i}>{p}</p>)}
-            </div>
-          </div>
-          <div className="about-side">
-            <div className="side-block">
-              <h3 className="side-h">On record</h3>
-              <ul className="ledger">
-                {ABOUT_LEDGER.map((entry, index) => (
-                  <li className={`ledger-item${index === 0 ? " ledger-item-lead" : ""}`} key={entry.label}>
-                    <div className="ledger-fig">{entry.value}</div>
-                    <div className="ledger-name">{entry.label}</div>
-                    <div className="ledger-note mono">{entry.note}</div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="side-block">
-              <h3 className="side-h">What I hand over</h3>
-              <ul className="how">
-                {HANDOVER.map((item, index) => (
-                  <li key={index}>
-                    <span className="how-n mono" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
-                    <span className="how-t">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 export function WorkSection({ onOpen }: { onOpen: (id: string) => void }) {
-  const showEvidenceMarks = useWideEvidenceMarks();
-
+  const governance = PROJECTS.find((project) => project.id === "p1")!;
+  const preview = PROJECTS.find((project) => project.id === "p6")!.images![3];
   return (
     <section id="work" className="room room-work" aria-labelledby="work-title">
       <div className="shell">
-        <Eyebrow dot>Selected work</Eyebrow>
         <div className="work-head">
-          <h2 className="h2 h2-work" id="work-title">{PROJECT_COUNT} projects, <em>{INDUSTRY_COUNT} industries.</em></h2>
-          <p className="lead lead-work">From access governance to legacy migrations — each one shows the constraint, the decision, and the delivered result.</p>
+          <div>
+            <Eyebrow>Selected work</Eyebrow>
+            <h2 className="h2" id="work-title">
+              {PROJECT_COUNT} projects.
+              <br />
+              <span>{INDUSTRY_COUNT} industries.</span>
+            </h2>
+          </div>
+          <p className="lead">{WORK_INTRO}</p>
         </div>
-        <section className="featured-proof" aria-labelledby="featured-proof-title">
-          <h3 className="featured-proof-label mono" id="featured-proof-title">Featured evidence</h3>
-          <ol className="featured-proof-list">
-            {FEATURED_PROJECTS.map((project) => {
-              const metric = getProjectMetric(project.evidence);
-              return (
-                <li key={project.id}>
-                  <button
-                    type="button"
-                    className="featured-proof-trigger"
-                    onClick={() => onOpen(project.id)}
-                    aria-haspopup="dialog"
-                    aria-label={`Open featured project: ${project.title}`}
-                  >
-                    <span className="featured-proof-meta mono">{project.n} · {project.featured.proof}</span>
-                    <span className="featured-proof-title">{project.title}</span>
-                    <span className="featured-proof-metric">
-                      <span>{metric.value}</span>
-                      <span className="mono">{metric.label}</span>
-                    </span>
-                    <span className="featured-proof-action">View project <span aria-hidden="true">→</span></span>
-                  </button>
-                </li>
-              );
-            })}
-          </ol>
-        </section>
-        <ul className="projects">
-          {PROJECTS.map((p) => {
+        <article
+          className="governance-feature"
+          aria-labelledby="flagship-title"
+        >
+          <div className="case-index mono">01 / Governance · Tableau</div>
+          <div>
+            <h3 id="flagship-title">{governance.title}</h3>
+            <p>{governance.decisionRecord.constraint}</p>
+          </div>
+          <div className="governance-outcome">
+            <p>{governance.decisionRecord.result}</p>
+            <button
+              className="text-link"
+              id="project-trigger-p1"
+              onClick={() => onOpen("p1")}
+              aria-haspopup="dialog"
+            >
+              Read the governance case <span className="action-arrow" aria-hidden="true">↗</span>
+            </button>
+          </div>
+        </article>
+        <article
+          className="prototype-feature"
+          aria-labelledby="prototype-title"
+        >
+          <div className="prototype-heading">
+            <div>
+              <div className="case-index mono">
+                06 / {PROTOTYPE_PREVIEW.label}
+              </div>
+              <h3 id="prototype-title">{PROTOTYPE_PREVIEW.title}</h3>
+            </div>
+            <p>{PROTOTYPE_PREVIEW.credit}</p>
+          </div>
+          <button
+            className="prototype-preview"
+            id="project-trigger-p6"
+            onClick={() => onOpen("p6")}
+            aria-haspopup="dialog"
+            aria-label="Explore the prototype in QuickSight"
+          >
+            <img
+              src={preview.src}
+              srcSet={preview.srcSet}
+              sizes="(max-width: 760px) calc(100vw - 40px), (max-width: 1500px) 90vw, 1320px"
+              width={preview.width}
+              height={preview.height}
+              alt={preview.alt}
+              loading="lazy"
+            />
+            <span className="prototype-open">
+              Explore the prototype <span className="action-arrow" aria-hidden="true">↗</span>
+            </span>
+          </button>
+          <div className="prototype-caption">
+            <p>{PROTOTYPE_PREVIEW.annotation}</p>
+            <span>{PROTOTYPE_PREVIEW.boundary}</span>
+          </div>
+        </article>
+        <div className="work-grid">
+          {PROJECTS.filter((p) => p.id !== "p1" && p.id !== "p6").map((p) => {
             const metric = getProjectMetric(p.evidence);
             return (
-              <li key={p.id} className="project">
-                <button
-                  type="button"
-                  id={`project-trigger-${p.id}`}
-                  className="project-trigger"
-                  onClick={() => onOpen(p.id)}
-                  aria-haspopup="dialog"
-                  aria-label={`Open project details for ${p.title}`}
-                />
-                <div className="proj-n mono">{p.n}</div>
-                <div className="proj-main">
-                  <h3 className="proj-title">{p.title}</h3>
-                  <div className="proj-meta mono">{p.client} · {p.role}</div>
-                  <p className="proj-sum">{p.summary}</p>
-                  <div className="proj-tools">
-                    {p.tools.map(t => <Pill key={t}>{t}</Pill>)}
-                  </div>
+              <article
+                key={p.id}
+                className={`work-study work-study-${p.id}`}
+                aria-labelledby={`study-title-${p.id}`}
+              >
+                <div className="study-top">
+                  <span className="case-index mono">
+                    {p.n} / {p.industry}
+                  </span>
+                  <span className="study-platform">{p.tools[0]}</span>
                 </div>
-                <div className="proj-chart">
-                  <div className="proj-metric">
-                    <div className="proj-mv">{metric.value}</div>
-                    <div className="proj-ml mono">{metric.label}</div>
-                  </div>
-                  {showEvidenceMarks && <ProjectChart evidence={p.evidence} color="currentColor" />}
+                <div className="study-graphic">
+                  <EvidenceGraphic evidence={p.evidence} />
                 </div>
-                <div className="proj-affordance" aria-hidden="true">
-                  View project <span>→</span>
+                <h3 id={`study-title-${p.id}`}>{p.title}</h3>
+                <div className="study-meta">
+                  {p.client} · {p.role}
                 </div>
-                <div className="proj-arr" aria-hidden="true">→</div>
-              </li>
+                <p className="study-summary">{p.summary}</p>
+                <div className="study-bottom">
+                  <span className="study-metric">
+                    {metric.value}
+                    <small>{metric.label}</small>
+                  </span>
+                  <button
+                    className="text-link"
+                    id={`project-trigger-${p.id}`}
+                    onClick={() => onOpen(p.id)}
+                    aria-haspopup="dialog"
+                    aria-label={`View project: ${p.title}`}
+                  >
+                    View project <span className="action-arrow" aria-hidden="true">↗</span>
+                  </button>
+                </div>
+              </article>
             );
           })}
-        </ul>
+        </div>
       </div>
     </section>
   );
@@ -188,29 +247,43 @@ export function WorkSection({ onOpen }: { onOpen: (id: string) => void }) {
 
 export function SkillsSection() {
   return (
-    <section id="skills" className="room room-skills" aria-labelledby="skills-title">
+    <section
+      id="skills"
+      className="room room-skills"
+      aria-labelledby="skills-title"
+    >
       <div className="shell">
-        <Eyebrow dot>Skills</Eyebrow>
+        <Eyebrow>Skills</Eyebrow>
         <div className="skills-head">
-          <h2 className="h2" id="skills-title">From business question <em>to trusted decision.</em></h2>
+          <h2 className="h2" id="skills-title">
+            From business question <em>to trusted decision.</em>
+          </h2>
           <div className="skills-promise">
-            <div className="skills-promise-label mono">End-to-end ownership</div>
-            <p>I connect the conversation, the model, and the interface—not just the final chart.</p>
+            <div className="skills-promise-label mono">
+              End-to-end ownership
+            </div>
+            <p>
+              I connect the conversation, the model, and the interface—not just
+              the final chart.
+            </p>
           </div>
         </div>
 
         <ol className="capability-path" aria-label="End-to-end BI capabilities">
-          {CAPABILITY_STAGES.map((stage, index) => (
+          {CAPABILITY_STAGES.map((stage) => (
             <li className="capability-stage" key={stage.phase}>
-              <div className="capability-step mono" aria-hidden="true">{String(index + 1).padStart(2, "0")}</div>
+              <div className="capability-step">
+                {stage.phase}
+              </div>
               <div className="capability-heading">
-                <div className="capability-phase mono">{stage.phase}</div>
                 <h3>{stage.title}</h3>
               </div>
               <div className="capability-detail">
                 <p>{stage.description}</p>
                 <ul aria-label={`${stage.phase} capabilities`}>
-                  {stage.capabilities.map(capability => <li key={capability}>{capability}</li>)}
+                  {stage.capabilities.map((capability) => (
+                    <li key={capability}>{capability}</li>
+                  ))}
                 </ul>
               </div>
             </li>
@@ -219,17 +292,24 @@ export function SkillsSection() {
 
         <section className="toolkit" aria-labelledby="toolkit-title">
           <div className="toolkit-head">
-            <h3 className="side-h" id="toolkit-title">Technical toolkit</h3>
-            <p>Platforms and tools I use to carry that work from source to delivery.</p>
+            <h3 className="side-h" id="toolkit-title">
+              Technical toolkit
+            </h3>
+            <p>
+              Platforms and tools I use to carry that work from source to
+              delivery.
+            </p>
           </div>
           <div className="skills-grid">
-            {SKILL_GROUPS.map(g => (
+            {SKILL_GROUPS.map((g) => (
               <div className="skill-col" key={g.label}>
                 <div className="skill-col-head">
                   <h3 className="skill-h mono">{g.label}</h3>
                 </div>
                 <ul>
-                  {g.items.map(it => <li key={it}>{it}</li>)}
+                  {g.items.map((it) => (
+                    <li key={it}>{it}</li>
+                  ))}
                 </ul>
               </div>
             ))}
@@ -241,13 +321,19 @@ export function SkillsSection() {
 }
 
 export function ExperienceSection() {
-  const [contactHeadingStart, contactHeadingEnd] = CONTACT.contactHeading.split(CONTACT.contactEmphasis);
-
   return (
-    <section id="experience" className="room room-exp" aria-labelledby="experience-title">
+    <section
+      id="experience"
+      className="room room-exp"
+      aria-labelledby="experience-title"
+    >
       <div className="shell experience-shell">
-        <Eyebrow dot>Experience</Eyebrow>
-        <h2 className="h2" id="experience-title">A path through <em>data, dashboards & teams.</em></h2>
+        <div className="experience-intro">
+          <Eyebrow>Experience</Eyebrow>
+          <h2 className="h2" id="experience-title">
+            A path through <em>data, dashboards & teams.</em>
+          </h2>
+        </div>
         <ol className="timeline">
           {EXPERIENCE.map((e, i) => (
             <li className="tl-item" key={i}>
@@ -260,10 +346,14 @@ export function ExperienceSection() {
             </li>
           ))}
         </ol>
-        <section className="experience-education" aria-labelledby="education-title">
+        <section
+          className="experience-education"
+          aria-labelledby="education-title"
+        >
           <div className="experience-education-head">
-            <h3 className="side-h" id="education-title">Education & certifications</h3>
-            <p>Formal foundations that support the work.</p>
+            <h3 className="side-h" id="education-title">
+              Education & certifications
+            </h3>
           </div>
           <ul className="edu-list">
             {EDUCATION.map((e) => (
@@ -275,52 +365,72 @@ export function ExperienceSection() {
             ))}
           </ul>
         </section>
-        <section id="contact" className="contact-block" aria-labelledby="contact-title">
-          <div className="contact-intro">
-            <Eyebrow dot>{CONTACT.contactEyebrow}</Eyebrow>
-            <h2 className="contact-title" id="contact-title">
-              {contactHeadingStart}<em>{CONTACT.contactEmphasis}</em>{contactHeadingEnd}
-            </h2>
-            <p className="contact-sub">{CONTACT.contactBody}</p>
-          </div>
-          <div className="contact-actions">
-            <a href={`mailto:${CONTACT.email}`} className="contact-email-cta">
-              <span className="contact-email-label mono">Start with an email</span>
-              <span className="contact-email-address">{CONTACT.email}</span>
-              <span className="contact-email-arrow" aria-hidden="true">→</span>
-            </a>
-            <ul className="contact-r">
-              <li className="contact-copy-row">
-                <span className="mono">Email</span>
-                <CopyEmailButton
-                  email={CONTACT.email}
-                  label={CONTACT.copyEmailLabel}
-                  successMessage={CONTACT.copyEmailSuccess}
-                  errorMessage={CONTACT.copyEmailError}
-                />
-              </li>
-              <li>
-                <span className="mono">LinkedIn</span>
-                <a href={CONTACT.linkedInUrl} target="_blank" rel="noopener noreferrer">
-                  Connect with Otto <span aria-hidden="true">↗</span>
-                </a>
-              </li>
-              <li><span className="mono">Based in</span><span>{CONTACT.location}</span></li>
-            </ul>
-          </div>
-        </section>
       </div>
     </section>
   );
 }
 
+// A decorative echo of the governance dot field, not an evidence count.
+const CONTACT_ARROW_DOTS = [
+  [18, 8], [28, 8], [38, 8], [48, 8], [58, 8],
+  [58, 18], [58, 28], [58, 38], [58, 48],
+  [48, 18], [38, 28], [28, 38], [18, 48], [8, 58],
+];
+
 export function SiteFooter() {
   return (
-    <footer className="site-footer room-exp">
+    <footer id="contact" className="site-footer" aria-labelledby="contact-title">
       <div className="shell footer-shell">
-        <div className="foot mono">
-          <span>© 2026 Otto Montoya</span>
-          <span>Made with care · Mérida, MX</span>
+        <div className="contact-composition">
+          <p className="contact-kicker">{CONTACT.contactEyebrow}</p>
+          <h2 className="contact-title" id="contact-title">
+            {CONTACT.contactHeadingLines.map((line, i) => (
+              <span key={line}>{line}{i === 0 ? " " : ""}</span>
+            ))}
+          </h2>
+          <a
+            href={`mailto:${CONTACT.email}`}
+            className="contact-send"
+            aria-label={`${CONTACT.emailAction}: ${CONTACT.email}`}
+          >
+            <span className="contact-send-disc">
+              <svg viewBox="0 0 66 66" aria-hidden="true" className="contact-send-arrow">
+                <g className="contact-arrow-dots" fill="currentColor">
+                  {CONTACT_ARROW_DOTS.map(([cx, cy]) => (
+                    <circle key={`${cx}-${cy}`} cx={cx} cy={cy} r="2.8" />
+                  ))}
+                </g>
+                <path className="contact-arrow-line" d="M9 57 57 9M15 9h42v42" fill="none" stroke="currentColor" strokeWidth="3" />
+              </svg>
+            </span>
+            <span className="contact-send-label">{CONTACT.emailAction}</span>
+          </a>
+        </div>
+        <div className="contact-details">
+          <div className="contact-email-group">
+            <a href={`mailto:${CONTACT.email}`} className="contact-email-address">
+              {CONTACT.email}
+            </a>
+            <CopyEmailButton
+              email={CONTACT.email}
+              label={CONTACT.copyEmailLabel}
+              successMessage={CONTACT.copyEmailSuccess}
+              errorMessage={CONTACT.copyEmailError}
+            />
+          </div>
+          <p className="contact-sub">{CONTACT.contactBody}</p>
+        </div>
+        <div className="footer-colophon">
+          <span className="footer-credit">© 2026 {CONTACT.name}</span>
+          <span className="footer-location">{CONTACT.location}</span>
+          <a href={CONTACT.linkedInUrl} target="_blank" rel="noopener noreferrer">
+            {CONTACT.linkedInLabel}
+            <span className="action-arrow" aria-hidden="true">↗</span>
+          </a>
+          <a href="#home">
+            {CONTACT.backToTopLabel}
+            <span className="action-arrow contact-top-arrow" aria-hidden="true">↑</span>
+          </a>
         </div>
       </div>
     </footer>

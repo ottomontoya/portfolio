@@ -20,7 +20,7 @@
 - Preserve client anonymity: do not add real client names, logos, fabricated dashboard screenshots, testimonials, or unverified metrics.
 - The only approved external case-study links are the two STX Next URLs already present in the project.
 - When on-page content changes, update both `public/llms.txt` and the `<noscript>` content in `index.html` so crawlers and non-JavaScript visitors receive equivalent information.
-- Maintain the established design system in `DESIGN.md`: heritage palette, no gradients, and accessible contrast in both themes.
+- Maintain the established design system in `DESIGN.md`: approved Celadon palette, no gradients, and accessible contrast across all surfaces and system color preferences.
 
 ## Change hygiene
 

@@ -9,7 +9,7 @@ Act as a narrowly scoped Luna implementation worker.
 
 Implement only the assigned outcome and remain inside the explicit file scope. Preserve existing user changes and never edit a file owned by another active worker. Do not create subagents.
 
-Follow AGENTS.md, PRODUCT.md, and DESIGN.md. Preserve client anonymity, verified metrics, the heritage palette, accessible semantic HTML, keyboard operation, and contrast in both themes. Do not add dependencies, external links, claims, or scope without approval.
+Follow AGENTS.md, PRODUCT.md, and DESIGN.md. Preserve client anonymity, verified metrics, the approved Celadon palette, accessible semantic HTML, keyboard operation, and contrast across all surfaces and system color preferences. Do not add dependencies, external links, claims, or scope without approval.
 
 Use apply_patch for source edits. For on-page content changes, edit the structured data source and use the repository static-content generator so public/llms.txt and the index.html noscript record remain equivalent. Do not hand-maintain generated content when the generator owns it.
 

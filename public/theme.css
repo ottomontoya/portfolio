@@ -1,0 +1,44 @@
+/* Shared by the application, no-JavaScript reading edition and static 404. */
+:root {
+  color-scheme: light;
+  --field: #c5d5be;
+  --on-field: #26302a;
+  --ground: #f2f4ee;
+  --ink: #26302a;
+  --accent: #365d4b;
+  --quiet-ground: #dfe7d9;
+  --wine: #203d30;
+  --on-wine: #f2f4ee;
+  --night: #1d2922;
+  --on-night: #f2f4ee;
+  --night-accent: #bcd9a8;
+  --image-brightness: 1;
+  --image-ground: #fff;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --field: #1d2922;
+  --on-field: #c5d5be;
+  --ground: #18221c;
+  --ink: #f2f4ee;
+  --accent: #bcd9a8;
+  --quiet-ground: #26302a;
+  --image-brightness: .68;
+  --image-ground: var(--ground);
+}
+
+/* Follow the system even when scripts are disabled or have not loaded. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --field: #1d2922;
+    --on-field: #c5d5be;
+    --ground: #18221c;
+    --ink: #f2f4ee;
+    --accent: #bcd9a8;
+    --quiet-ground: #26302a;
+    --image-brightness: .68;
+    --image-ground: var(--ground);
+  }
+}

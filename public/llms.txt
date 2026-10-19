@@ -2,7 +2,11 @@
 
 # Otto Montoya — Data Analyst
 
-> Clear insights from complex data. End-to-end across the BI stack.
+> Business intelligence, built end to end.
+
+I define the KPIs, shape the model and access rules, implement the dashboards, and support the handover with documentation and training.
+
+**Selected evidence / Tableau governance:** 696 → 12 Access paths consolidated. for one Tableau deployment · ~1,500 users. Access consolidated for ~1,500 users, with legitimate access preserved.
 
 Otto Montoya is a Data Analyst based in Mérida, México, with a Bachelor's in Informatics Engineering and Digital Business. He specializes in Tableau and Amazon QuickSight and has delivered end-to-end BI work — from KPI definition and data modeling to dashboard design, governance, and adoption — across cybersecurity, automotive, non-profit, energy, SaaS, and manufacturing.
 
@@ -12,31 +16,275 @@ Otto Montoya is a Data Analyst based in Mérida, México, with a Bachelor's in I
 
 ---
 
-## About
+## 6 Projects Across 6 Industries
+
+The access rules underneath. The decisions on screen. Six projects showing what I own, how I build, and how the work is checked.
+
+**Internal prototype · dummy data:** From supplied mockup to native QuickSight.
+Implementation from a supplied mockup, built in STX Next’s internal environment. Four connected views, with conditional formatting and drill-down navigation.
+Fleet view: status prioritization, health scores, and selected-pair details bring a 2,000+ asset scenario into one analytical view.
+No production deployment or adoption claim.
+
+### Project 01 — Governed Data Access at Scale
+**Client:** Global Cybersecurity Platform
+**Industry:** cybersecurity
+**Role:** Data Analyst & BI Specialist
+**Tools:** Tableau, Snowflake, dbt
+**Timeline:** ~12 months | End-to-end
+
+Redesigned Tableau row-level security for a 1,500-user environment, consolidating 696 ad-hoc access paths into 12 maintainable access groups and retiring every identified PII-exposed data source.
+
+The Tableau environment had grown organically over years, leaving 696 ad-hoc access paths across ~1,500 active users, multiple data sources with PII exposure, and roughly 30 team-specific folders that made governance nearly impossible.
+
+Working from a usage and risk analysis of the site, I designed a new group-based Row Level Security model that collapsed 696 access paths into 12 access groups (3 default cases and 9 special cases) and retired 100% of the identified risky data sources. Every active user was migrated to the new model with no loss of legitimate access.
+
+Alongside the RLS redesign, I restructured ~30 team folders into 5 global, access-regulated folders, clearly separating Sandbox, Production, and Staging environments. I defined metrics for stale vs. active content and for inactive users and orphaned assets, then consolidated several manual review processes into a single admin monitoring dashboard, cutting ongoing admin workload by approximately 70%.
+
+**Evidence:** 696 → 12 — Access paths → groups.
+
+**Result:** Every active user migrated with no loss of legitimate access; 100% of identified PII-exposed sources were retired; ongoing administration fell by approximately 70%.
+
+**Source-supported decision path:**
+- **Constraint:** Reduce PII exposure and administrative complexity without removing legitimate access.
+- **Chosen response:** Replace ad-hoc paths with 12 group-based RLS cases, consolidate folders into five regulated global spaces, and unify admin monitoring.
+- **How it was checked:** Usage and risk analysis, access-preserving migration, dbt and Snowflake metadata, and a monitoring dashboard for stale content, inactive users, and orphaned assets.
+- **Removed from the reconstruction:** Client identity, group and folder names, schemas, data-source names, and user-level access details removed.
+
+**Responsibilities:**
+- Designed a group-based RLS model collapsing 696 access paths into 12 access groups across ~1,500 users
+- Migrated every active user to the new RLS model with no loss of legitimate access
+- Retired 100% of identified PII-exposed data sources
+- Restructured ~30 team folders into 5 global, access-regulated folders separating Sandbox, Production, and Staging
+- Maintained the data catalog with dbt tagging and Snowflake metadata to support RLS enforcement
+- Unified multiple manual admin review processes into a single Tableau monitoring dashboard for stale content, inactive users, and orphaned assets
+- Authored governance documentation, admin demos, and user onboarding materials to roll the model out across all teams
+
+**Impact:** 696 ad-hoc access paths consolidated into 12 access groups across ~1,500 users. 100% of identified PII-exposed data sources removed. ~70% reduction in ongoing admin workload through process unification.
+
+**Discuss a similar project:** mailto:work@ottomontoya.com?subject=Project%20inquiry%20%E2%80%94%20Governed%20Data%20Access%20at%20Scale
+
+---
+
+### Project 06 — Manufacturing Analytics Prototype in QuickSight
+**Client:** Manufacturing Analytics Case Study
+**Industry:** manufacturing
+**Role:** QuickSight Prototype Developer
+**Tools:** Amazon QuickSight
+**Timeline:** 3 wk | Internal prototype
+
+Recreated a four-view manufacturing analytics experience from a supplied mockup using dummy data in STX Next's internal QuickSight environment, including a 2,000+ asset scenario.
+
+I received a four-view manufacturing analytics mockup and dummy data, then recreated the experience in STX Next's internal Amazon QuickSight environment. This was an internal implementation prototype: I did not work in the client's QuickSight environment, use real company data or resources, contact the client, or participate in a production deployment.
+
+The prototype covered four interconnected views: a Furnace Process Overview for high-level situational awareness, a Detailed Metrics view for point diagnostics, a Rotating Equipment Fleet view representing 2,000+ assets with status prioritization, and an Asset Deep Dive organized around a diagnostic narrative and work-order actions.
+
+My implementation work covered visual formatting and layout, conditional formatting tied to dummy-data thresholds, interactive filtering, and cross-view drill-down navigation. The result demonstrated how the supplied cognitive-UI design could be brought to life using native QuickSight components and representative data.
+
+**Evidence:** 2,000+ — Assets represented in prototype.
+
+**Result:** A working internal QuickSight prototype demonstrated how the supplied design and interactions could behave with representative data.
+
+**Source-supported decision path:**
+- **Constraint:** Bring the mockup to life using native QuickSight components in an internal environment, with dummy data and no access to client systems or resources.
+- **Chosen response:** Implement four connected views with conditional status formatting, interactive filters, cross-view drill-down, and the mockup's cognitive-UI hierarchy.
+- **How it was checked:** Implementation was checked against the supplied mockup and exercised with dummy-data thresholds and navigation paths.
+- **Removed from the reconstruction:** Internal prototype only: no client contact, real company data, client environment, production deployment, operator use, or adoption claim.
+
+**Responsibilities:**
+- Recreated the supplied four-view mockup as a working prototype in STX Next's internal QuickSight environment
+- Implemented conditional formatting against thresholds represented in dummy data
+- Wired interactive filtering and cross-view navigation between fleet, asset, and process views
+- Translated the mockup's cognitive UI principles into native QuickSight components within the tool's constraints
+- Used only dummy data and internal resources; no client environment or production data was accessed
+
+**Impact:** Delivered a working internal QuickSight prototype that demonstrated the supplied four-view design, interactions, and 2,000+ asset scenario using dummy data. No production deployment or client adoption is claimed.
+
+**Dashboard views:**
+- Internal QuickSight prototype of a furnace process overview using dummy data for feed, temperature, heat duty, gas composition, coil readings, and operating-limit status.
+- Internal QuickSight prototype of detailed furnace metrics using dummy data for firebox readings, stack temperatures, inlet pressures, burner status, draft profile, and fuel composition.
+- Internal QuickSight prototype of an asset deep dive using dummy data for machine status, pressure trends, vital signs, alerts, contributing factors, and work-order history.
+- Internal QuickSight prototype of a rotating-equipment fleet using dummy data for pump health scores, operating status, alerts, vibration scores, and selected-pair details.
+
+**Discuss a similar project:** mailto:work@ottomontoya.com?subject=Project%20inquiry%20%E2%80%94%20Manufacturing%20Analytics%20Prototype%20in%20QuickSight
+
+---
+
+### Project 02 — Market Research Dashboards for a Global Automotive Manufacturer
+**Client:** Leading German Automotive Manufacturer
+**Industry:** automotive
+**Role:** BI Developer
+**Tools:** Tableau
+**Timeline:** 6 mo | Implementation
+
+Built the Tableau visualization layer of a custom market research analytics platform, delivering ~15 dashboards from sketch-based designs that surface customer insights by market segment.
+
+The client, one of the largest globally recognized German automotive manufacturers, commissioned a custom market research analytics platform to uncover why specific customer segments prefer particular products and inform targeted marketing and production strategies. The platform combined automated data ingestion from sources like SPSS files, a research-oriented data warehouse supporting longitudinal analysis, and cross-tabulation tools for exploring behavioral patterns and trends. My work covered the visualization layer.
+
+I translated approximately 15 sketch-based designs into fully functional Tableau dashboards, working with datasets prepared by the data engineering team for each market research use case. Each dashboard went through iterative review cycles where I submitted completed work, the client provided feedback, and I refined until function and visuals matched both the original sketches and the client's expectations. The dashboards were then embedded into the client's internal portal as part of the platform's enterprise integration.
+
+In parallel, I conducted R&D on Tableau Extensions to evaluate how third-party visual components could accelerate future development, offer richer chart types, and reduce reliance on complex calculated fields, simplifying both knowledge transfer and long-term maintenance.
+
+**Evidence:** ~15 — Dashboards delivered.
+
+**Result:** Approximately 15 dashboards went live inside the internal portal, supporting cross-tabulation and longitudinal customer analysis.
+
+**Source-supported decision path:**
+- **Constraint:** Preserve each sketch's analytical intent inside native Tableau and the client's internal portal integration.
+- **Chosen response:** Translate the sketches into production dashboards through iterative delivery, while evaluating Tableau Extensions for richer visuals and simpler maintenance.
+- **How it was checked:** Multiple client review cycles compared function and visuals with the supplied sketches and expectations before final delivery.
+- **Removed from the reconstruction:** Client identity, source sketches, research data, portal implementation details, and proprietary calculations removed.
+
+**Responsibilities:**
+- Built the Tableau visualization layer for a custom market research analytics platform
+- Translated ~15 sketch-based designs into production Tableau dashboards end-to-end
+- Worked with datasets prepared by the data engineering team across multiple market research use cases
+- Iterated through multiple client review cycles to align function and visuals with expectations
+- Researched Tableau Extensions to expand visual options and simplify long-term maintenance
+- Coordinated with the embedding team on technical constraints and integration readiness
+
+**Impact:** Delivered the full dashboard suite for the platform, live and embedded in the client's internal portal, enabling cross-tabulation and longitudinal analysis of customer behavior to support targeted marketing and production decisions.
+
+**Case study:** https://www.stxnext.com/case-study/market-research-platform
+
+**Discuss a similar project:** mailto:work@ottomontoya.com?subject=Project%20inquiry%20%E2%80%94%20Market%20Research%20Dashboards%20for%20a%20Global%20Automotive%20Manufacturer
+
+---
+
+### Project 03 — BI Layer for an Open Source Foundation's Salesforce Migration
+**Client:** Major Open Source Software Foundation
+**Industry:** non-profit
+**Role:** BI Consultant
+**Tools:** Amazon QuickSight, Snowflake
+**Timeline:** 3 mo | End-to-end
+
+Designed and built three QuickSight dashboards on a Snowflake-backed data layer covering CRM, web analytics, and GitHub community activity, all redesigned from scratch as part of the client's move off Salesforce reporting.
+
+The client, a major open source software foundation, was rebuilding their analytics and reporting away from Salesforce to gain full ownership of their data and reduce platform dependency. The data engineering team migrated source systems into Snowflake, and I was brought in to build the QuickSight dashboard layer that surfaced that data back to the business.
+
+Working from high-level requirements rather than detailed mockups, I designed and iterated on dashboard concepts, presented them in weekly client reviews, and translated feedback into three production QuickSight dashboards covering Salesforce CRM, web analytics, and GitHub community activity. All three were designed from scratch. For the CRM and web analytics views, existing reports served as reference material for understanding which KPIs the team tracked, but the visualizations, structure, and chart choices were my own design, switched out to be clearer and more concise. The GitHub dashboard had no reference to anchor against and was designed end-to-end from client requirements alone.
+
+I authored a detailed specification document for the data engineering team, outlining required fields, grain, and source systems for each dashboard so the upstream Snowflake models delivered exactly what reporting needed. After implementation I ran data validation and iterative refinement to ensure metrics matched source-system expectations before handoff.
+
+**Evidence:** 3 → 1 — Sources unified: CRM, Web analytics, GitHub community activity into Controlled BI environment.
+
+**Result:** CRM, web analytics, and GitHub community activity were unified in one controlled BI environment independent of Salesforce reporting.
+
+**Source-supported decision path:**
+- **Constraint:** Work from high-level requirements: existing CRM and web reports were KPI references only, and the GitHub view had no prior dashboard to follow.
+- **Chosen response:** Design three QuickSight dashboards from scratch and write a reporting specification covering required fields, grain, and source systems for data engineering.
+- **How it was checked:** Weekly client reviews, source-system reconciliation, and iterative refinement confirmed metric accuracy before handoff.
+- **Removed from the reconstruction:** Client identity, specification documents, source fields, schemas, KPI logic, and underlying data removed.
+
+**Responsibilities:**
+- Designed and built three QuickSight dashboards on Snowflake-backed data for CRM, web, and community reporting, iterating through weekly client review cycles
+- Redesigned the CRM and web analytics views from scratch, using existing reports only as reference for KPI selection and switching out visualizations for clearer, more concise versions
+- Designed a net-new GitHub community activity dashboard end-to-end from client requirements with no prior dashboard to reference
+- Authored data specification documents for the data engineering team to align upstream Snowflake models with reporting needs
+- Performed data validation against source systems to confirm metric accuracy before handoff
+
+**Impact:** Three data sources unified in a single controlled BI environment, giving the client's team a consolidated view of funnel, web, and community performance independent of Salesforce reporting.
+
+**Case study:** https://www.stxnext.com/case-study/salesforce-optimization
+
+**Discuss a similar project:** mailto:work@ottomontoya.com?subject=Project%20inquiry%20%E2%80%94%20BI%20Layer%20for%20an%20Open%20Source%20Foundation's%20Salesforce%20Migration
+
+---
+
+### Project 04 — Revenue Reporting & Workflow Apps for an Energy Company
+**Client:** Energy & Digital Assets
+**Industry:** energy
+**Role:** BI & Workflow Applications Developer
+**Tools:** Amazon QuickSight, Retool, AWS
+**Timeline:** Ongoing | End-to-end
+
+Delivered two connected tracks — scheduled revenue reporting and four interactive workflow applications — to automate manual processes and improve data quality.
+
+The work had two connected delivery tracks: scheduled revenue reporting in Amazon QuickSight and four form-driven workflow applications in Retool to replace error-prone manual processes.
+
+In QuickSight I designed and implemented scheduled revenue reports, working from high-level requirements and mockups co-created with a product designer and the client. In Retool I built highly interactive, data-entry-oriented applications with many dynamic fields, conditional logic, and validation rules to minimize user error and ensure data quality in complex operational workflows.
+
+Requirements were gathered and refined through daily syncs and working sessions with the client's team. These sessions also served as live demos and training — walking the client through functionality, capturing feedback, and ensuring the team could use the tools confidently in daily operations. I also produced how-to guides and documentation to support ongoing adoption.
+
+**Evidence:** 2 — Delivery tracks: Scheduled revenue reporting and Retool workflow applications. Abstract report stack and app motifs, not client screens or report counts.
+
+**Result:** Four manual workflows were automated, data quality improved through input guardrails, and the client team was onboarded to the new tools.
+
+**Source-supported decision path:**
+- **Constraint:** Support scheduled reporting and complex data entry with evolving requirements, dynamic fields, and strong validation.
+- **Chosen response:** Use QuickSight for scheduled revenue reporting and Retool for four form-driven workflows with conditional logic and validation guardrails.
+- **How it was checked:** Daily working sessions, validation rules, live demonstrations, training, and how-to documentation supported refinement and adoption.
+- **Removed from the reconstruction:** Client identity, revenue figures, workflow fields, business rules, operational data, and internal documentation removed.
+
+**Responsibilities:**
+- Gathered and refined reporting and workflow requirements directly from the client
+- Built QuickSight dashboards for fixed-schedule revenue reporting
+- Developed four Retool workflow applications with dynamic fields, conditional logic, and validation rules
+- Collaborated with a product designer on high-level mockups before implementation
+- Led working sessions, demos, and training so the client's team could adopt the tools
+- Produced how-to guides and documentation for ongoing use
+
+**Impact:** Four manual workflows automated. Data quality improved through validation guardrails. Client team fully onboarded.
+
+**Discuss a similar project:** mailto:work@ottomontoya.com?subject=Project%20inquiry%20%E2%80%94%20Revenue%20Reporting%20%26%20Workflow%20Apps%20for%20an%20Energy%20Company
+
+---
+
+### Project 05 — Rationalized BI for an Email Client Product Team
+**Client:** Software Product — Email Client
+**Industry:** SaaS
+**Role:** BI Consultant
+**Tools:** Amazon QuickSight, Neon, Salesforce
+**Timeline:** 3 mo | End-to-end
+
+Rationalized approximately 20–25 fragmented Salesforce reports by unifying five separate time grains in one flexible QuickSight dashboard set.
+
+The client had accumulated approximately 20–25 disconnected Salesforce reports — standalone charts, overlapping dashboards, and separate versions for each time grain (daily, weekly, monthly, quarterly, yearly). The goal was to rationalize this landscape and build one unified, flexible dashboard set in Amazon QuickSight.
+
+I helped evaluate BI tools and led the recommendation toward QuickSight based on the client's Salesforce setup and long-term needs. From there I designed KPI-oriented mockups largely from scratch, using existing Salesforce reports and continuous client feedback as input, and implemented one flexible dashboard set where users could switch between daily, weekly, monthly, quarterly, and yearly views — replacing the near-duplicate dashboards with one maintainable structure.
+
+I also built out the full QuickSight project structure: folders, user groups, core dashboards, data sources connected to Neon, and scheduled refreshes — ensuring a smooth, company-wide rollout with up-to-date data and minimal manual work for the client's team.
+
+**Evidence:** 5 → 1 — Time grains unified: Daily, Weekly, Monthly, Quarterly, Yearly into Flexible dashboard set.
+
+**Result:** Five time grains and approximately 20–25 reports were rationalized into one flexible dashboard set with a company-wide governed rollout.
+
+**Source-supported decision path:**
+- **Constraint:** Reduce duplication while preserving access to all five time grains and establishing a maintainable reporting environment.
+- **Chosen response:** Recommend QuickSight, design a flexible time-switching dashboard set, and build the surrounding folders, groups, Neon data sources, and refresh schedules.
+- **How it was checked:** Continuous client feedback shaped the KPI views, while scheduled refreshes kept the delivered reporting structure current.
+- **Removed from the reconstruction:** Client identity, report names, KPIs, folder and group configuration, source structures, and business data removed.
+
+**Responsibilities:**
+- Supported BI tool evaluation and recommended Amazon QuickSight
+- Designed KPI-oriented mockups from scratch using Salesforce reports as input
+- Built unified dashboards with flexible time-range switching (daily → yearly)
+- Consolidated many overlapping dashboards into a small, maintainable set
+- Designed full QuickSight structure: folders, user groups, data sources, schedules
+- Configured Neon data sources with scheduled refreshes for reliable, timely data
+
+**Impact:** Approximately 20–25 fragmented Salesforce reports rationalized into one flexible dashboard set. Company-wide QuickSight rollout delivered with full structure and governance.
+
+**Discuss a similar project:** mailto:work@ottomontoya.com?subject=Project%20inquiry%20%E2%80%94%20Rationalized%20BI%20for%20an%20Email%20Client%20Product%20Team
+
+---
+
+## About Me
 
 ### I turn messy data into reliable insights.
 
-I work client-side at STX Next — multiple clients at a time, each with its own systems, vocabulary, and definition of a good number. Requirements arrive in working sessions and daily syncs, not as a written spec.
+I work client-side at STX Next — multiple clients at a time, each with its own systems, vocabulary, and definition of a good number. Requirements don’t always arrive as a written spec; I help define them through working sessions and daily syncs.
 
 The starting point is usually someone else's artifact: a sketch, a design team's mockup, an existing Salesforce report used only as a KPI reference. So the first real task is deciding what the numbers should mean before anything gets modeled.
 
-What I hand over reflects that. The dashboard is the middle of the job, not the end of it.
-
-**On record:**
-- 100% of identified PII-exposed data sources retired — Tableau access governance · ~1,500 users
-- ~15 Dashboards built from sketch-based designs — global automotive manufacturer · design intent into native Tableau
-
-**What I hand over:**
-- A written KPI definition, agreed in working sessions before anything gets built, so the metric reads the same to everyone.
-- A specification the data engineering team can build against — the model, the grain, and the fields the report needs.
-- A validation pass against the source systems, every metric reconciled before the dashboard reaches production.
-- How-to guides, a live demo, and training — so the work keeps running after the engagement ends.
+**What that looks like:**
+- From ambiguity to definition. Agree on what the KPIs mean before modeling begins.
+- From sketch to dashboard. Translate supplied designs into working Tableau dashboards.
 
 **Career highlights:**
 - 696 → 12 Access paths consolidated — for one Tableau deployment · ~1,500 users
+- 3+ Years end-to-end BI — from KPI to delivery
 - 6 Industries served — cybersecurity · automotive · non-profit · energy · SaaS · manufacturing
 - ~70% Admin workload reduced — manual reviews consolidated into one monitoring dashboard
-- 3+ Years end-to-end BI — from KPI to delivery
 
 ---
 
@@ -81,245 +329,6 @@ I carry delivery through documentation, live demos, training, and iteration so t
 
 ---
 
-## 6 Projects Across 6 Industries
-
-### Featured evidence
-
-- **Governance & scale:** Governed Data Access at Scale — 696 → 12 Access paths → groups
-- **End-to-end delivery:** BI Layer for an Open Source Foundation's Salesforce Migration — 3 → 1 Sources unified
-- **Design implementation:** Market Research Dashboards for a Global Automotive Manufacturer — ~15 Dashboards delivered
-
-### Project 01 — Governed Data Access at Scale
-**Client:** Global Cybersecurity Platform
-**Industry:** cybersecurity
-**Role:** Data Analyst & BI Specialist
-**Tools:** Tableau, Snowflake, dbt
-**Timeline:** ~12 months | End-to-end
-
-Redesigned Tableau row-level security for a 1,500-user environment, consolidating 696 ad-hoc access paths into 12 maintainable access groups and retiring every identified PII-exposed data source.
-
-The Tableau environment had grown organically over years, leaving 696 ad-hoc access paths across ~1,500 active users, multiple data sources with PII exposure, and roughly 30 team-specific folders that made governance nearly impossible.
-
-Working from a usage and risk analysis of the site, I designed a new group-based Row Level Security model that collapsed 696 access paths into 12 access groups (3 default cases and 9 special cases) and retired 100% of the identified risky data sources. Every active user was migrated to the new model with no loss of legitimate access.
-
-Alongside the RLS redesign, I restructured ~30 team folders into 5 global, access-regulated folders, clearly separating Sandbox, Production, and Staging environments. I defined metrics for stale vs. active content and for inactive users and orphaned assets, then consolidated several manual review processes into a single admin monitoring dashboard, cutting ongoing admin workload by approximately 70%.
-
-**Evidence:** 696 → 12 — Access paths → groups.
-
-**Source-supported decision path:**
-- **Constraint:** Reduce PII exposure and administrative complexity without removing legitimate access.
-- **Chosen response:** Replace ad-hoc paths with 12 group-based RLS cases, consolidate folders into five regulated global spaces, and unify admin monitoring.
-- **How it was checked:** Usage and risk analysis, access-preserving migration, dbt and Snowflake metadata, and a monitoring dashboard for stale content, inactive users, and orphaned assets.
-- **Removed from the reconstruction:** Client identity, group and folder names, schemas, data-source names, and user-level access details removed.
-
-**Responsibilities:**
-- Designed a group-based RLS model collapsing 696 access paths into 12 access groups across ~1,500 users
-- Migrated every active user to the new RLS model with no loss of legitimate access
-- Retired 100% of identified PII-exposed data sources
-- Restructured ~30 team folders into 5 global, access-regulated folders separating Sandbox, Production, and Staging
-- Maintained the data catalog with dbt tagging and Snowflake metadata to support RLS enforcement
-- Unified multiple manual admin review processes into a single Tableau monitoring dashboard for stale content, inactive users, and orphaned assets
-- Authored governance documentation, admin demos, and user onboarding materials to roll the model out across all teams
-
-**Impact:** 696 ad-hoc access paths consolidated into 12 access groups across ~1,500 users. 100% of identified PII-exposed data sources removed. ~70% reduction in ongoing admin workload through process unification.
-
-**Discuss a similar project:** mailto:work@ottomontoya.com?subject=Project%20inquiry%20%E2%80%94%20Governed%20Data%20Access%20at%20Scale
-
----
-
-### Project 02 — Market Research Dashboards for a Global Automotive Manufacturer
-**Client:** Leading German Automotive Manufacturer
-**Industry:** automotive
-**Role:** BI Developer
-**Tools:** Tableau
-**Timeline:** 6 mo | Implementation
-
-Built the Tableau visualization layer of a custom market research analytics platform, delivering ~15 dashboards from sketch-based designs that surface customer insights by market segment.
-
-The client, one of the largest globally recognized German automotive manufacturers, commissioned a custom market research analytics platform to uncover why specific customer segments prefer particular products and inform targeted marketing and production strategies. The platform combined automated data ingestion from sources like SPSS files, a research-oriented data warehouse supporting longitudinal analysis, and cross-tabulation tools for exploring behavioral patterns and trends. My work covered the visualization layer.
-
-I translated approximately 15 sketch-based designs into fully functional Tableau dashboards, working with datasets prepared by the data engineering team for each market research use case. Each dashboard went through iterative review cycles where I submitted completed work, the client provided feedback, and I refined until function and visuals matched both the original sketches and the client's expectations. The dashboards were then embedded into the client's internal portal as part of the platform's enterprise integration.
-
-In parallel, I conducted R&D on Tableau Extensions to evaluate how third-party visual components could accelerate future development, offer richer chart types, and reduce reliance on complex calculated fields, simplifying both knowledge transfer and long-term maintenance.
-
-**Evidence:** ~15 — Dashboards delivered.
-
-**Source-supported decision path:**
-- **Constraint:** Preserve each sketch's analytical intent inside native Tableau and the client's internal portal integration.
-- **Chosen response:** Translate the sketches into production dashboards through iterative delivery, while evaluating Tableau Extensions for richer visuals and simpler maintenance.
-- **How it was checked:** Multiple client review cycles compared function and visuals with the supplied sketches and expectations before final delivery.
-- **Removed from the reconstruction:** Client identity, source sketches, research data, portal implementation details, and proprietary calculations removed.
-
-**Responsibilities:**
-- Built the Tableau visualization layer for a custom market research analytics platform
-- Translated ~15 sketch-based designs into production Tableau dashboards end-to-end
-- Worked with datasets prepared by the data engineering team across multiple market research use cases
-- Iterated through multiple client review cycles to align function and visuals with expectations
-- Researched Tableau Extensions to expand visual options and simplify long-term maintenance
-- Coordinated with the embedding team on technical constraints and integration readiness
-
-**Impact:** Delivered the full dashboard suite for the platform, live and embedded in the client's internal portal, enabling cross-tabulation and longitudinal analysis of customer behavior to support targeted marketing and production decisions.
-
-**Case study:** https://www.stxnext.com/case-study/market-research-platform
-
-**Discuss a similar project:** mailto:work@ottomontoya.com?subject=Project%20inquiry%20%E2%80%94%20Market%20Research%20Dashboards%20for%20a%20Global%20Automotive%20Manufacturer
-
----
-
-### Project 03 — BI Layer for an Open Source Foundation's Salesforce Migration
-**Client:** Major Open Source Software Foundation
-**Industry:** non-profit
-**Role:** BI Consultant
-**Tools:** Amazon QuickSight, Snowflake
-**Timeline:** 3 mo | End-to-end
-
-Designed and built three QuickSight dashboards on a Snowflake-backed data layer covering CRM, web analytics, and GitHub community activity, all redesigned from scratch as part of the client's move off Salesforce reporting.
-
-The client, a major open source software foundation, was rebuilding their analytics and reporting away from Salesforce to gain full ownership of their data and reduce platform dependency. The data engineering team migrated source systems into Snowflake, and I was brought in to build the QuickSight dashboard layer that surfaced that data back to the business.
-
-Working from high-level requirements rather than detailed mockups, I designed and iterated on dashboard concepts, presented them in weekly client reviews, and translated feedback into three production QuickSight dashboards covering Salesforce CRM, web analytics, and GitHub community activity. All three were designed from scratch. For the CRM and web analytics views, existing reports served as reference material for understanding which KPIs the team tracked, but the visualizations, structure, and chart choices were my own design, switched out to be clearer and more concise. The GitHub dashboard had no reference to anchor against and was designed end-to-end from client requirements alone.
-
-I authored a detailed specification document for the data engineering team, outlining required fields, grain, and source systems for each dashboard so the upstream Snowflake models delivered exactly what reporting needed. After implementation I ran data validation and iterative refinement to ensure metrics matched source-system expectations before handoff.
-
-**Evidence:** 3 → 1 — Sources unified: CRM, Web analytics, GitHub community activity into Controlled BI environment.
-
-**Source-supported decision path:**
-- **Constraint:** Work from high-level requirements: existing CRM and web reports were KPI references only, and the GitHub view had no prior dashboard to follow.
-- **Chosen response:** Design three QuickSight dashboards from scratch and write a reporting specification covering required fields, grain, and source systems for data engineering.
-- **How it was checked:** Weekly client reviews, source-system reconciliation, and iterative refinement confirmed metric accuracy before handoff.
-- **Removed from the reconstruction:** Client identity, specification documents, source fields, schemas, KPI logic, and underlying data removed.
-
-**Responsibilities:**
-- Designed and built three QuickSight dashboards on Snowflake-backed data for CRM, web, and community reporting, iterating through weekly client review cycles
-- Redesigned the CRM and web analytics views from scratch, using existing reports only as reference for KPI selection and switching out visualizations for clearer, more concise versions
-- Designed a net-new GitHub community activity dashboard end-to-end from client requirements with no prior dashboard to reference
-- Authored data specification documents for the data engineering team to align upstream Snowflake models with reporting needs
-- Performed data validation against source systems to confirm metric accuracy before handoff
-
-**Impact:** Three data sources unified in a single controlled BI environment, giving the client's team a consolidated view of funnel, web, and community performance independent of Salesforce reporting.
-
-**Case study:** https://www.stxnext.com/case-study/salesforce-optimization
-
-**Discuss a similar project:** mailto:work@ottomontoya.com?subject=Project%20inquiry%20%E2%80%94%20BI%20Layer%20for%20an%20Open%20Source%20Foundation's%20Salesforce%20Migration
-
----
-
-### Project 04 — Revenue Reporting & Workflow Apps for an Energy Company
-**Client:** Energy & Digital Assets
-**Industry:** energy
-**Role:** BI & Workflow Applications Developer
-**Tools:** Amazon QuickSight, Retool, AWS
-**Timeline:** Ongoing | End-to-end
-
-Delivered two connected tracks — scheduled revenue reporting and four interactive workflow applications — to automate manual processes and improve data quality.
-
-The work had two connected delivery tracks: scheduled revenue reporting in Amazon QuickSight and four form-driven workflow applications in Retool to replace error-prone manual processes.
-
-In QuickSight I designed and implemented scheduled revenue reports, working from high-level requirements and mockups co-created with a product designer and the client. In Retool I built highly interactive, data-entry-oriented applications with many dynamic fields, conditional logic, and validation rules to minimize user error and ensure data quality in complex operational workflows.
-
-Requirements were gathered and refined through daily syncs and working sessions with the client's team. These sessions also served as live demos and training — walking the client through functionality, capturing feedback, and ensuring the team could use the tools confidently in daily operations. I also produced how-to guides and documentation to support ongoing adoption.
-
-**Evidence:** 2 — Delivery tracks: Scheduled revenue reporting and Retool workflow applications.
-
-**Source-supported decision path:**
-- **Constraint:** Support scheduled reporting and complex data entry with evolving requirements, dynamic fields, and strong validation.
-- **Chosen response:** Use QuickSight for scheduled revenue reporting and Retool for four form-driven workflows with conditional logic and validation guardrails.
-- **How it was checked:** Daily working sessions, validation rules, live demonstrations, training, and how-to documentation supported refinement and adoption.
-- **Removed from the reconstruction:** Client identity, revenue figures, workflow fields, business rules, operational data, and internal documentation removed.
-
-**Responsibilities:**
-- Gathered and refined reporting and workflow requirements directly from the client
-- Built QuickSight dashboards for fixed-schedule revenue reporting
-- Developed four Retool workflow applications with dynamic fields, conditional logic, and validation rules
-- Collaborated with a product designer on high-level mockups before implementation
-- Led working sessions, demos, and training so the client's team could adopt the tools
-- Produced how-to guides and documentation for ongoing use
-
-**Impact:** Four manual workflows automated. Data quality improved through validation guardrails. Client team fully onboarded.
-
-**Discuss a similar project:** mailto:work@ottomontoya.com?subject=Project%20inquiry%20%E2%80%94%20Revenue%20Reporting%20%26%20Workflow%20Apps%20for%20an%20Energy%20Company
-
----
-
-### Project 05 — Rationalized BI for an Email Client Product Team
-**Client:** Software Product — Email Client
-**Industry:** SaaS
-**Role:** BI Consultant
-**Tools:** Amazon QuickSight, Neon, Salesforce
-**Timeline:** 3 mo | End-to-end
-
-Rationalized approximately 20–25 fragmented Salesforce reports by unifying five separate time grains in one flexible QuickSight dashboard set.
-
-The client had accumulated approximately 20–25 disconnected Salesforce reports — standalone charts, overlapping dashboards, and separate versions for each time grain (daily, weekly, monthly, quarterly, yearly). The goal was to rationalize this landscape and build one unified, flexible dashboard set in Amazon QuickSight.
-
-I helped evaluate BI tools and led the recommendation toward QuickSight based on the client's Salesforce setup and long-term needs. From there I designed KPI-oriented mockups largely from scratch, using existing Salesforce reports and continuous client feedback as input, and implemented one flexible dashboard set where users could switch between daily, weekly, monthly, quarterly, and yearly views — replacing the near-duplicate dashboards with one maintainable structure.
-
-I also built out the full QuickSight project structure: folders, user groups, core dashboards, data sources connected to Neon, and scheduled refreshes — ensuring a smooth, company-wide rollout with up-to-date data and minimal manual work for the client's team.
-
-**Evidence:** 5 → 1 — Time grains unified: Daily, Weekly, Monthly, Quarterly, Yearly into Flexible dashboard set.
-
-**Source-supported decision path:**
-- **Constraint:** Reduce duplication while preserving access to all five time grains and establishing a maintainable reporting environment.
-- **Chosen response:** Recommend QuickSight, design a flexible time-switching dashboard set, and build the surrounding folders, groups, Neon data sources, and refresh schedules.
-- **How it was checked:** Continuous client feedback shaped the KPI views, while scheduled refreshes kept the delivered reporting structure current.
-- **Removed from the reconstruction:** Client identity, report names, KPIs, folder and group configuration, source structures, and business data removed.
-
-**Responsibilities:**
-- Supported BI tool evaluation and recommended Amazon QuickSight
-- Designed KPI-oriented mockups from scratch using Salesforce reports as input
-- Built unified dashboards with flexible time-range switching (daily → yearly)
-- Consolidated many overlapping dashboards into a small, maintainable set
-- Designed full QuickSight structure: folders, user groups, data sources, schedules
-- Configured Neon data sources with scheduled refreshes for reliable, timely data
-
-**Impact:** Approximately 20–25 fragmented Salesforce reports rationalized into one flexible dashboard set. Company-wide QuickSight rollout delivered with full structure and governance.
-
-**Discuss a similar project:** mailto:work@ottomontoya.com?subject=Project%20inquiry%20%E2%80%94%20Rationalized%20BI%20for%20an%20Email%20Client%20Product%20Team
-
----
-
-### Project 06 — Manufacturing Analytics Prototype in QuickSight
-**Client:** Manufacturing Analytics Case Study
-**Industry:** manufacturing
-**Role:** QuickSight Prototype Developer
-**Tools:** Amazon QuickSight
-**Timeline:** 3 wk | Internal prototype
-
-Recreated a four-view manufacturing analytics experience from a supplied mockup using dummy data in STX Next's internal QuickSight environment, including a 2,000+ asset scenario.
-
-I received a four-view manufacturing analytics mockup and dummy data, then recreated the experience in STX Next's internal Amazon QuickSight environment. This was an internal implementation prototype: I did not work in the client's QuickSight environment, use real company data or resources, contact the client, or participate in a production deployment.
-
-The prototype covered four interconnected views: a Furnace Process Overview for high-level situational awareness, a Detailed Metrics view for point diagnostics, a Rotating Equipment Fleet view representing 2,000+ assets with status prioritization, and an Asset Deep Dive organized around a diagnostic narrative and work-order actions.
-
-My implementation work covered visual formatting and layout, conditional formatting tied to dummy-data thresholds, interactive filtering, and cross-view drill-down navigation. The result demonstrated how the supplied cognitive-UI design could be brought to life using native QuickSight components and representative data.
-
-**Evidence:** 2,000+ — Assets represented in prototype.
-
-**Source-supported decision path:**
-- **Constraint:** Bring the mockup to life using native QuickSight components in an internal environment, with dummy data and no access to client systems or resources.
-- **Chosen response:** Implement four connected views with conditional status formatting, interactive filters, cross-view drill-down, and the mockup's cognitive-UI hierarchy.
-- **How it was checked:** Implementation was checked against the supplied mockup and exercised with dummy-data thresholds and navigation paths.
-- **Removed from the reconstruction:** Internal prototype only: no client contact, real company data, client environment, production deployment, operator use, or adoption claim.
-
-**Responsibilities:**
-- Recreated the supplied four-view mockup as a working prototype in STX Next's internal QuickSight environment
-- Implemented conditional formatting against thresholds represented in dummy data
-- Wired interactive filtering and cross-view navigation between fleet, asset, and process views
-- Translated the mockup's cognitive UI principles into native QuickSight components within the tool's constraints
-- Used only dummy data and internal resources; no client environment or production data was accessed
-
-**Impact:** Delivered a working internal QuickSight prototype that demonstrated the supplied four-view design, interactions, and 2,000+ asset scenario using dummy data. No production deployment or client adoption is claimed.
-
-**Dashboard views:**
-- Internal QuickSight prototype of a furnace process overview using dummy data for feed, temperature, heat duty, gas composition, coil readings, and operating-limit status.
-- Internal QuickSight prototype of detailed furnace metrics using dummy data for firebox readings, stack temperatures, inlet pressures, burner status, draft profile, and fuel composition.
-- Internal QuickSight prototype of an asset deep dive using dummy data for machine status, pressure trends, vital signs, alerts, contributing factors, and work-order history.
-- Internal QuickSight prototype of a rotating-equipment fleet using dummy data for pump health scores, operating status, alerts, vibration scores, and selected-pair details.
-
-**Discuss a similar project:** mailto:work@ottomontoya.com?subject=Project%20inquiry%20%E2%80%94%20Manufacturing%20Analytics%20Prototype%20in%20QuickSight
-
----
-
 ## Experience
 
 - **Data Analyst** at STX Next (Present) — Leading dashboard and governance work end-to-end across multiple client industries.
@@ -339,9 +348,9 @@ My implementation work covered visual formatting and layout, conditional formatt
 
 ## Start a conversation
 
-### Let's turn the next complex question into a clear decision.
+### What’s your next question?
 
-Looking for someone who can own the BI work from business question through adoption? Tell me about the role, the team, or the reporting problem.
+A new role. A complex reporting problem. A decision that needs better data. I’d like to hear about it.
 
 **Start with an email:** mailto:work@ottomontoya.com
 **LinkedIn:** https://www.linkedin.com/in/ottomontoya/
