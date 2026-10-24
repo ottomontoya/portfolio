@@ -25,7 +25,9 @@ Implementation from a supplied mockup, built in STX Next’s internal environmen
 Fleet view: status prioritization, health scores, and selected-pair details bring a 2,000+ asset scenario into one analytical view.
 No production deployment or adoption claim.
 
-### Project 01 — Governed Data Access at Scale
+### Project 1 — Governed Data Access at Scale
+[All work](https://ottomontoya.com#work) · [Previous: Manufacturing Analytics Prototype in QuickSight](https://ottomontoya.com#p6) · [Next: Market Research Dashboards for a Global Automotive Manufacturer](https://ottomontoya.com#p2)
+
 **Client:** Global Cybersecurity Platform
 **Industry:** cybersecurity
 **Role:** Data Analyst & BI Specialist
@@ -65,7 +67,9 @@ Alongside the RLS redesign, I restructured ~30 team folders into 5 global, acces
 
 ---
 
-### Project 06 — Manufacturing Analytics Prototype in QuickSight
+### Project 6 — Manufacturing Analytics Prototype in QuickSight
+[All work](https://ottomontoya.com#work) · [Previous: Rationalized BI for an Email Client Product Team](https://ottomontoya.com#p5) · [Next: Governed Data Access at Scale](https://ottomontoya.com#p1)
+
 **Client:** Manufacturing Analytics Case Study
 **Industry:** manufacturing
 **Role:** QuickSight Prototype Developer
@@ -109,7 +113,9 @@ My implementation work covered visual formatting and layout, conditional formatt
 
 ---
 
-### Project 02 — Market Research Dashboards for a Global Automotive Manufacturer
+### Project 2 — Market Research Dashboards for a Global Automotive Manufacturer
+[All work](https://ottomontoya.com#work) · [Previous: Governed Data Access at Scale](https://ottomontoya.com#p1) · [Next: BI Layer for an Open Source Foundation's Salesforce Migration](https://ottomontoya.com#p3)
+
 **Client:** Leading German Automotive Manufacturer
 **Industry:** automotive
 **Role:** BI Developer
@@ -150,7 +156,9 @@ In parallel, I conducted R&D on Tableau Extensions to evaluate how third-party v
 
 ---
 
-### Project 03 — BI Layer for an Open Source Foundation's Salesforce Migration
+### Project 3 — BI Layer for an Open Source Foundation's Salesforce Migration
+[All work](https://ottomontoya.com#work) · [Previous: Market Research Dashboards for a Global Automotive Manufacturer](https://ottomontoya.com#p2) · [Next: Revenue Reporting & Workflow Apps for an Energy Company](https://ottomontoya.com#p4)
+
 **Client:** Major Open Source Software Foundation
 **Industry:** non-profit
 **Role:** BI Consultant
@@ -190,7 +198,9 @@ I authored a detailed specification document for the data engineering team, outl
 
 ---
 
-### Project 04 — Revenue Reporting & Workflow Apps for an Energy Company
+### Project 4 — Revenue Reporting & Workflow Apps for an Energy Company
+[All work](https://ottomontoya.com#work) · [Previous: BI Layer for an Open Source Foundation's Salesforce Migration](https://ottomontoya.com#p3) · [Next: Rationalized BI for an Email Client Product Team](https://ottomontoya.com#p5)
+
 **Client:** Energy & Digital Assets
 **Industry:** energy
 **Role:** BI & Workflow Applications Developer
@@ -229,7 +239,9 @@ Requirements were gathered and refined through daily syncs and working sessions 
 
 ---
 
-### Project 05 — Rationalized BI for an Email Client Product Team
+### Project 5 — Rationalized BI for an Email Client Product Team
+[All work](https://ottomontoya.com#work) · [Previous: Revenue Reporting & Workflow Apps for an Energy Company](https://ottomontoya.com#p4) · [Next: Manufacturing Analytics Prototype in QuickSight](https://ottomontoya.com#p6)
+
 **Client:** Software Product — Email Client
 **Industry:** SaaS
 **Role:** BI Consultant
