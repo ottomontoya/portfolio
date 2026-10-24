@@ -2,7 +2,6 @@ import {
   INDUSTRY_COUNT,
   PROJECT_COUNT,
   PROJECTS,
-  getProjectMetric,
 } from "../data/projects";
 import { EDUCATION, EXPERIENCE } from "../data/education";
 import { CAPABILITY_STAGES, SKILL_GROUPS } from "../data/skills";
@@ -18,8 +17,10 @@ import {
   ABOUT_EXAMPLES,
 } from "../data/about";
 import { CONTACT } from "../data/contact";
-import { CopyEmailButton, Eyebrow } from "./ui";
-import { AccessField, EvidenceGraphic } from "./Evidence";
+import { Eyebrow } from "./ui";
+import { AccessField } from "./Evidence";
+import { WorkCollections } from "./WorkCollections";
+import { LiquidArrowButton } from "./LiquidArrowButton";
 
 export function HeroSection({ onOpen }: { onOpen: (id: string) => void }) {
   const governance = PROJECTS.find((project) => project.id === "p1")!;
@@ -38,12 +39,7 @@ export function HeroSection({ onOpen }: { onOpen: (id: string) => void }) {
             </h1>
             <p className="lead">{HERO.body}</p>
             <div className="cta-row">
-              <a className="cta cta-primary" href="#work">
-                View work{" "}
-                <span className="arr action-arrow" aria-hidden="true">
-                  ↗
-                </span>
-              </a>
+              <LiquidArrowButton href="#work" label="View work" tone="field" />
               <a className="hero-email" href={`mailto:${CONTACT.email}`}>
                 {CONTACT.email}
               </a>
@@ -57,15 +53,14 @@ export function HeroSection({ onOpen }: { onOpen: (id: string) => void }) {
             <div className="signal-context">
               <p>{SIGNAL.caption}</p>
             </div>
-            <button
-              className="signal-case-link"
+            <LiquidArrowButton
+              className="signal-case-action"
               id="hero-project-trigger-p1"
               onClick={() => onOpen("p1")}
               aria-haspopup="dialog"
-            >
-              {SIGNAL.action}
-              <span className="action-arrow" aria-hidden="true">↗</span>
-            </button>
+              label={SIGNAL.action}
+              tone="field"
+            />
           </div>
         </div>
         <ul className="evidence-band" aria-label="Career highlights">
@@ -150,14 +145,12 @@ export function WorkSection({ onOpen }: { onOpen: (id: string) => void }) {
           </div>
           <div className="governance-outcome">
             <p>{governance.decisionRecord.result}</p>
-            <button
-              className="text-link"
+            <LiquidArrowButton
               id="project-trigger-p1"
               onClick={() => onOpen("p1")}
               aria-haspopup="dialog"
-            >
-              Read the governance case <span className="action-arrow" aria-hidden="true">↗</span>
-            </button>
+              label="Read the governance case"
+            />
           </div>
         </article>
         <article
@@ -198,48 +191,7 @@ export function WorkSection({ onOpen }: { onOpen: (id: string) => void }) {
             <span>{PROTOTYPE_PREVIEW.boundary}</span>
           </div>
         </article>
-        <div className="work-grid">
-          {PROJECTS.filter((p) => p.id !== "p1" && p.id !== "p6").map((p) => {
-            const metric = getProjectMetric(p.evidence);
-            return (
-              <article
-                key={p.id}
-                className={`work-study work-study-${p.id}`}
-                aria-labelledby={`study-title-${p.id}`}
-              >
-                <div className="study-top">
-                  <span className="case-index mono">
-                    {p.n} / {p.industry}
-                  </span>
-                  <span className="study-platform">{p.tools[0]}</span>
-                </div>
-                <div className="study-graphic">
-                  <EvidenceGraphic evidence={p.evidence} />
-                </div>
-                <h3 id={`study-title-${p.id}`}>{p.title}</h3>
-                <div className="study-meta">
-                  {p.client} · {p.role}
-                </div>
-                <p className="study-summary">{p.summary}</p>
-                <div className="study-bottom">
-                  <span className="study-metric">
-                    {metric.value}
-                    <small>{metric.label}</small>
-                  </span>
-                  <button
-                    className="text-link"
-                    id={`project-trigger-${p.id}`}
-                    onClick={() => onOpen(p.id)}
-                    aria-haspopup="dialog"
-                    aria-label={`View project: ${p.title}`}
-                  >
-                    View project <span className="action-arrow" aria-hidden="true">↗</span>
-                  </button>
-                </div>
-              </article>
-            );
-          })}
-        </div>
+        <WorkCollections onOpen={onOpen} />
       </div>
     </section>
   );
@@ -370,69 +322,4 @@ export function ExperienceSection() {
   );
 }
 
-// A decorative echo of the governance dot field, not an evidence count.
-const CONTACT_ARROW_DOTS = [
-  [18, 8], [28, 8], [38, 8], [48, 8], [58, 8],
-  [58, 18], [58, 28], [58, 38], [58, 48],
-  [48, 18], [38, 28], [28, 38], [18, 48], [8, 58],
-];
-
-export function SiteFooter() {
-  return (
-    <footer id="contact" className="site-footer" aria-labelledby="contact-title">
-      <div className="shell footer-shell">
-        <div className="contact-composition">
-          <p className="contact-kicker">{CONTACT.contactEyebrow}</p>
-          <h2 className="contact-title" id="contact-title">
-            {CONTACT.contactHeadingLines.map((line, i) => (
-              <span key={line}>{line}{i === 0 ? " " : ""}</span>
-            ))}
-          </h2>
-          <a
-            href={`mailto:${CONTACT.email}`}
-            className="contact-send"
-            aria-label={`${CONTACT.emailAction}: ${CONTACT.email}`}
-          >
-            <span className="contact-send-disc">
-              <svg viewBox="0 0 66 66" aria-hidden="true" className="contact-send-arrow">
-                <g className="contact-arrow-dots" fill="currentColor">
-                  {CONTACT_ARROW_DOTS.map(([cx, cy]) => (
-                    <circle key={`${cx}-${cy}`} cx={cx} cy={cy} r="2.8" />
-                  ))}
-                </g>
-                <path className="contact-arrow-line" d="M9 57 57 9M15 9h42v42" fill="none" stroke="currentColor" strokeWidth="3" />
-              </svg>
-            </span>
-            <span className="contact-send-label">{CONTACT.emailAction}</span>
-          </a>
-        </div>
-        <div className="contact-details">
-          <div className="contact-email-group">
-            <a href={`mailto:${CONTACT.email}`} className="contact-email-address">
-              {CONTACT.email}
-            </a>
-            <CopyEmailButton
-              email={CONTACT.email}
-              label={CONTACT.copyEmailLabel}
-              successMessage={CONTACT.copyEmailSuccess}
-              errorMessage={CONTACT.copyEmailError}
-            />
-          </div>
-          <p className="contact-sub">{CONTACT.contactBody}</p>
-        </div>
-        <div className="footer-colophon">
-          <span className="footer-credit">© 2026 {CONTACT.name}</span>
-          <span className="footer-location">{CONTACT.location}</span>
-          <a href={CONTACT.linkedInUrl} target="_blank" rel="noopener noreferrer">
-            {CONTACT.linkedInLabel}
-            <span className="action-arrow" aria-hidden="true">↗</span>
-          </a>
-          <a href="#home">
-            {CONTACT.backToTopLabel}
-            <span className="action-arrow contact-top-arrow" aria-hidden="true">↑</span>
-          </a>
-        </div>
-      </div>
-    </footer>
-  );
-}
+export { SiteFooter } from "./SiteFooter";

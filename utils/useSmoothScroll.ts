@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, type RefObject } from "react";
 import Lenis from "lenis";
 import "lenis/dist/lenis.css";
 
@@ -9,10 +9,23 @@ const ANCHOR_MOTION = {
     t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2,
 };
 
-export function useSmoothScroll(isProjectOpen: boolean) {
+export function useSmoothScroll({
+  enabled = true,
+  wrapperRef,
+  contentRef,
+  resetKey,
+}: {
+  enabled?: boolean;
+  wrapperRef?: RefObject<HTMLElement>;
+  contentRef?: RefObject<HTMLElement>;
+  // Recreate the controller when the active case changes, cancelling inertia.
+  resetKey?: string | null;
+} = {}) {
   useEffect(() => {
-    // The case reader and image viewer keep their native, independent scrolling.
-    if (isProjectOpen) return;
+    if (!enabled) return;
+    const wrapper = wrapperRef?.current;
+    const content = contentRef?.current;
+    if ((wrapperRef && !wrapper) || (contentRef && !content)) return;
 
     const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
     let lenis: Lenis | null = null;
@@ -22,7 +35,13 @@ export function useSmoothScroll(isProjectOpen: boolean) {
       lenis?.destroy();
       lenis = motion.matches
         ? null
-        : new Lenis({ autoRaf: true, lerp: 0.1, syncTouch: false });
+        : new Lenis({
+          autoRaf: true,
+          lerp: 0.1,
+          syncTouch: false,
+          ...(wrapper ? { wrapper } : {}),
+          ...(content ? { content } : {}),
+        });
     };
     syncMotion();
     motion.addEventListener("change", syncMotion);
@@ -96,11 +115,14 @@ export function useSmoothScroll(isProjectOpen: boolean) {
         reset();
       }
     };
-    document.addEventListener("click", onClick);
+    // Only the homepage owns section anchors and document history scrolling.
+    if (!wrapper) {
+      document.addEventListener("click", onClick);
+      window.addEventListener("popstate", onHistoryNavigation);
+      window.addEventListener("hashchange", onHistoryNavigation);
+    }
     document.addEventListener("keydown", onKeyDown);
     document.addEventListener("pointerdown", onScrollbarPointerDown, true);
-    window.addEventListener("popstate", onHistoryNavigation);
-    window.addEventListener("hashchange", onHistoryNavigation);
 
     return () => {
       clearAnchorFocus();
@@ -112,5 +134,5 @@ export function useSmoothScroll(isProjectOpen: boolean) {
       window.removeEventListener("hashchange", onHistoryNavigation);
       lenis?.destroy();
     };
-  }, [isProjectOpen]);
+  }, [enabled, wrapperRef, contentRef, resetKey]);
 }

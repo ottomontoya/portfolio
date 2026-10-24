@@ -1,9 +1,10 @@
 import { HERO, SIGNAL, NOT_FOUND, WORK_INTRO, PROTOTYPE_PREVIEW, ABOUT_BODY, ABOUT_HEADLINE, ABOUT_EXAMPLES, STATS } from "../data/about.ts";
 import { CONTACT } from "../data/contact.ts";
-import { PROJECT_NAV_LABELS } from "../data/navigation.ts";
+import { FOOTER_NAV_ITEMS, PROJECT_NAV_LABELS } from "../data/navigation.ts";
 import { EDUCATION, EXPERIENCE } from "../data/education.ts";
 import { CAPABILITY_STAGES, SKILL_GROUPS } from "../data/skills.ts";
 import { SEO } from "../data/seo.ts";
+import { WORK_INDEX, PUBLISHED_WORK, PROTOTYPE_GALLERY } from "../data/workPresentation.ts";
 import {
   INDUSTRIES,
   INDUSTRY_COUNT,
@@ -14,6 +15,68 @@ import {
 } from "../data/projects.ts";
 
 const workProjects = ["p1", "p6", "p2", "p3", "p4", "p5"].map(id => PROJECTS.find(project => project.id === id)!);
+const indexedProjects = WORK_INDEX.projects.map(entry => ({ ...entry, project: PROJECTS.find(project => project.id === entry.id)! }));
+
+function renderCollectionsMarkdown(): string {
+  return `### ${WORK_INDEX.title}
+${WORK_INDEX.description}
+${indexedProjects.map(({ project, title }) => `- [${title}](${CONTACT.portfolioUrl}#${project.id}) — ${project.tools.join(" + ")} / ${project.scope}. ${renderEvidence(project.evidence)}`).join("\n")}
+${WORK_INDEX.footer}
+
+### ${PUBLISHED_WORK.title}
+${PUBLISHED_WORK.description}
+${PUBLISHED_WORK.linkLabel}:
+${indexedProjects.filter(({ project }) => project.caseStudy).map(({ project, title }) => `- [${title}](${project.caseStudy}) — STX Next case study`).join("\n")}
+${PUBLISHED_WORK.contribution} ${PUBLISHED_WORK.context}`;
+}
+
+function renderCollectionsHtml(): string {
+  return `        <section aria-labelledby="reading-index-title">
+          <h3 id="reading-index-title">${escapeHtml(WORK_INDEX.title)}</h3>
+          <p>${escapeHtml(WORK_INDEX.description)}</p>
+          <ul>${indexedProjects.map(({ project, title }) => `<li><a href="#reading-${project.id}">${escapeHtml(title)}</a> — ${escapeHtml(project.tools.join(" + "))} / ${escapeHtml(project.scope)}. ${escapeHtml(renderEvidence(project.evidence))}</li>`).join("\n")}</ul>
+          <p>${escapeHtml(WORK_INDEX.footer)}</p>
+        </section>
+        <section aria-labelledby="reading-published-title">
+          <h3 id="reading-published-title">${escapeHtml(PUBLISHED_WORK.title)}</h3>
+          <p>${escapeHtml(PUBLISHED_WORK.description)}</p>
+          <p>${escapeHtml(PUBLISHED_WORK.linkLabel)}:</p>
+          <ul>${indexedProjects.filter(({ project }) => project.caseStudy).map(({ project, title }) => `<li><a href="${escapeHtml(project.caseStudy!)}">${escapeHtml(title)}</a> — STX Next case study</li>`).join("\n")}</ul>
+          <p>${escapeHtml(PUBLISHED_WORK.contribution)} ${escapeHtml(PUBLISHED_WORK.context)}</p>
+        </section>`;
+}
+
+function galleryChapters(project: (typeof PROJECTS)[number]) {
+  return PROTOTYPE_GALLERY.chapters.flatMap(chapter => {
+    const image = project.images?.[chapter.imageIndex];
+    return image ? [{ ...chapter, image }] : [];
+  });
+}
+
+function renderGalleryMarkdown(project: (typeof PROJECTS)[number]): string {
+  return `\n\n#### ${PROTOTYPE_GALLERY.title}
+${PROTOTYPE_GALLERY.description}
+${PROTOTYPE_GALLERY.label}. ${project.decisionRecord.boundary}
+${galleryChapters(project).map((chapter, index) => `\n**${index + 1}. ${chapter.title}** — ${chapter.topic}\n${chapter.note}\nImage description: ${chapter.image.alt}`).join("\n")}
+${PROTOTYPE_GALLERY.credit}
+${project.tools.join(" + ")} / ${project.scope} / ${project.timeline}`;
+}
+
+function renderGalleryHtml(project: (typeof PROJECTS)[number]): string {
+  return `\n          <section aria-labelledby="reading-gallery-title">
+            <h4 id="reading-gallery-title">${escapeHtml(PROTOTYPE_GALLERY.title)}</h4>
+            <p>${escapeHtml(PROTOTYPE_GALLERY.description)}</p>
+            <p>${escapeHtml(PROTOTYPE_GALLERY.label)}. ${escapeHtml(project.decisionRecord.boundary)}</p>
+${galleryChapters(project).map((chapter, index) => `            <figure>
+              <h5>${index + 1}. ${escapeHtml(chapter.title)}</h5>
+              <p>${escapeHtml(chapter.topic)}</p>
+              <img src="${escapeHtml(chapter.image.src)}" srcset="${escapeHtml(chapter.image.srcSet)}" sizes="(max-width: 760px) calc(100vw - 48px), (max-width: 1280px) 50vw, 600px" width="${chapter.image.width}" height="${chapter.image.height}" loading="lazy" alt="${escapeHtml(chapter.image.alt)}" />
+              <figcaption>${escapeHtml(chapter.note)}</figcaption>
+            </figure>`).join("\n")}
+            <p>${escapeHtml(PROTOTYPE_GALLERY.credit)}</p>
+            <p>${escapeHtml(project.tools.join(" + "))} / ${escapeHtml(project.scope)} / ${escapeHtml(project.timeline)}</p>
+          </section>`;
+}
 
 const industryList = `${INDUSTRIES.slice(0, -1).join(", ")}, and ${INDUSTRIES.at(-1)}`;
 
@@ -167,7 +230,7 @@ function renderAboutExample(entry: (typeof ABOUT_EXAMPLES)[number]): string {
 function renderProjectMarkdown(project: (typeof PROJECTS)[number]): string {
   const { previous, next } = adjacentProjects(project);
   const caseStudy = project.caseStudy ? `\n\n**Case study:** ${project.caseStudy}` : "";
-  const images = project.images?.length
+  const images = project.id === PROTOTYPE_GALLERY.projectId ? renderGalleryMarkdown(project) : project.images?.length
     ? `\n\n**Dashboard views:**\n${project.images.map(image => `- ${image.alt}`).join("\n")}`
     : "";
   const contactHref = `mailto:${CONTACT.email}?subject=${encodeURIComponent(`Project inquiry — ${project.title}`)}`;
@@ -231,6 +294,8 @@ ${PROTOTYPE_PREVIEW.credit}
 ${PROTOTYPE_PREVIEW.annotation}
 ${PROTOTYPE_PREVIEW.boundary}
 
+${renderCollectionsMarkdown()}
+
 ${workProjects.map(renderProjectMarkdown).join("\n\n---\n\n")}
 
 ---
@@ -285,6 +350,13 @@ ${CONTACT.contactBody}
 **Start with an email:** mailto:${CONTACT.email}
 **LinkedIn:** ${CONTACT.linkedInUrl}
 **Based in:** ${CONTACT.location}
+
+**${CONTACT.footerEyebrow}:** ${FOOTER_NAV_ITEMS.map(item => `[${item.label}](${CONTACT.portfolioUrl}/#${item.id})`).join(" · ")}
+
+${CONTACT.name} — ${CONTACT.footerRole}
+${CONTACT.tagline}
+
+[${CONTACT.backToTopLabel}](${CONTACT.portfolioUrl}/#home)
 `;
 }
 
@@ -300,7 +372,7 @@ function renderProjectHtml(project: (typeof PROJECTS)[number]): string {
   const caseStudy = project.caseStudy
     ? `\n          <p>Case study: <a href="${escapeHtml(project.caseStudy)}">${escapeHtml(project.caseStudy)}</a></p>`
     : "";
-  const images = project.images?.length
+  const images = project.id === PROTOTYPE_GALLERY.projectId ? renderGalleryHtml(project) : project.images?.length
     ? `\n          <div role="group" aria-label="Dashboard views">\n${project.images.map(image => `            <img src="${escapeHtml(image.src)}" srcset="${escapeHtml(image.srcSet)}" sizes="(max-width: 760px) calc(100vw - 48px), (max-width: 1280px) 50vw, 600px" width="${image.width}" height="${image.height}" loading="lazy" alt="${escapeHtml(image.alt)}" />`).join("\n")}\n          </div>`
     : "";
   const contactHref = `mailto:${CONTACT.email}?subject=${encodeURIComponent(`Project inquiry — ${project.title}`)}`;
@@ -337,7 +409,7 @@ export function renderNoscript(): string {
   return `    <!-- Structured content generated from data/*.ts for crawlers and non-JavaScript visitors. -->
     <noscript>
       <main>
-        <h1>${escapeHtml(CONTACT.name)} — ${escapeHtml(CONTACT.role)}</h1>
+        <h1 id="reading-home">${escapeHtml(CONTACT.name)} — ${escapeHtml(CONTACT.role)}</h1>
         <p>${escapeHtml(CONTACT.tagline)}</p>
         <p>${escapeHtml(HERO.body)}</p>
         <p>${escapeHtml(SIGNAL.eyebrow)}: ${escapeHtml(renderStat(STATS[0]))}. ${escapeHtml(SIGNAL.caption)}</p>
@@ -346,10 +418,11 @@ export function renderNoscript(): string {
         <p>${escapeHtml(WORK_INTRO)}</p>
         <p>${escapeHtml(PROTOTYPE_PREVIEW.label)}: ${escapeHtml(PROTOTYPE_PREVIEW.title)}</p>
         <p>${escapeHtml(PROTOTYPE_PREVIEW.credit)} ${escapeHtml(PROTOTYPE_PREVIEW.annotation)} ${escapeHtml(PROTOTYPE_PREVIEW.boundary)}</p>
+${renderCollectionsHtml()}
 ${workProjects.map(renderProjectHtml).join("\n\n")}
 
         <p>About Me</p>
-        <h2>${escapeHtml(ABOUT_HEADLINE)}</h2>
+        <h2 id="reading-about">${escapeHtml(ABOUT_HEADLINE)}</h2>
 ${ABOUT_BODY.map(paragraph => `        <p>${escapeHtml(paragraph)}</p>`).join("\n")}
         <h3>What that looks like</h3>
         <ul>
@@ -376,7 +449,7 @@ ${SKILL_GROUPS.map(group => `          <li>${escapeHtml(group.label)}: ${escapeH
 
 
 
-        <h2>Experience</h2>
+        <h2 id="reading-experience">Experience</h2>
         <ul>
 ${EXPERIENCE.map(item => `          <li>${escapeHtml(item.role)} at ${escapeHtml(item.org)} (${escapeHtml(item.time)}) — ${escapeHtml(item.note)}</li>`).join("\n")}
         </ul>
@@ -395,6 +468,15 @@ ${EDUCATION.map(item => `          <li>${escapeHtml(item.title)} — ${escapeHtm
           <li>Portfolio: <a href="${escapeHtml(CONTACT.portfolioUrl)}">${escapeHtml(CONTACT.portfolioUrl)}</a></li>
           <li>Based in: ${escapeHtml(CONTACT.location)}</li>
         </ul>
+        <nav aria-label="Footer navigation">
+          <h3>${escapeHtml(CONTACT.footerEyebrow)}</h3>
+          <ul>
+${FOOTER_NAV_ITEMS.map(item => `            <li><a href="#reading-${escapeHtml(item.id)}">${escapeHtml(item.label)}</a></li>`).join("\n")}
+          </ul>
+        </nav>
+        <p>${escapeHtml(CONTACT.name)} — ${escapeHtml(CONTACT.footerRole)}</p>
+        <p>${escapeHtml(CONTACT.tagline)}</p>
+        <p><a href="#reading-home">${escapeHtml(CONTACT.backToTopLabel)}</a></p>
       </main>
     </noscript>`;
 }
