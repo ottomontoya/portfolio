@@ -415,6 +415,8 @@ button, a, summary { touch-action: manipulation; }
 .footer-signature-meta a span { margin-left:15px; }
 .footer-signature { display:flex; justify-content:space-between; padding:18px 0 26px; overflow:hidden; font-size:clamp(50px,14.8vw,245px); font-weight:500; line-height:1; letter-spacing:-.075em; }
 .footer-signature span { display:block; }
+/* Keep the final glyph inside the reveal mask despite the tight tracking. */
+.footer-signature span:last-child { letter-spacing:0; }
 .footer-colophon { display:flex; justify-content:space-between; gap:20px; align-items:center; min-height:76px; border-top:1px solid var(--rule); font-family:var(--font-mono); font-size:10px; }
 .footer-colophon-tagline { font-family:var(--font-body); font-size:12px; }
 .footer-colophon a { display:flex; gap:22px; align-items:center; text-decoration:none; min-height:44px; }
