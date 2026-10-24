@@ -3,6 +3,7 @@ import "./portfolio.css";
 import { PROJECTS } from "./data/projects";
 import { NOT_FOUND } from "./data/about";
 import { Nav } from "./components/Nav";
+import { LiquidArrowButton } from "./components/LiquidArrowButton";
 import {
   HeroSection,
   AboutSection,
@@ -33,7 +34,7 @@ export default function App() {
   const { theme, toggleTheme } = useTheme();
   const [openId, setOpenId] = useState<string | null>(projectIdFromHash);
   const project = PROJECTS.find((p) => p.id === openId) ?? null;
-  useSmoothScroll(Boolean(project));
+  useSmoothScroll({ enabled: !project });
   useScrollbarVisibility(undefined, !project);
 
   useEffect(() => {
@@ -86,12 +87,7 @@ export default function App() {
         </div>
         <h1>{NOT_FOUND.title}</h1>
         <p>{NOT_FOUND.body}</p>
-        <a className="cta cta-primary" href="/">
-          {NOT_FOUND.action}
-          <span className="arr" aria-hidden="true">
-            ↗
-          </span>
-        </a>
+        <LiquidArrowButton href="/" label={NOT_FOUND.action} tone="field" />
       </main>
     );
   }

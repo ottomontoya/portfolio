@@ -25,6 +25,21 @@ Implementation from a supplied mockup, built in STX Next’s internal environmen
 Fleet view: status prioritization, health scores, and selected-pair details bring a 2,000+ asset scenario into one analytical view.
 No production deployment or adoption claim.
 
+### More work.
+Different problems. A connected approach to business intelligence.
+- [Market research analytics](https://ottomontoya.com#p2) — Tableau / Implementation. ~15 — Dashboards delivered.
+- [Beyond Salesforce reporting](https://ottomontoya.com#p3) — Amazon QuickSight + Snowflake / End-to-end. 3 → 1 — Sources unified: CRM, Web analytics, GitHub community activity into Controlled BI environment.
+- [Revenue reporting & workflow tools](https://ottomontoya.com#p4) — Amazon QuickSight + Retool + AWS / End-to-end. 2 — Delivery tracks: Scheduled revenue reporting and Retool workflow applications. Abstract report stack and app motifs, not client screens or report counts.
+- [One reporting framework](https://ottomontoya.com#p5) — Amazon QuickSight + Neon + Salesforce / End-to-end. 5 → 1 — Time grains unified: Daily, Weekly, Monthly, Quarterly, Yearly into Flexible dashboard set.
+Four projects. Explore the decisions behind each.
+
+### Published work.
+Two public case studies from my work at STX Next.
+Published case studies:
+- [Market research analytics](https://www.stxnext.com/case-study/market-research-platform) — STX Next case study
+- [Beyond Salesforce reporting](https://www.stxnext.com/case-study/salesforce-optimization) — STX Next case study
+Dashboard implementation. Reporting architecture. The wider delivery story, documented by STX Next.
+
 ### Project 1 — Governed Data Access at Scale
 [All work](https://ottomontoya.com#work) · [Previous: Manufacturing Analytics Prototype in QuickSight](https://ottomontoya.com#p6) · [Next: Market Research Dashboards for a Global Automotive Manufacturer](https://ottomontoya.com#p2)
 
@@ -103,11 +118,27 @@ My implementation work covered visual formatting and layout, conditional formatt
 
 **Impact:** Delivered a working internal QuickSight prototype that demonstrated the supplied four-view design, interactions, and 2,000+ asset scenario using dummy data. No production deployment or client adoption is claimed.
 
-**Dashboard views:**
-- Internal QuickSight prototype of a furnace process overview using dummy data for feed, temperature, heat duty, gas composition, coil readings, and operating-limit status.
-- Internal QuickSight prototype of detailed furnace metrics using dummy data for firebox readings, stack temperatures, inlet pressures, burner status, draft profile, and fuel composition.
-- Internal QuickSight prototype of an asset deep dive using dummy data for machine status, pressure trends, vital signs, alerts, contributing factors, and work-order history.
-- Internal QuickSight prototype of a rotating-equipment fleet using dummy data for pump health scores, operating status, alerts, vibration scores, and selected-pair details.
+#### Inside the prototype.
+Four connected views, recreated from a supplied mockup in native QuickSight.
+Internal prototype · Dummy data. Internal prototype only: no client contact, real company data, client environment, production deployment, operator use, or adoption claim.
+
+**1. The process, at a glance.** — Furnace process overview
+A supplied process layout, recreated in native QuickSight with conditional formatting tied to dummy-data thresholds.
+Image description: Internal QuickSight prototype of a furnace process overview using dummy data for feed, temperature, heat duty, gas composition, coil readings, and operating-limit status.
+
+**2. Find the reading that matters.** — Detailed furnace metrics
+The same process, at a finer grain. Firebox readings, temperatures, pressures, and burner status sit together for inspection.
+Image description: Internal QuickSight prototype of detailed furnace metrics using dummy data for firebox readings, stack temperatures, inlet pressures, burner status, draft profile, and fuel composition.
+
+**3. From the fleet to one asset.** — Rotating equipment fleet
+Status prioritization and selected-pair details bring a 2,000+ asset scenario into one view, using representative dummy data.
+Image description: Internal QuickSight prototype of a rotating-equipment fleet using dummy data for pump health scores, operating status, alerts, vibration scores, and selected-pair details.
+
+**4. Follow the diagnostic story.** — Asset deep dive
+Machine status, pressure trends, vital signs, and contributing factors follow the supplied mockup’s diagnostic narrative.
+Image description: Internal QuickSight prototype of an asset deep dive using dummy data for machine status, pressure trends, vital signs, alerts, contributing factors, and work-order history.
+Implementation from a supplied mockup, built in STX Next’s internal environment.
+Amazon QuickSight / Internal prototype / 3 wk
 
 **Discuss a similar project:** mailto:work@ottomontoya.com?subject=Project%20inquiry%20%E2%80%94%20Manufacturing%20Analytics%20Prototype%20in%20QuickSight
 
@@ -367,3 +398,10 @@ A new role. A complex reporting problem. A decision that needs better data. I’
 **Start with an email:** mailto:work@ottomontoya.com
 **LinkedIn:** https://www.linkedin.com/in/ottomontoya/
 **Based in:** Mérida, México
+
+**Keep exploring:** [Work](https://ottomontoya.com/#work) · [About](https://ottomontoya.com/#about) · [Experience](https://ottomontoya.com/#experience)
+
+Otto Montoya — Data Analyst / BI
+Business intelligence, built end to end.
+
+[Back to top](https://ottomontoya.com/#home)

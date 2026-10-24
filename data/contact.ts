@@ -12,10 +12,13 @@ export const CONTACT = {
   contactHeading: contactHeadingLines.join(" "),
   contactHeadingLines,
   contactBody: "A new role. A complex reporting problem. A decision that needs better data. I’d like to hear about it.",
+  footerEyebrow: "Keep exploring",
+  footerRole: "Data Analyst / BI",
   emailAction: "Email me",
   linkedInLabel: "LinkedIn",
   backToTopLabel: "Back to top",
   copyEmailLabel: "Copy email address",
+  copyEmailShortLabel: "Copy email",
   copyEmailSuccess: "Email copied",
   copyEmailError: "Copy unavailable. Select the address or open your email app.",
 } as const;

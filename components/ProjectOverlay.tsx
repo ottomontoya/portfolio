@@ -8,8 +8,12 @@ import {
 import { CONTACT } from "../data/contact";
 import { PROTOTYPE_PREVIEW } from "../data/about";
 import { EvidenceGraphic } from "./Evidence";
+import { ProjectGallery } from "./ProjectGallery";
+import { PROTOTYPE_GALLERY } from "../data/workPresentation";
 import { Nav } from "./Nav";
+import { LiquidArrowButton } from "./LiquidArrowButton";
 import { useScrollbarVisibility } from "../utils/useScrollbarVisibility";
+import { useSmoothScroll } from "../utils/useSmoothScroll";
 import type { Theme } from "../utils/useTheme";
 
 export function ProjectOverlay({
@@ -45,6 +49,7 @@ export function ProjectOverlay({
   };
   const dialogRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
+  const articleRef = useRef<HTMLElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
   const lightboxRef = useRef<HTMLDivElement>(null);
   const lightboxViewportRef = useRef<HTMLDivElement>(null);
@@ -56,6 +61,12 @@ export function ProjectOverlay({
   const isOpen = Boolean(project);
   useScrollbarVisibility(cardRef, isOpen);
   useScrollbarVisibility(lightboxViewportRef, Boolean(lightbox), imageZoomed);
+  useSmoothScroll({
+    enabled: isOpen && !lightbox,
+    wrapperRef: cardRef,
+    contentRef: articleRef,
+    resetKey: projectId,
+  });
 
   useEffect(() => {
     if (project) lastProjectIdRef.current = project.id;
@@ -105,7 +116,7 @@ export function ProjectOverlay({
     imageOpenerRef.current = null;
     if (!project) return;
     const focusFrame = window.requestAnimationFrame(() => {
-      cardRef.current?.scrollTo({ top: 0 });
+      cardRef.current?.scrollTo({ top: 0, behavior: "instant" });
       closeRef.current?.focus();
     });
     return () => window.cancelAnimationFrame(focusFrame);
@@ -118,7 +129,7 @@ export function ProjectOverlay({
         e.preventDefault();
         if (lightbox) {
           setLightbox(null);
-          window.requestAnimationFrame(() => imageOpenerRef.current?.focus());
+          window.requestAnimationFrame(() => imageOpenerRef.current?.focus({ preventScroll: true }));
         } else {
           onClose();
         }
@@ -174,7 +185,7 @@ export function ProjectOverlay({
 
   const closeLightbox = () => {
     setLightbox(null);
-    window.requestAnimationFrame(() => imageOpenerRef.current?.focus());
+    window.requestAnimationFrame(() => imageOpenerRef.current?.focus({ preventScroll: true }));
   };
 
   if (!project) return null;
@@ -216,7 +227,7 @@ export function ProjectOverlay({
         aria-hidden={Boolean(lightbox)}
         {...(lightbox ? { inert: "" } : {})}
       >
-        <article className="case-article">
+        <article ref={articleRef} className="case-article">
           <header className="case-header shell">
             <div className="case-index mono">
               Project {Number(project.n)} / {project.industry} / {project.client}
@@ -246,7 +257,7 @@ export function ProjectOverlay({
               </dl>
             </div>
           </header>
-          {project.images?.[0] && (
+          {project.id !== PROTOTYPE_GALLERY.projectId && project.images?.[0] && (
             <figure className="case-cover shell">
               <button
                 type="button"
@@ -290,14 +301,13 @@ export function ProjectOverlay({
                 {project.decisionRecord.boundary}
               </p>
               {project.caseStudy && (
-                <a
+                <LiquidArrowButton
                   href={project.caseStudy}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-link"
-                >
-                  Published case study <span className="action-arrow" aria-hidden="true">↗</span>
-                </a>
+                  label="Published case study"
+                  tone="field"
+                />
               )}
             </aside>
             <div className="case-narrative">
@@ -322,7 +332,13 @@ export function ProjectOverlay({
               ))}
             </div>
           </div>
-          {project.images && (
+          {project.id === PROTOTYPE_GALLERY.projectId && (
+            <ProjectGallery key={project.id} project={project} scrollerRef={cardRef} onImage={(image, opener) => {
+              imageOpenerRef.current = opener;
+              setLightbox(image);
+            }} />
+          )}
+          {project.id !== PROTOTYPE_GALLERY.projectId && project.images && (
             <section
               className="case-gallery shell"
               aria-labelledby="case-gallery-title"
@@ -393,9 +409,7 @@ export function ProjectOverlay({
             </details>
           </section>
           <footer className="case-footer shell">
-            <a href={contactHref} className="case-contact">
-              Discuss a similar project <span className="action-arrow" aria-hidden="true">↗</span>
-            </a>
+            <LiquidArrowButton href={contactHref} className="case-contact-action" label="Discuss a similar project" />
             <nav className="case-pagination" aria-label="Project navigation">
               <button
                 onClick={() => onNavigate(previousProject.id)}
