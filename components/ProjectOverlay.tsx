@@ -8,17 +8,20 @@ import {
 import { CONTACT } from "../data/contact";
 import { PROTOTYPE_PREVIEW } from "../data/about";
 import { EvidenceGraphic } from "./Evidence";
+import { Nav } from "./Nav";
 import { useScrollbarVisibility } from "../utils/useScrollbarVisibility";
 import type { Theme } from "../utils/useTheme";
 
 export function ProjectOverlay({
   project,
   theme,
+  onToggleTheme,
   onClose,
   onNavigate,
 }: {
   project: Project | null;
   theme: Theme;
+  onToggleTheme: () => void;
   onClose: () => void;
   onNavigate: (id: string) => void;
 }) {
@@ -192,28 +195,20 @@ export function ProjectOverlay({
       tabIndex={-1}
     >
       <div
-        className="case-bar"
+        className="case-navigation"
         aria-hidden={Boolean(lightbox)}
         {...(lightbox ? { inert: "" } : {})}
       >
-        <button
-          ref={closeRef}
-          className="case-back"
-          onClick={onClose}
-          aria-label="Back to work, close project details"
-        >
-          <span aria-hidden="true">←</span> Back to work
-        </button>
-        <span className="case-bar-label">
-          Otto Montoya <span>/ Selected work {project.n}</span>
-        </span>
-        <button
-          className="case-bar-next"
-          onClick={() => onNavigate(nextProject.id)}
-          aria-label={`Next project: ${nextProject.title}`}
-        >
-          Next <span className="action-arrow" aria-hidden="true">↗</span>
-        </button>
+        <Nav
+          theme={theme}
+          onToggleTheme={onToggleTheme}
+          projectNavigation={{
+            onClose,
+            closeRef,
+            previous: { title: previousProject.title, onSelect: () => onNavigate(previousProject.id) },
+            next: { title: nextProject.title, onSelect: () => onNavigate(nextProject.id) },
+          }}
+        />
       </div>
       <div
         ref={cardRef}
@@ -224,7 +219,7 @@ export function ProjectOverlay({
         <article className="case-article">
           <header className="case-header shell">
             <div className="case-index mono">
-              {project.n} / {project.industry} / {project.client}
+              Project {Number(project.n)} / {project.industry} / {project.client}
             </div>
             <h1 className="case-title" id={`project-title-${project.id}`}>
               {project.title}
@@ -319,15 +314,10 @@ export function ProjectOverlay({
                   title: "How it was checked",
                   body: project.decisionRecord.validation,
                 },
-              ].map((chapter, index) => (
+              ].map((chapter) => (
                 <section className="case-chapter" key={chapter.title}>
-                  <span className="chapter-number" aria-hidden="true">
-                    0{index + 1}
-                  </span>
-                  <div>
-                    <h2>{chapter.title}</h2>
-                    <p>{chapter.body}</p>
-                  </div>
+                  <h2>{chapter.title}</h2>
+                  <p>{chapter.body}</p>
                 </section>
               ))}
             </div>

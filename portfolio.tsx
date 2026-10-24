@@ -119,6 +119,7 @@ export default function App() {
       <ProjectOverlay
         project={project}
         theme={theme}
+        onToggleTheme={toggleTheme}
         onClose={closeProject}
         onNavigate={navigateProject}
       />

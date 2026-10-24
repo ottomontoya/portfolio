@@ -1,5 +1,6 @@
 import { HERO, SIGNAL, NOT_FOUND, WORK_INTRO, PROTOTYPE_PREVIEW, ABOUT_BODY, ABOUT_HEADLINE, ABOUT_EXAMPLES, STATS } from "../data/about.ts";
 import { CONTACT } from "../data/contact.ts";
+import { PROJECT_NAV_LABELS } from "../data/navigation.ts";
 import { EDUCATION, EXPERIENCE } from "../data/education.ts";
 import { CAPABILITY_STAGES, SKILL_GROUPS } from "../data/skills.ts";
 import { SEO } from "../data/seo.ts";
@@ -15,6 +16,14 @@ import {
 const workProjects = ["p1", "p6", "p2", "p3", "p4", "p5"].map(id => PROJECTS.find(project => project.id === id)!);
 
 const industryList = `${INDUSTRIES.slice(0, -1).join(", ")}, and ${INDUSTRIES.at(-1)}`;
+
+function adjacentProjects(project: (typeof PROJECTS)[number]) {
+  const index = PROJECTS.findIndex(item => item.id === project.id);
+  return {
+    previous: PROJECTS[(index - 1 + PROJECTS.length) % PROJECTS.length],
+    next: PROJECTS[(index + 1) % PROJECTS.length],
+  };
+}
 
 function escapeHtml(value: string): string {
   return value
@@ -156,13 +165,16 @@ function renderAboutExample(entry: (typeof ABOUT_EXAMPLES)[number]): string {
 }
 
 function renderProjectMarkdown(project: (typeof PROJECTS)[number]): string {
+  const { previous, next } = adjacentProjects(project);
   const caseStudy = project.caseStudy ? `\n\n**Case study:** ${project.caseStudy}` : "";
   const images = project.images?.length
     ? `\n\n**Dashboard views:**\n${project.images.map(image => `- ${image.alt}`).join("\n")}`
     : "";
   const contactHref = `mailto:${CONTACT.email}?subject=${encodeURIComponent(`Project inquiry — ${project.title}`)}`;
 
-  return `### Project ${project.n} — ${project.title}
+  return `### Project ${Number(project.n)} — ${project.title}
+[${PROJECT_NAV_LABELS.allWork}](${CONTACT.portfolioUrl}#work) · [${PROJECT_NAV_LABELS.previous}: ${previous.title}](${CONTACT.portfolioUrl}#${previous.id}) · [${PROJECT_NAV_LABELS.next}: ${next.title}](${CONTACT.portfolioUrl}#${next.id})
+
 **Client:** ${project.client}
 **Industry:** ${project.industry}
 **Role:** ${project.role}
@@ -284,6 +296,7 @@ function renderParagraphs(value: string): string {
 }
 
 function renderProjectHtml(project: (typeof PROJECTS)[number]): string {
+  const { previous, next } = adjacentProjects(project);
   const caseStudy = project.caseStudy
     ? `\n          <p>Case study: <a href="${escapeHtml(project.caseStudy)}">${escapeHtml(project.caseStudy)}</a></p>`
     : "";
@@ -292,8 +305,11 @@ function renderProjectHtml(project: (typeof PROJECTS)[number]): string {
     : "";
   const contactHref = `mailto:${CONTACT.email}?subject=${encodeURIComponent(`Project inquiry — ${project.title}`)}`;
 
-  return `        <article>
-          <h3>${escapeHtml(project.title)} — ${escapeHtml(project.client)}</h3>
+  return `        <article id="reading-${project.id}">
+          <h3>Project ${Number(project.n)} / ${escapeHtml(project.title)} — ${escapeHtml(project.client)}</h3>
+          <nav aria-label="${escapeHtml(project.title)} navigation">
+            <a href="#reading-work">${PROJECT_NAV_LABELS.allWork}</a> · <a href="#reading-${previous.id}" aria-label="${escapeHtml(`${PROJECT_NAV_LABELS.previous} project: ${previous.title}`)}">${PROJECT_NAV_LABELS.previous}</a> · <a href="#reading-${next.id}" aria-label="${escapeHtml(`${PROJECT_NAV_LABELS.next} project: ${next.title}`)}">${PROJECT_NAV_LABELS.next}</a>
+          </nav>
           <p>Industry: ${escapeHtml(project.industry)} | Role: ${escapeHtml(project.role)} | Tools: ${escapeHtml(project.tools.join(", "))} | ${escapeHtml(project.timeline)} | ${escapeHtml(project.scope)}</p>
           <p>${escapeHtml(project.summary)}</p>
 ${renderParagraphs(project.description)}
@@ -326,7 +342,7 @@ export function renderNoscript(): string {
         <p>${escapeHtml(HERO.body)}</p>
         <p>${escapeHtml(SIGNAL.eyebrow)}: ${escapeHtml(renderStat(STATS[0]))}. ${escapeHtml(SIGNAL.caption)}</p>
 
-        <h2>${PROJECT_COUNT} Projects Across ${INDUSTRY_COUNT} Industries</h2>
+        <h2 id="reading-work">${PROJECT_COUNT} Projects Across ${INDUSTRY_COUNT} Industries</h2>
         <p>${escapeHtml(WORK_INTRO)}</p>
         <p>${escapeHtml(PROTOTYPE_PREVIEW.label)}: ${escapeHtml(PROTOTYPE_PREVIEW.title)}</p>
         <p>${escapeHtml(PROTOTYPE_PREVIEW.credit)} ${escapeHtml(PROTOTYPE_PREVIEW.annotation)} ${escapeHtml(PROTOTYPE_PREVIEW.boundary)}</p>
