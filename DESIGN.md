@@ -239,6 +239,9 @@ The mobile layout is composed separately: the headline leads, both governance en
 | Condition | Implemented change |
 | --- | --- |
 | At least 1500px | Hero column gap becomes 100px. |
+| 1280px and below | Open navigation panel changes from 28vw to 40vw. |
+| 1023px and below | Navigation's secondary project-card column is hidden; Work still exposes every project. |
+| 768px and below | Open navigation panel fills the available width within 18px side gutters. |
 | 1100px and below | Tighter columns, smaller hero, two-column governance feature; prototype gallery returns to normal flow. |
 | 1099px and below | Compact project-index columns and hidden “View project” text; the arrow and full row remain actionable. |
 | 1050px and below | Footer columns tighten and the contact details stack. |
@@ -246,7 +249,7 @@ The mobile layout is composed separately: the headline leads, both governance en
 | 759px and below | Footer contact panel and navigation stack; pointer-following and signature entrance stop. |
 | 700px and below | Index/published rows and gallery captions reorganize; the index metric stays beside its label below the title. |
 | 560px and below | Header becomes 66px and case evidence/narrative stack. |
-| 360px and below | Narrow gutter and typography; Previous shortens to Prev while its accessible name retains the destination. |
+| 360px and below | Narrow gutter and typography; case controls remain accessible inside the navigation panel. |
 
 Decorative floating previews require at least 1100px width, 540px height, a fine hover pointer, and no forced colors. The image parallax threshold is strictly above 1100px. Reduced motion changes animation behavior rather than removing evidence.
 
@@ -273,6 +276,7 @@ The recurring forms are open rectangular records, square-cornered evidence and i
 - **Pills:** fully rounded primary actions and image-viewer controls use the frontmatter pill radius. The phone image-enlarge strip becomes square and full width.
 - **Circles:** the theme button, timeline dots, and pointer use 50% rounding. The footer contact panel stays square; its email action is a pill.
 - **Records and panels:** no decorative corner radius on the work rows, evidence panel, case surface, or prototype image stage.
+- **Navigation exception:** the approved menu panel, project shortcuts, and All six projects action have 16px corners. The 44px closed menu control remains circular. Do not use ticket-shaped notches.
 - **Borders:** most rules and control outlines are 1px. The general keyboard focus outline is 2px with a 5px offset; individual controls pull it inside where needed. The prototype gallery image uses a 3px accent focus outline inset 6px.
 - **Evidence geometry:** the governance count field has 696 marks and 12 outlines. Other marks derive from the project's typed evidence. Shape is never permission to invent client topology or screenshots.
 
@@ -298,11 +302,17 @@ Expandable context uses native `details` / `summary`, ruled above and below. The
 
 ### Navigation and case reader
 
-Cases occupy the full viewport with their own scrolling surface and the shared site navbar. The identity, shell, Celadon/night surface, responsive sizing, link feedback, and theme toggle match the homepage. Project controls replace the section links with All work, Previous, and Next; the brand also returns to the preserved page. Project identity stays in the heading immediately below the navbar. The header remains visible while the case scrolls and becomes inert beneath an open image viewer. They retain modal semantics because the underlying home position is preserved. The visible sequence is title → result and metadata → evidence beside constraint/decision/verification → full imagery where available → expandable context/responsibilities/impact → contact and previous/next.
+The approved navbar uses a Pensatori-inspired expanding panel, adapted to the portfolio's solid surfaces and real project content. The original outlined circular theme toggle sits left of an always-filled circular menu button, with a 12px gap. Both share the header's centered, 1380px maximum-width shell, including on wide monitors. There is no decorative Menu label, Explore heading, separate column-toggle arrow, or duplicate footer theme toggle.
+
+The menu grows from its 44px control into a 92dvh panel. Home, Work, About, and Contact reveal with ruled separators. Hover, keyboard focus, and press fill a band and turn its arrow −35 degrees; text keeps its size and moves 10px like the footer rows. The panel, cards, and expansion action use 16px rounded corners. Light-mode panels use Deep Green/Celadon; dark-mode panels use Celadon/Ink. All six projects retains a Celadon fill with Deep Green text in both themes.
+
+On desktop, five existing case studies enter beside the panel with a staggered translation and settle without rotation. All six projects expands that column into a scrollable list; shorter viewports also scroll the column so card content remains readable. The cards scatter out when closed. Project order and labels are shared from `data/navigation.ts` and existing work/project data, with no invented imagery or metrics. Mobile retains the main links and contact destinations. Reduced motion settles immediately; forced colors use system surfaces. Only the existing Lenis owner is paused while the menu is open. The background and header identity are inert; Tab stays in the menu, Escape dismisses it before a case, and dismissal restores the trigger. Selection hands focus and history to the destination. Both reading editions expose the same section links and six project destinations.
+
+Cases occupy the full viewport with their own scrolling surface and the shared site navbar. The identity, shell, Celadon/night surface, responsive sizing, link feedback, and theme toggle match the homepage. Project controls replace the panel's section links with All work, Previous, and Next; a visible All work control and the brand also return to the preserved page. Project identity stays in the heading immediately below the navbar. The header remains visible while the case scrolls and becomes inert beneath an open image viewer. They retain modal semantics because the underlying home position is preserved. The visible sequence is title → result and metadata → evidence beside constraint/decision/verification → full imagery where available → expandable context/responsibilities/impact → contact and previous/next.
 
 `#p1`–`#p6` are durable URLs. Opening from home pushes one entry; previous/next replaces that entry; browser back or close restores the page. Direct project URLs open immediately and close by removing only the project hash. The document title follows the active case.
 
-At 360px and below, Previous shortens to Prev while its accessible name retains the destination project title. Every header control remains at least 24px wide and 44px tall.
+Previous and Next retain the destination project title in their accessible names. Every header control remains at least 24px wide and 44px tall; the theme and menu controls remain 44px circles.
 
 The background is inert while a case is open. Focus moves into the case and stays there. Escape closes an image before its case. Closing returns focus to the original opener without moving the saved page, or to the corresponding project trigger for a direct link. All existing trigger IDs remain available. Image viewing supports fit/zoom, responsive sources, a keyboard-focusable scroll region when zoomed, and focus return to the image button. Zoom enlarges beyond the viewport even on wide desktops. A single scroll-padding reservation keeps section anchors clear of the header.
 

@@ -1,6 +1,6 @@
 import { HERO, SIGNAL, NOT_FOUND, WORK_INTRO, PROTOTYPE_PREVIEW, ABOUT_BODY, ABOUT_HEADLINE, ABOUT_EXAMPLES, STATS } from "../data/about.ts";
 import { CONTACT } from "../data/contact.ts";
-import { FOOTER_NAV_ITEMS, PROJECT_NAV_LABELS } from "../data/navigation.ts";
+import { FOOTER_NAV_ITEMS, NAV_ITEMS, NAV_MENU, NAV_PROJECT_IDS, PROJECT_NAV_LABELS } from "../data/navigation.ts";
 import { EDUCATION, EXPERIENCE } from "../data/education.ts";
 import { CAPABILITY_STAGES, SKILL_GROUPS } from "../data/skills.ts";
 import { SEO } from "../data/seo.ts";
@@ -16,6 +16,29 @@ import {
 
 const workProjects = ["p1", "p6", "p2", "p3", "p4", "p5"].map(id => PROJECTS.find(project => project.id === id)!);
 const indexedProjects = WORK_INDEX.projects.map(entry => ({ ...entry, project: PROJECTS.find(project => project.id === entry.id)! }));
+const menuProjects = NAV_PROJECT_IDS.map(id => {
+  const project = PROJECTS.find(item => item.id === id)!;
+  return { project, title: WORK_INDEX.projects.find(item => item.id === id)?.title ?? project.title };
+});
+
+function renderMenuMarkdown(): string {
+  return `**Navigation:** ${NAV_ITEMS.map(item => `[${item.label}](${CONTACT.portfolioUrl}/#${item.id})`).join(" · ")}
+
+**${NAV_MENU.allProjects}:**
+${menuProjects.map(({ project, title }) => `- [${title}](${CONTACT.portfolioUrl}/#${project.id}) — ${renderEvidence(project.evidence)}`).join("\n")}`;
+}
+
+function renderMenuHtml(): string {
+  return `        <nav aria-label="${escapeHtml(NAV_MENU.primaryLabel)}">
+          ${NAV_ITEMS.map(item => `<a href="#reading-${item.id}">${escapeHtml(item.label)}</a>`).join(" · ")}
+        </nav>
+        <details>
+          <summary>${escapeHtml(NAV_MENU.allProjects)}</summary>
+          <ul>
+${menuProjects.map(({ project, title }) => `            <li><a href="#reading-${project.id}">${escapeHtml(title)}</a> — ${escapeHtml(renderEvidence(project.evidence))}</li>`).join("\n")}
+          </ul>
+        </details>`;
+}
 
 function renderCollectionsMarkdown(): string {
   return `### ${WORK_INDEX.title}
@@ -283,6 +306,8 @@ ${CONTACT.name} is a ${CONTACT.role} based in ${CONTACT.location}, with a Bachel
 **Email:** ${CONTACT.email}
 **LinkedIn:** ${CONTACT.linkedInUrl}
 
+${renderMenuMarkdown()}
+
 ---
 
 ## ${PROJECT_COUNT} Projects Across ${INDUSTRY_COUNT} Industries
@@ -409,6 +434,7 @@ export function renderNoscript(): string {
   return `    <!-- Structured content generated from data/*.ts for crawlers and non-JavaScript visitors. -->
     <noscript>
       <main>
+${renderMenuHtml()}
         <h1 id="reading-home">${escapeHtml(CONTACT.name)} — ${escapeHtml(CONTACT.role)}</h1>
         <p>${escapeHtml(CONTACT.tagline)}</p>
         <p>${escapeHtml(HERO.body)}</p>
@@ -459,7 +485,7 @@ ${EXPERIENCE.map(item => `          <li>${escapeHtml(item.role)} at ${escapeHtml
 ${EDUCATION.map(item => `          <li>${escapeHtml(item.title)} — ${escapeHtml(item.school)}. ${escapeHtml(item.note)}</li>`).join("\n")}
         </ul>
 
-        <h2>${escapeHtml(CONTACT.contactEyebrow)}</h2>
+        <h2 id="reading-contact">${escapeHtml(CONTACT.contactEyebrow)}</h2>
         <h3>${escapeHtml(CONTACT.contactHeading)}</h3>
         <p>${escapeHtml(CONTACT.contactBody)}</p>
         <ul>
