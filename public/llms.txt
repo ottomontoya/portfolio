@@ -14,6 +14,16 @@ Otto Montoya is a Data Analyst based in Mérida, México, with a Bachelor's in I
 **Email:** work@ottomontoya.com
 **LinkedIn:** https://www.linkedin.com/in/ottomontoya/
 
+**Navigation:** [Home](https://ottomontoya.com/#home) · [Work](https://ottomontoya.com/#work) · [About](https://ottomontoya.com/#about) · [Contact](https://ottomontoya.com/#contact)
+
+**All six projects:**
+- [Governed Data Access at Scale](https://ottomontoya.com/#p1) — 696 → 12 — Access paths → groups.
+- [Manufacturing Analytics Prototype in QuickSight](https://ottomontoya.com/#p6) — 2,000+ — Assets represented in prototype.
+- [Market research analytics](https://ottomontoya.com/#p2) — ~15 — Dashboards delivered.
+- [Beyond Salesforce reporting](https://ottomontoya.com/#p3) — 3 → 1 — Sources unified: CRM, Web analytics, GitHub community activity into Controlled BI environment.
+- [One reporting framework](https://ottomontoya.com/#p5) — 5 → 1 — Time grains unified: Daily, Weekly, Monthly, Quarterly, Yearly into Flexible dashboard set.
+- [Revenue reporting & workflow tools](https://ottomontoya.com/#p4) — 2 — Delivery tracks: Scheduled revenue reporting and Retool workflow applications. Abstract report stack and app motifs, not client screens or report counts.
+
 ---
 
 ## 6 Projects Across 6 Industries

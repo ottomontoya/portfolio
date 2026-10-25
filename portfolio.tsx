@@ -33,9 +33,10 @@ function historyStateWithProject(value: boolean) {
 export default function App() {
   const { theme, toggleTheme } = useTheme();
   const [openId, setOpenId] = useState<string | null>(projectIdFromHash);
+  const [navigationOpen, setNavigationOpen] = useState(false);
   const project = PROJECTS.find((p) => p.id === openId) ?? null;
-  useSmoothScroll({ enabled: !project });
-  useScrollbarVisibility(undefined, !project);
+  useSmoothScroll({ enabled: !project, suspended: navigationOpen });
+  useScrollbarVisibility(undefined, !project && !navigationOpen);
 
   useEffect(() => {
     const syncProjectFromUrl = () => setOpenId(projectIdFromHash());
@@ -102,7 +103,7 @@ export default function App() {
         <a className="skip-link" href="#main-content">
           Skip to main content
         </a>
-        <Nav theme={theme} onToggleTheme={toggleTheme} />
+        <Nav theme={theme} onToggleTheme={toggleTheme} onOpenProject={openProject} onOpenChange={setNavigationOpen} />
         <main id="main-content" tabIndex={-1}>
           <HeroSection onOpen={openProject} />
           <WorkSection onOpen={openProject} />

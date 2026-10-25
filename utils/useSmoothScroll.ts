@@ -1,4 +1,4 @@
-import { useEffect, type RefObject } from "react";
+import { useEffect, useLayoutEffect, useRef, type RefObject } from "react";
 import Lenis from "lenis";
 import "lenis/dist/lenis.css";
 
@@ -11,16 +11,26 @@ const ANCHOR_MOTION = {
 
 export function useSmoothScroll({
   enabled = true,
+  suspended = false,
   wrapperRef,
   contentRef,
   resetKey,
 }: {
   enabled?: boolean;
+  suspended?: boolean;
   wrapperRef?: RefObject<HTMLElement>;
   contentRef?: RefObject<HTMLElement>;
   // Recreate the controller when the active case changes, cancelling inertia.
   resetKey?: string | null;
 } = {}) {
+  const controller = useRef<Lenis | null>(null);
+  const suspendedRef = useRef(suspended);
+  useLayoutEffect(() => {
+    suspendedRef.current = suspended;
+    if (suspended) controller.current?.stop();
+    else controller.current?.start();
+  }, [suspended]);
+
   useEffect(() => {
     if (!enabled) return;
     const wrapper = wrapperRef?.current;
@@ -42,6 +52,8 @@ export function useSmoothScroll({
           ...(wrapper ? { wrapper } : {}),
           ...(content ? { content } : {}),
         });
+      controller.current = lenis;
+      if (suspendedRef.current) lenis?.stop();
     };
     syncMotion();
     motion.addEventListener("change", syncMotion);
@@ -93,8 +105,10 @@ export function useSmoothScroll({
       target.focus({ preventScroll: true });
       // Native scrolling can precede its scroll event (touch, focus, history).
       // Measure the destination from the current document position.
-      lenis.scrollTo(lenis.actualScroll, { immediate: true });
-      lenis.scrollTo(target, ANCHOR_MOTION);
+      // An explicit menu selection can arrive before the menu's suspension clears.
+      lenis.start();
+      lenis.scrollTo(lenis.actualScroll, { immediate: true, force: true });
+      lenis.scrollTo(target, { ...ANCHOR_MOTION, force: true });
     };
 
     // Native keyboard scrolling and history restoration must interrupt inertia.
@@ -133,6 +147,7 @@ export function useSmoothScroll({
       window.removeEventListener("popstate", onHistoryNavigation);
       window.removeEventListener("hashchange", onHistoryNavigation);
       lenis?.destroy();
+      controller.current = null;
     };
   }, [enabled, wrapperRef, contentRef, resetKey]);
 }

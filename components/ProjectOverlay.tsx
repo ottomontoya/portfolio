@@ -30,6 +30,7 @@ export function ProjectOverlay({
   onNavigate: (id: string) => void;
 }) {
   const projectId = project?.id ?? null;
+  const [navigationOpen, setNavigationOpen] = useState(false);
   const [imageZoomed, setImageZoomed] = useState(false);
   const [originalBrightness, setOriginalBrightness] = useState(false);
   const [imageState, setImageState] = useState<{
@@ -63,6 +64,7 @@ export function ProjectOverlay({
   useScrollbarVisibility(lightboxViewportRef, Boolean(lightbox), imageZoomed);
   useSmoothScroll({
     enabled: isOpen && !lightbox,
+    suspended: navigationOpen,
     wrapperRef: cardRef,
     contentRef: articleRef,
     resetKey: projectId,
@@ -125,6 +127,7 @@ export function ProjectOverlay({
   useEffect(() => {
     if (!project) return;
     const onKey = (e: KeyboardEvent) => {
+      if (e.defaultPrevented) return;
       if (e.key === "Escape") {
         e.preventDefault();
         if (lightbox) {
@@ -213,7 +216,10 @@ export function ProjectOverlay({
         <Nav
           theme={theme}
           onToggleTheme={onToggleTheme}
+          onOpenProject={onNavigate}
+          onOpenChange={setNavigationOpen}
           projectNavigation={{
+            projectId: project.id,
             onClose,
             closeRef,
             previous: { title: previousProject.title, onSelect: () => onNavigate(previousProject.id) },
